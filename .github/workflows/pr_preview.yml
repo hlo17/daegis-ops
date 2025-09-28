@@ -1,39 +1,31 @@
-cat <<'EOF' > .github/workflows/pr_preview.yml
 # .github/workflows/pr_preview.yml
 
 name: PR Preview Diff
 
-# ワークフローが実行されるタイミングを定義
 on:
   pull_request:
-    types: [opened, synchronize] # PRがオープンまたは更新された時
-    paths:
-      - 'ops/runbooks/**.md'     # ops/runbooks/ 内のMDファイルが対象
+    types: [opened, synchronize]
+#   paths:
+#     - 'ops/runbooks/**.md'  # ← 原因切り分けのため、このセクションを無効化
 
-# このワークフローがPRにコメントを書き込む権限を設定
 permissions:
   pull-requests: write
 
 jobs:
   generate-preview:
     runs-on: ubuntu-latest
-
     steps:
-      # 1. PRのコードをチェックアウト
       - name: Checkout repository
         uses: actions/checkout@v4
-        # 比較対象のブランチ(main)の履歴も取得するためにfetch-depthを0に設定
         with:
           fetch-depth: 0
 
-      # 2. 変更されたMDファイルの一覧を取得
       - name: Get changed files
         id: changed-files
         run: |
           CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'ops/runbooks/**.md' | xargs)
           echo "files=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
-      # 3. 差分を生成してコメント本文を作成
       - name: Generate diff content
         id: generate-diff
         run: |
@@ -44,18 +36,15 @@ jobs:
             for file in ${{ steps.changed-files.outputs.files }}; do
               COMMENT_BODY+="#### \`$file\`\n\n"
               COMMENT_BODY+="\`\`\`diff\n"
-              # git diff の出力を変数に格納し、HEREDOCの展開を防ぐ
               DIFF_CONTENT=$(git diff origin/${{ github.base_ref }}...HEAD -- "$file")
               COMMENT_BODY+="$DIFF_CONTENT"
               COMMENT_BODY+="\n\`\`\`\n\n"
             done
           fi
-          # 複数行のBODYをエクスポートするための特殊な形式
           echo 'body<<EOF' >> $GITHUB_OUTPUT
           echo "$COMMENT_BODY" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
-      # 4. PRにコメントとして投稿
       - name: Post preview comment
         uses: actions/github-script@v7
         with:
@@ -66,4 +55,3 @@ jobs:
               repo: context.repo.repo,
               body: `${{ steps.generate-diff.outputs.body }}`
             })
-EOF
