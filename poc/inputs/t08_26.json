@@ -1,0 +1,10 @@
+{
+  "id": "t08",
+  "prompt": null,
+  "answer": "数値と期限は以下の通りです。\n\n- 数値: 3件\n- 期限: 10/5まで",
+  "model": "gpt-4o-mini",
+  "latency_ms": 987,
+  "cost": null,
+  "ts": "2025-09-28 15:04:38",
+  "topic": "halu/answer"
+}

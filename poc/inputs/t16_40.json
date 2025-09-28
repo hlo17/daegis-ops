@@ -1,0 +1,10 @@
+{
+  "id": "t16",
+  "prompt": null,
+  "answer": "1. 重要なポイントを明確にする。\n2. 冗長な表現を省く。\n3. 読者を引き込む簡潔さを保つ。",
+  "model": "gpt-4o-mini",
+  "latency_ms": 2162,
+  "cost": null,
+  "ts": "2025-09-28 15:14:50",
+  "topic": "halu/answer"
+}

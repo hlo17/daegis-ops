@@ -1,0 +1,43 @@
+
+--- [START: Daegis Hand-off.md] ---
+---
+tags:
+  - Daegis
+aliases:
+created: 2025-09-27 16:39
+modified: 2025-09-27 17:26
+Describe: "現在地スナップショット: この1枚だけで“今どこにいるか”をAIに渡す正本"
+---
+
+[[Daegis Hand-off 2025-09-27]]
+
+```dataview
+TABLE
+FROM #Daegis_HandOff or #
+SORT file.mtime DESC
+```
+
+③ 今の状況（launchd / Git）
+	•	sync-handoff.sh は Git に登録・push 済み ✅
+	•	launchd の plist も読み込み済み ✅
+（launchctl load で登録され、毎日21:00に走る設定になっています）
+
+現時点での状態：
+	•	Obsidianに確実にファイルは存在している
+	•	自動同期（Obsidian → repo）は仕組みが整っている
+	•	Obsidian上で「見えない」のはインデックス or ファイル名のせい
+
+---
+### **使い方メモ**
+
+Gitに入れるなら
+```
+cd ~/daegis
+git add "Obsidian/2_Areas/50_Daegis/Daegis Hand-off/Daegis Hand-off $(date +%F).md"
+git commit -m "Hand-off: update $(date +%F)"
+git push
+```
+
+--- [ERROR: File not found: Daegis Hand-off 2025-09-27] ---
+
+--- [END: Daegis Hand-off.md] ---

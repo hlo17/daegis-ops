@@ -14,3 +14,7 @@ context_bundle.txt
 # sentry local scratch
 ops/sentry/*.tmp
 ops/sentry/*.log
+.env
+.env.*
+*.env
+.env.bak*

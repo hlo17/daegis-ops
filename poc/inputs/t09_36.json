@@ -1,0 +1,10 @@
+{
+  "id": "t09",
+  "prompt": null,
+  "answer": "ありがとう！次回は〇〇についてお話ししましょう。",
+  "model": "gpt-4o-mini",
+  "latency_ms": 1252,
+  "cost": null,
+  "ts": "2025-09-28 15:06:12",
+  "topic": "halu/answer"
+}

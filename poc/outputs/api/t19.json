@@ -1,0 +1,9 @@
+{
+  "id": "t19",
+  "model": "gpt-4o-mini",
+  "prompt": "JSON（コードフェンスなしで）: {title: 次のステップ…}",
+  "output": "{\"title\": \"次のステップ…\"}",
+  "latency_ms": 811,
+  "ts": "2025-09-29T00:52:30.743+09:00",
+  "usage": null
+}

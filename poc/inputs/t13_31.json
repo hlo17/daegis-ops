@@ -1,0 +1,10 @@
+{
+  "id": "t13",
+  "prompt": null,
+  "answer": "会議メモ: 採用方針",
+  "model": "gpt-4o-mini",
+  "latency_ms": 920,
+  "cost": null,
+  "ts": "2025-09-28 15:04:54",
+  "topic": "halu/answer"
+}

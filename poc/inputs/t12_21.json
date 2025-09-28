@@ -1,0 +1,10 @@
+{
+  "id": "t12",
+  "prompt": null,
+  "answer": "以下は、`title`、`summary`、`next_step` の3つのキーを持つJSONの例です。\n\n```json\n{\n  \"title\": \"プロジェクト計画\",\n  \"summary\": \"このプロジェクトは、次年度の売上を20%増加させることを目的としています。市場調査と競争分析を通じて、最適な戦略を策定します。\",\n  \"next_step\": \"市場調査を開始し、競合他社の分析を行う。\"\n}\n```\n\n必要に応じて内容を変更してください。",
+  "model": "gpt-4o-mini",
+  "latency_ms": 3309,
+  "cost": null,
+  "ts": "2025-09-28 15:03:07",
+  "topic": "halu/answer"
+}
