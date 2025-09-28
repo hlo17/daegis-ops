@@ -1,0 +1,5 @@
+groups:
+  - name: bad
+    rules:
+      - alert: BadExpr
+        expr: up ==   # ← わざと壊す
