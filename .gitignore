@@ -1,0 +1,9 @@
+# secrets & caches
+halu/.env
+**/*.env
+**/__pycache__/
+halu/logs/
+*.jsonl
+# editor junk
+.DS_Store
+*.swp
