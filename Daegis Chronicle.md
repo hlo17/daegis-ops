@@ -87,3 +87,14 @@ _appended: 2025-09-29T02:35:29+0900_
 **スクショ**
 - サーバーログ: ![mosquitto log](assets/acl_deny_log_20250929-0233.png)
 
+
+## 2025-09-29 Slack通知テスト完了
+_appended: 2025-09-29T02:38:15+0900_
+
+## Slack通知テスト完了
+
+**現象**: Prometheus→Alertmanager→Slack 通知ルート、整形テンプレ反映済で表示成功。
+
+**スクショ**
+- Slack通知: ![alert_slack](assets/alert_slack_20250929-0237.png)
+
