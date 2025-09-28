@@ -101,3 +101,5 @@ note "OK: ID=${ID} PROMPT=${PROMPT}"
 3. 暫定: DEDUPE_OFF=1 / seen-idsクリア
 4. 恒久策: TTL/当日スコープ化・pre-dedupe削除 等 → PR
 5. 記録: [[notes.md]] に追記
+
+# PR preview re-test
