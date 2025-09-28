@@ -7,3 +7,10 @@ halu/logs/
 # editor junk
 .DS_Store
 *.swp
+
+# local build artifacts / bundles
+context_bundle.txt
+
+# sentry local scratch
+ops/sentry/*.tmp
+ops/sentry/*.log
