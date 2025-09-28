@@ -1,3 +1,4 @@
+cat <<'EOF' > .github/workflows/pr_preview.yml
 # .github/workflows/pr_preview.yml
 
 name: PR Preview Diff
@@ -29,7 +30,7 @@ jobs:
       - name: Get changed files
         id: changed-files
         run: |
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.event.after }} -- 'ops/runbooks/**.md' | xargs)
+          CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD -- 'ops/runbooks/**.md' | xargs)
           echo "files=$CHANGED_FILES" >> $GITHUB_OUTPUT
 
       # 3. 差分を生成してコメント本文を作成
@@ -44,7 +45,7 @@ jobs:
               COMMENT_BODY+="#### \`$file\`\n\n"
               COMMENT_BODY+="\`\`\`diff\n"
               # git diff の出力を変数に格納し、HEREDOCの展開を防ぐ
-              DIFF_CONTENT=$(git diff ${{ github.event.before }} ${{ github.event.after }} -- "$file")
+              DIFF_CONTENT=$(git diff origin/${{ github.base_ref }}...HEAD -- "$file")
               COMMENT_BODY+="$DIFF_CONTENT"
               COMMENT_BODY+="\n\`\`\`\n\n"
             done
@@ -65,3 +66,4 @@ jobs:
               repo: context.repo.repo,
               body: `${{ steps.generate-diff.outputs.body }}`
             })
+EOF
