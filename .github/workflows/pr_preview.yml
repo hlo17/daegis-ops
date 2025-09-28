@@ -5,8 +5,8 @@ name: PR Preview Diff
 on:
   pull_request:
     types: [opened, synchronize]
-#   paths:
-#     - 'ops/runbooks/**.md'  # ← 原因切り分けのため、このセクションを無効化
+    paths:
+      - 'ops/runbooks/**.md'
 
 permissions:
   pull-requests: write
@@ -53,5 +53,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `${{ steps.generate-diff.outputs.body }}`
+              body: ${{ toJSON(steps.generate-diff.outputs.body) }}
             })
