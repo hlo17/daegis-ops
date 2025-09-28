@@ -54,3 +54,36 @@ _appended: 2025-09-29T02:23:28+0900_
 **スクショ**
 - 拒否メッセージ: ![ACL deny](assets/)
 
+
+## 2025-09-29 ACL deny テスト（サーバーログ補強）
+_appended: 2025-09-29T02:27:08+0900_
+
+## ACL deny テスト補強（サーバーログ）
+
+**現象**: ブローカーが  publish を受け取り →  として拒否（期待どおり）
+
+**スクショ**
+- サーバーログ: ![mosquitto log](assets/)
+
+
+## 2025-09-29 ACL deny テスト（サーバーログ補強）
+_appended: 2025-09-29T02:35:00+0900_
+
+## ACL deny テスト補強（サーバーログ）
+
+**現象**: ブローカーが  publish を受け取り →  として拒否（期待どおり）
+
+**スクショ**
+- サーバーログ: ![mosquitto log](assets/acl_deny_log_20250929-0233.png)
+
+
+## 2025-09-29 ACL deny テスト（サーバーログ補強）
+_appended: 2025-09-29T02:35:29+0900_
+
+## ACL deny テスト補強（サーバーログ）
+
+**現象**: ブローカーが `daegis/gemini/out` publish を受け取り → `not authorised` として拒否（期待どおり）
+
+**スクショ**
+- サーバーログ: ![mosquitto log](assets/acl_deny_log_20250929-0233.png)
+
