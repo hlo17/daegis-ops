@@ -1,0 +1,10 @@
+{
+  "id": "t05",
+  "prompt": null,
+  "answer": "もちろん、文章の内容を要約し結論を先に提示しますので、具体的な内容を教えてください。",
+  "model": "gpt-4o-mini",
+  "latency_ms": 1151,
+  "cost": null,
+  "ts": "2025-09-28 14:56:40",
+  "topic": "halu/answer"
+}

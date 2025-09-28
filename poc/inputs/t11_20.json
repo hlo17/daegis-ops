@@ -1,0 +1,10 @@
+{
+  "id": "t11",
+  "prompt": null,
+  "answer": "## デプロイ手順書\n\n### 1. 前準備\n- 環境の確認\n- 必要な依存関係のインストール\n- バージョン管理の確認（Gitなど）\n\n### 2. コードの取得\n- リモートリポジトリから最新のコードを取得\n  ```bash\n  git pull origin master\n  ```\n\n### 3. ビルド\n- プロジェクトのビルドを実行\n  ```bash\n  npm run build\n  ```\n- ビルド成果物の確認\n\n### 4. テスト\n- 自動テストの実行\n  ```bash\n  npm test\n  ```\n- テスト結果の確認",
+  "model": "gpt-4o-mini",
+  "latency_ms": 3446,
+  "cost": null,
+  "ts": "2025-09-28 15:03:07",
+  "topic": "halu/answer"
+}

@@ -1,0 +1,10 @@
+{
+  "id": "t04",
+  "prompt": null,
+  "answer": "本件について、至急ご確認いただけますようお願い申し上げます。",
+  "model": "gpt-4o-mini",
+  "latency_ms": 2120,
+  "cost": null,
+  "ts": "2025-09-28 14:56:39",
+  "topic": "halu/answer"
+}

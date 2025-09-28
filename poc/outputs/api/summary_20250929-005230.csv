@@ -1,0 +1,17 @@
+id,model,latency_ms,out_json
+t01,gpt-4o-mini,11071,t01.json
+t02,gpt-4o-mini,4061,t02.json
+t03,gpt-4o-mini,8498,t03.json
+t04,gpt-4o-mini,5970,t04.json
+t05,gpt-4o-mini,1464,t05.json
+t06,gpt-4o-mini,9516,t06.json
+t07,gpt-4o-mini,3328,t07.json
+t08,gpt-4o-mini,13950,t08.json
+t09,gpt-4o-mini,915,t09.json
+t10,gpt-4o-mini,4482,t10.json
+t11,gpt-4o-mini,11587,t11.json
+t12,gpt-4o-mini,2023,t12.json
+t13,gpt-4o-mini,1710,t13.json
+t14,gpt-4o-mini,10992,t14.json
+t15,gpt-4o-mini,3222,t15.json
+t19,gpt-4o-mini,811,t19.json

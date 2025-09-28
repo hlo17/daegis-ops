@@ -1,0 +1,10 @@
+{
+  "id": "t09",
+  "prompt": null,
+  "answer": "ありがとうございます！次回のミーティングでお話しできるのを楽しみにしています。日程はいかがでしょうか？",
+  "model": "gpt-4o-mini",
+  "latency_ms": 2636,
+  "cost": null,
+  "ts": "2025-09-28 15:03:06",
+  "topic": "halu/answer"
+}

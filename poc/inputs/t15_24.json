@@ -1,0 +1,10 @@
+{
+  "id": "t15",
+  "prompt": null,
+  "answer": "Slackの通知機能をテストする。",
+  "model": "gpt-4o-mini",
+  "latency_ms": 1049,
+  "cost": null,
+  "ts": "2025-09-28 15:03:12",
+  "topic": "halu/answer"
+}
