@@ -492,3 +492,12 @@ _appended: 2025-09-29T02:45:36+0900_
 3. Mosquitto ACL 最終化（ユーザー別 in/out 役割分離）
 4. Cloudflare Tunnel 恒久化（ngrok撤去）
 
+
+---
+_appended: 2025-09-29T04:23:42+0900_
+### 1ページ要旨（Ark/Citadel 追補）
+- **結論**: 「対話=API直」「運用=Relay」を維持しつつ、
+  **Ark**で“全部残す”を安全に、**Citadel**で“秘密は城外”を体現。
+- **差別化軸**: 透明性（Ledger/Chronicle）× 再現性（Ark）× 監査性（Merkle）× 運用性（Slack/Alert）
+- **移行計画**: P1=Ark Sink + Citadel(PoC) → P2=Glacier/再水和運用 + Vault本番
+
