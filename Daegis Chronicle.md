@@ -98,3 +98,17 @@ _appended: 2025-09-29T02:38:15+0900_
 **スクショ**
 - Slack通知: ![alert_slack](assets/alert_slack_20250929-0237.png)
 
+
+## 2025-09-29 Sentry
+_appended: 2025-09-29T02:59:27+0900_
+
+Hand-off PDF化完了。足りない画像は固定エイリアスで解消（alert_ui.png / api_vs_relay_table.png）。
+
+
+## 2025-09-29 Alert UI スクショ追記
+_appended: 2025-09-29T03:08:02+0900_
+
+## Alertmanager Alerts 画面の証跡
+- スクショ: ![alert_ui](assets/alert_ui.png)
+- 目的: Slack通知の UI 側対となる二段証跡（発火元の可視化）
+
