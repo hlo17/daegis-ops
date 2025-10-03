@@ -25,3 +25,7 @@ scribe/repo.bak.*
 ops/staging-snap/
 ops/**/notifiers.bak/
 ops/**/contact-points*.yaml
+# local roundtable backups
+roundtable/*.bak.*
+roundtable/*.backup.*
+roundtable/*.broken.*
