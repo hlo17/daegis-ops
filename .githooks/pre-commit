@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+RED=$'\e[31m'; YEL=$'\e[33m'; RST=$'\e[0m'
+if git diff --cached -U0 | grep -E 'https://hooks\.slack\.com/' >/dev/null; then
+  echo "${RED}[pre-commit] Slack Webhook らしき文字列を検出。コミットを中止します。${RST}" >&2
+  echo "${YEL}対処: 機微情報を削除/マスクして再度 add、または .env などに退避してください。${RST}" >&2
+  echo "(一時的に無視するには: git commit --no-verify) " >&2
+  exit 1
+fi
+exit 0
