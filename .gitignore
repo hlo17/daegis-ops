@@ -29,3 +29,8 @@ ops/**/contact-points*.yaml
 roundtable/*.bak.*
 roundtable/*.backup.*
 roundtable/*.broken.*
+# envs / deps / tools (commitしない)
+venv/
+**/venv/
+node_modules/
+*.jar
