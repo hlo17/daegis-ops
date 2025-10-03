@@ -14,3 +14,11 @@ context_bundle.txt
 # sentry local scratch
 ops/sentry/*.tmp
 ops/sentry/*.log
+
+.venv/
+venv/
+
+# local backups (do not track)
+bin/daegis-worker.bak.*
+logbook.bak.*
+scribe/repo.bak.*
