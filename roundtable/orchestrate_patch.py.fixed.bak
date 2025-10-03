@@ -1,0 +1,96 @@
+import os
+from typing import List, Dict, Any
+from fastapi import FastAPI
+from fastapi.routing import APIRoute
+from roundtable_orchestrator import vote_all, select_coordinator
+from compressor_arbitrator import compress_proposal, arbitrate
+
+print("[rt] orchestrate_patch: module imported")
+
+def _remove_post_orchestrate(app: FastAPI):
+    # 旧 /orchestrate(POST含む) を「完全削除」する
+    removed = 0
+    # コピーで走査し本体から個別 remove する（途中で弄ると取りこぼす）
+    for route in list(app.router.routes):
+        if isinstance(route, APIRoute) and route.path == "/orchestrate" and "POST" in route.methods:
+            app.router.routes.remove(route)
+            removed += 1
+    print(f"[rt] Removed {removed} /orchestrate POST routes")
+
+def register(app: FastAPI):
+    print("[rt] orchestrate_patch.register() called")
+
+    # デバッグ用
+    @app.get("/rt_patch_alive")
+    async def _alive():
+        return {"ok": True, "source": "orchestrate_patch"}
+
+    @app.get("/rt_routes")
+    async def _routes():
+        details = []
+        for r in app.router.routes:
+            if isinstance(r, APIRoute):
+                details.append({
+                    "path": r.path,
+                    "methods": sorted(list(r.methods)),
+                    "endpoint": getattr(r.endpoint, "__name__", "anon"),
+                    "module": getattr(r.endpoint, "__module__", "unknown")
+                })
+        return {"count": len(details), "routes": details}
+
+    # 旧ハンドラを確実に掃除
+    _remove_post_orchestrate(app)
+
+    # 新ハンドラを登録（POST）
+    @app.post("/orchestrate")
+    async def orchestrate(payload: Dict[str, Any]):
+        task = payload.get("task", "")
+        # G1: 自治投票
+        votes: List[Dict[str, Any]] = await vote_all(task, timeout_s=30.0)
+
+        # 過去実績（当面ダミー）
+        hist = {
+            "Grok4": {"lead_time": 120, "rework_count": 0.5, "user_rating": 4.8},
+            "ChatGPT": {"lead_time": 90,  "rework_count": 1.0, "user_rating": 4.2},
+            "Perplexity": {"lead_time": 80, "rework_count": 1.2, "user_rating": 4.0},
+        }
+
+        # G1: コーディネーター選出
+        coordinator = select_coordinator(votes, hist, alpha=0.6)
+
+        # G2: 圧縮→仲裁（モック圧縮だが schema どおり返す）
+        compressed = [compress_proposal(task, v["ai_name"]
+    # DRL guard: no proposals
+    if not compressed:
+        return {
+            "task": task,
+            "coordinator": None,
+            "arbitrated": {"summary_len": 0, "note": "no_proposals"},
+            "status": "ok"
+        }
+, "seed") for v in votes]
+        arb = arbitrate(
+            compressed,
+            speed_priority=True,
+            quality_priority=False,
+            task_description=task
+        )
+
+        
+    # --- DRL fallback: no proposals guard ---
+    try:
+        pass
+    except Exception:
+        pass
+return {
+            "task": task,
+            "votes": votes,
+            "coordinator": coordinator,
+            "arbitrated": arb.dict(),   # ここが埋まる
+            "source": "orchestrate_patch",
+            "next": "coordinatorが実行計画を作成 → Slack返信（未実装）"
+        }
+
+    # 登録後の確認ログ
+    post = [r for r in app.router.routes if isinstance(r, APIRoute) and r.path == "/orchestrate"]
+    print(f"[rt] Post-registration /orchestrate routes: {len(post)}")
