@@ -1,0 +1,44 @@
+# .github/workflows/prometheus_linter.yml
+
+name: Prometheus Linter
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'prometheus/**.yml'
+  pull_request:
+    paths:
+      - 'prometheus/**.yml'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    
+    # Prometheusの公式Dockerイメージを利用して、ツールを簡単に使えるようにする
+    container:
+      image: prom/prometheus:v2.45.0
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check Prometheus config
+        run: promtool check config prometheus/prometheus.yml
+
+      - name: Check Prometheus rules
+        run: promtool check rules prometheus/rules/*.rules.yml
+
+      # amtoolは別イメージなので、別のジョブで実行
+  lint-alertmanager:
+    runs-on: ubuntu-latest
+    
+    container:
+      image: quay.io/prometheus/alertmanager:v0.25.0
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Check Alertmanager config
+        run: amtool check-config prometheus/alertmanager.yml
