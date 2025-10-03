@@ -1,0 +1,20 @@
+service: rt-slash
+desc: Slack Slash Relay (Roundtable)
+owner: ops
+systemd:
+  unit: rt-slash.service
+  exec: /home/f/relay/venv/bin/python /home/f/relay/slash_roundtable.py
+  env_file: /etc/roundtable/slash.env
+  health:
+    url: http://127.0.0.1:8123/health
+    expect_json: $.ok==true
+    port: 8123
+monitor:
+  probe: http                  # blackbox exporter
+  slo:
+    availability: 0.995
+    latency_ms_p95: 1500
+  severity: warning
+  interval: 15s
+  labels:
+    team: platform

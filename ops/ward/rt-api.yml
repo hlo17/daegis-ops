@@ -1,0 +1,14 @@
+service: rt-api
+desc: Daegis Roundtable API (uvicorn)
+owner: ops
+systemd:
+  unit: roundtable.service
+  exec: /home/f/daegis/roundtable/venv/bin/python3 /home/f/daegis/roundtable/app.py
+  env_file: /etc/systemd/system/roundtable.service.d/env.conf
+  prestart: /usr/local/lib/roundtable/prestart.sh
+monitor:
+  probe: none
+  labels:
+    team: platform
+runbooks:
+- runbooks/rt-api-prestart-diagnosis.md

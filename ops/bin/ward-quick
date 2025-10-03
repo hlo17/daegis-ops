@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -euo pipefail
+/usr/local/bin/ward-apply.sh
+echo "[ward-quick] rules:"
+curl -fsS http://127.0.0.1:9091/api/v1/rules \
+| jq -r '.data.groups[].rules[]?.name' | paste -sd',' -

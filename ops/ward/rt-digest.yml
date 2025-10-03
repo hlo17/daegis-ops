@@ -1,0 +1,12 @@
+service: rt-digest
+desc: Roundtable daily digest
+owner: ops
+systemd:
+  unit: rt-digest.service
+  exec: /usr/local/bin/rt-digest.sh
+  env_file: /etc/roundtable/rt.env
+monitor:
+  # ログベースKPIは将来拡張。ひとまず“生存”のみHTTP化したい場合は軽いhealthを別途用意。
+  probe: none
+  labels:
+    team: platform
