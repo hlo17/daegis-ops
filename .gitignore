@@ -22,3 +22,6 @@ venv/
 bin/daegis-worker.bak.*
 logbook.bak.*
 scribe/repo.bak.*
+ops/staging-snap/
+ops/**/notifiers.bak/
+ops/**/contact-points*.yaml
