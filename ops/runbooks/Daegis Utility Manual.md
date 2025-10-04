@@ -22,3 +22,9 @@
 - フックが止める:
   - 直す: `hk hooks-fix`
   - 急ぎ: `git -c core.hooksPath=/dev/null commit/push`
+
+### Terminal Ops Rules (quick)
+- `.bashrc` は薄く：対話ガード＋Starship（任意）＋フォールバックPS1のみ
+- 非対話（フック/CI/拡張/cron）は“素のbash”前提
+- 緊急時：`~/bin/recover-bash.sh` → 即復旧
+- Starship で不調なら `starship-off` で即切り替え
