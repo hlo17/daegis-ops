@@ -126,3 +126,8 @@
 - 2025-10-04T19:33:37Z Mosquitto SoT化（/etc/mosquitto/mosquitto.conf 単独）・localhost限定・ACL強制。anon拒否/認証OKを確認。
 
 - 2025-10-04T19:35:35Z Mosquitto SoT化（/etc/mosquitto/mosquitto.conf 単独）・localhost限定・ACL強制。anon拒否/認証OKを確認。
+
+## Daegis Oracle 状況（2025-10-04T19:40:04Z）
+- state: 保留（構想段階。実装serviceなし）
+- role: Pull Request自動レビュア／未来差分可視化
+- next: GitHub Actions統合時に再設計予定

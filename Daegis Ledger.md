@@ -17,3 +17,4 @@
 2025-10-05: ACL掃除→再検証—anon遮断/auth通過を確定、再発検知はward-selftestに委譲。
 2025-10-05: Mosquitto SoT確立＆ACL強制—auth PASS/anon BLOCKを恒常化。
 2025-10-05: Mosquitto SoT確立＆ACL強制—auth PASS/anon BLOCKを恒常化。
+2025-10-05: Daegis Oracle 保留—実装未着手、構想のみ。
