@@ -1,0 +1,7 @@
+{
+  "start_here": "ops/runbooks/AI-Handoff.md",
+  "runbooks": [
+    "ops/runbooks/AI-Handoff.md"
+  ],
+  "hooks_path": ".githooks/"
+}
