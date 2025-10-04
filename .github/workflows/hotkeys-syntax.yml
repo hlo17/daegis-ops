@@ -1,0 +1,9 @@
+name: hotkeys-syntax
+on: [push, pull_request]
+jobs:
+  shfmt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: bash -n
+        run: bash -n tools/hotkeys.sh

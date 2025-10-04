@@ -1,0 +1,40 @@
+# .github/workflows/generate_bundle.yml
+
+name: Generate Context Bundle
+
+# ワークフローが実行されるタイミングを定義
+on:
+  push:
+    branches: [ main ] # mainブランチへのプッシュをトリガー
+    paths:
+      - 'ops/**.md'        # ドキュメントが格納されているディレクトリ
+      - 'link_resolver.py'  # スクリプト自体が変更された場合
+
+jobs:
+  build:
+    runs-on: ubuntu-latest # 最新のUbuntu環境で実行
+
+    steps:
+      # 1. リポジトリのコードをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Python環境をセットアップ
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10' # 必要に応じてバージョンを指定
+
+      # 3. link_resolver.py を実行してバンドルを生成
+      - name: Run link_resolver.py
+        run: |
+          python link_resolver.py \
+            -S "ops/Daegis Hand-off.md" \
+            -o "context_bundle.txt"
+
+      # 4. 生成された context_bundle.txt を成果物としてアップロード
+      - name: Upload context bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: context-bundle # 成果物の名前
+          path: context_bundle.txt # アップロードするファイルのパス

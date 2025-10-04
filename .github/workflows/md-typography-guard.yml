@@ -1,0 +1,21 @@
+\
+name: md-typography-guard
+on: [push, pull_request]
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - shell: bash
+        run: |
+          set -euo pipefail
+          pattern='[\x{00A0}\x{200B}\x{200C}\x{FEFF}\x{2018}\x{2019}\x{201C}\x{201D}\x{2013}\x{2014}\x{2212}]'
+          hits=$(git ls-files -z -- '*.md' '*.sh' '*.yaml' '*.yml' '*.bash' \
+            | xargs -0 -I{} perl -CS -ne "print qq{{}:$.:$_} if /$pattern/" {} || true)
+          if [ -n "$hits" ]; then
+            echo "$hits"
+            echo "::error::Non-ASCII smart punctuation or invisible spaces detected"
+            exit 1
+          fi
+          echo "OK"

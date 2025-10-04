@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -eu
+set -o pipefail 2>/dev/null || true
+ALLOW=".secrets-allowlist"
+if git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then RANGE="@{u}..HEAD"; else RANGE="origin/main..HEAD"; fi
+COMMITS=$(git rev-list --no-merges "$RANGE" 2>/dev/null || true)
+[ -z "${COMMITS:-}" ] && exit 0
+hits=$(git grep -nE 'https://hooks\.slack\.com/' $COMMITS -- \
+  . ':!venv/**' ':!**/venv/**' ':!**/site-packages/**' \
+  ':!node_modules/**' ':!**/*.log' ':!**/*.bak*' ':!**/*.backup*' ':!**/*.env' \
+  ':!ops/staging-snap/**' ':!ops/**/notifiers.bak/**' ':!ops/**/contact-points*.yaml' \
+  || true)
+if [[ -n "$hits" ]]; then
+  rem="$hits"
+  [[ -f "$ALLOW" ]] && rem=$(printf "%s" "$hits" | grep -Ev -f "$ALLOW" || true)
+  if [[ -n "$rem" ]]; then
+    printf "%s\n" "$rem" >&2
+    echo "[pre-push] Slack Webhook らしき文字列。push 中止。" >&2
+    exit 1
+  fi
+fi
+exit 0

@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -eu
+hk() {
+  local cmd="${1:-help}"; shift || true
+  case "$cmd" in
+    help)
+      cat <<'H'
+Daegis Hotkeys:
+  hk help
+  hk list-utils
+  hk hooks-fix
+  hk deliver-scp <src> <user@host:path>
+H
+      ;;
+    list-utils)
+      find . -type f \( -path './.githooks/*' -o -path './tools/*' -o -path './ops/runbooks/*' \) | sort
+      ;;
+    hooks-fix)
+      bash -lc '
+        fix(){ sed -i "1{/^\\\\$/d}" "$1";
+               awk "NR==1{print \"#!/usr/bin/env bash\";next}{print}" "$1">"$1.tmp" && mv "$1.tmp" "$1";
+               sed -i "s/\r$//" "$1";
+               perl -0777 -pe "s/set -euo pipefail\n/set -eu\nset -o pipefail 2>\\/dev\\/null || true\n/g" -i "$1";
+               chmod +x "$1"; }
+        fix .githooks/pre-commit; fix .githooks/pre-push;
+        git config core.hooksPath .githooks; echo "[hooks] fixed."'
+      ;;
+    deliver-scp)
+      src="${1:?src required}"; dst="${2:?user@host:path required}"
+      tools/deliver-scp.sh "$src" "$dst"
+      ;;
+    *)
+      echo "unknown: $cmd" >&2; return 2;;
+  esac
+}
+# source-safe
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then hk "$@"; fi
+
+sed_i(){ if sed --version >/dev/null 2>&1; then sed -i "$@"; else local f="${@: -1}"; local rest="${@:1:$(($#-1))}"; sed -i "" $rest "$f"; fi; }
+    ;;
+    deliver-auto)
+      src="${1:?src}"; host="${2:?user@host}"; rpath="${3:?remote path}"; shift 3 || true
+      tools/deliver-auto.sh "$src" "$host" "$rpath" "$@"
+      ;;
+    deliver-b64)
+      src="${1:?src}"; host="${2:?user@host}"; rpath="${3:?remote path}"
+      tools/deliver-b64.sh "$src" "$host" "$rpath"
+      ;;
+    validate)
+      tools/validate.sh "${1:?file}"
+      ;;
+    ;;
+    ward)
+      # 例: ward-quick のラッパ（存在しなければスキップ）
+      if command -v ward-quick >/dev/null 2>&1; then
+        ward-quick
+      else
+        echo "[ward] ward-quick が見つかりません" >&2; exit 1
+      fi
+      ;;
+    rt-smoke)
+      # Roundtable /orchestrate を軽く叩く
+      url="${RT_ORCHESTRATE_URL:-http://127.0.0.1:8010/orchestrate}"
+      curl -fsS -X POST "$url" -H 'content-type: application/json' -d '{"task":"smoke"}' \
+        | jq '{status,agents:(.rt_agents//.agents),votes:(.votes//[])|length,synth:(.arbitrated.synthesized_proposal)}'
+      ;;
+    sentry)
+      # 置いてあれば実行（なければ案内）
+      if [ -x ops/sentry/sentry.sh ]; then
+        bash ops/sentry/sentry.sh
+      else
+        echo "[sentry] ops/sentry/sentry.sh が見つかりません" >&2; exit 1
+      fi
+      ;;

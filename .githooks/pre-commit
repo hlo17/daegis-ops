@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -eu
+set -o pipefail 2>/dev/null || true
+RED=$'\e[31m'; YEL=$'\e[33m'; RST=$'\e[0m'
+ALLOW=".secrets-allowlist"
+
+# 1) まず整形
+[ -x tools/fix-typography.sh ] && bash tools/fix-typography.sh
+
+# 2) ステージ済みに危険文字が残っていないか
+if git diff --cached --name-only -z -- \
+  | while IFS= read -r -d '' f; do
+      [ -f "$f" ] || continue
+      perl -CS -ne 'exit 1 if /[\x{00A0}\x{200B}\x{200C}\x{FEFF}\x{2018}\x{2019}\x{201C}\x{201D}\x{2013}\x{2014}\x{2212}]/' "$f" || exit 2
+    done
+then :; else
+  code=$?
+  if [ $code -eq 2 ]; then
+    echo "${RED}[pre-commit] 非ASCII/スマート記号/不可視空白が残っています。コミット中止。${RST}" >&2
+    echo "${YEL}対処: 自動整形は実施済み。変更を add し直してから再度 commit。${RST}" >&2
+    exit 1
+  fi
+fi
+
+# 3) Slack Incoming Webhook のガード
+diff=$(git diff --cached -U0 | grep -E 'https://hooks\.slack\.com/' || true)
+if [[ -n "$diff" ]]; then
+  rem="$diff"
+  [[ -f "$ALLOW" ]] && rem=$(printf "%s" "$diff" | grep -Ev -f "$ALLOW" || true)
+  if [[ -n "$rem" ]]; then
+    echo "${RED}[pre-commit] Slack Webhook らしき文字列。コミット中止。${RST}" >&2
+    echo "${YEL}対処: マスク/削除 or ${ALLOW} に追加（テスト用のみ）。${RST}" >&2
+    exit 1
+  fi
+fi
+exit 0

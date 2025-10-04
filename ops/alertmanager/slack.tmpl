@@ -1,0 +1,7 @@
+{{ define "slack.title" }}[{{ .Status | toUpper }}] {{ .CommonAnnotations.summary | default "Daegis Alert" }}{{ end }}
+{{ define "slack.text" -}}
+*Status*: {{ .Status }}
+*Alert*:  {{ index .Alerts 0 | printf "%v" }}
+*Cause*:  {{ .CommonAnnotations.cause | default "-" }}
+*Action*: {{ .CommonAnnotations.action | default "See Runbook: ops/runbooks/AI-Handoff.md" }}
+{{- end }}

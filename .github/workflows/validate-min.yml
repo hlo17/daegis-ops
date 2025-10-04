@@ -1,0 +1,26 @@
+name: validate-min
+on: [push, pull_request]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: bash syntax
+        run: |
+          set -e
+          find . -type f \( -name '*.sh' -o -name '*.bash' \) -print0 | \
+            xargs -0 -r bash -n
+      - name: python byte-compile
+        run: |
+          set -e
+          python3 - <<'PY'
+import os, py_compile
+for root, _, files in os.walk('.'):
+    for f in files:
+        if f.endswith('.py'):
+            try:
+                py_compile.compile(os.path.join(root,f), doraise=True)
+            except Exception as e:
+                print("PY COMPILE FAIL:", os.path.join(root,f), e)
+                raise
+PY

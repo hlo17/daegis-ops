@@ -1,0 +1,40 @@
+# secrets & caches
+halu/.env
+**/*.env
+**/__pycache__/
+halu/logs/
+*.jsonl
+# editor junk
+.DS_Store
+*.swp
+
+# local build artifacts / bundles
+context_bundle.txt
+
+# sentry local scratch
+ops/sentry/*.tmp
+ops/sentry/*.log
+
+.venv/
+venv/
+
+# local backups (do not track)
+bin/daegis-worker.bak.*
+logbook.bak.*
+scribe/repo.bak.*
+ops/staging-snap/
+ops/**/notifiers.bak/
+ops/**/contact-points*.yaml
+# local roundtable backups
+roundtable/*.bak.*
+roundtable/*.backup.*
+roundtable/*.broken.*
+# envs / deps / tools (commitしない)
+venv/
+**/venv/
+node_modules/
+*.jar
+
+# backups
+*.bak
+*.bak.*

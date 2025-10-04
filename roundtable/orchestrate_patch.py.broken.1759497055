@@ -1,0 +1,213 @@
+import os, json, logging, asyncio
+from typing import List, Dict, Any
+from fastapi import Body
+from fastapi.routing import APIRoute
+
+# 依存（既存実装を利用）
+from roundtable_orchestrator import vote_all, select_coordinator
+from compressor_arbitrator import compress_proposal
+from arb_patch import arbitrate_openai as arbitrate
+
+log = logging.getLogger("orchestrate_patch")
+
+# ----- G3: JSONL logger -----
+from pathlib import Path
+from datetime import datetime, timezone
+import uuid
+_ORCH_DIR = Path("/var/log/roundtable")
+_ORCH_FILE = _ORCH_DIR / "orchestrate.jsonl"
+_ORCH_DIR.mkdir(parents=True, exist_ok=True)
+
+def print("[rt] BEFORE _orch_log", {"task":task});
+    try:
+        _rtlog(task, votes, coordinator, arbitrated, source="orchestrate_patch", arb_backend=None, rt_agents=None, latency_ms=None, status="ok"):
+    print("[rt] JSONL about to write", {"task":task, "arb_backend":arb_backend, "latency_ms":latency_ms, "status":status})
+    print("[rt] JSONL about to write", {"task":task, "arb_backend":arb_backend, "latency_ms":latency_ms, "status":status})
+    try:
+        syn = ""
+        if isinstance(arbitrated, dict):
+            syn = arbitrated.get("synthesized_proposal","") or ""
+        elif hasattr(arbitrated, "synthesized_proposal"):
+            syn = arbitrated.synthesized_proposal or ""
+        entry = {
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "corr_id": str(uuid.uuid4()),
+            "task": task,
+            "votes": votes,
+            "coordinator": coordinator,
+            "arbitrated": { "summary_len": len(syn.encode("utf-8")) },
+            "source": source,
+            "arb_backend": arb_backend,
+            "rt_agents": rt_agents,
+            "latency_ms": latency_ms,
+            "status": status
+        },
+            "source": source,
+            "arb_backend": arb_backend,
+            "rt_agents": rt_agents,
+            "latency_ms": latency_ms,
+            "status": status
+        },
+            "source": source,
+            "arb_backend": arb_backend,
+            "rt_agents": rt_agents,
+            "latency_ms": latency_ms,
+            "status": status
+        }datetime.now(timezone.utc).isoformat(),
+            "corr_id": str(uuid.uuid4()),
+            "task": task,
+            "votes": votes,
+            "coordinator": coordinator,
+            "arbitrated": { "summary_len": len(syn.encode("utf-8")) },
+            "source": source,
+        }
+        try:
+        with _ORCH_FILE.open("a", encoding="utf-8") as f:
+            f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+        print("[rt] orchestrate jsonl logged", entry.get("corr_id"), entry.get("task"))
+        except Exception as _e:
+            print("[rt] JSONL WRITE ERROR:", str(_e))
+        print("[rt] orchestrate jsonl logged", entry.get("corr_id"), entry.get("task"))
+        print("[rt] orchestrate jsonl logged", entry["corr_id"])
+    except Exception as e:
+        log.error(f"jsonl log failed: {e}")
+
+# ----- register() 本体 -----
+def register(app):
+    print("[rt] orchestrate_patch: module imported")
+    print("[rt] orchestrate_patch.register() called")
+
+    # 既存 /orchestrate(POST) を全削除（HEAD が付く実装にも対応）
+    def _remove_post_orchestrate(app):
+        removed = 0
+        for r in list(app.router.routes):
+            if isinstance(r, APIRoute) and r.path == "/orchestrate" and "POST" in r.methods:
+                app.router.routes.remove(r)
+                removed += 1
+        print(f"[rt] Removed {removed} /orchestrate POST routes")
+
+    # デバッグエンドポイント
+    @app.get("/rt_patch_alive")
+    async def _alive():
+    if os.getenv("RT_DEBUG_ROUTES","0")!="1":
+        raise HTTPException(status_code=404)
+        return {"ok": True, "source": "orchestrate_patch"}
+
+    @app.get("/rt_routes")
+    async def _routes():
+    if os.getenv("RT_DEBUG_ROUTES","0")!="1":
+        raise HTTPException(status_code=404)
+        out=[]
+        for r in app.routes:
+            try:
+                out.append({
+                    "path": getattr(r,"path","?"),
+                    "methods": list(getattr(r,"methods",[])),
+                    "endpoint": getattr(getattr(r,"endpoint",object),"__name__","?"),
+                    "module": getattr(getattr(r,"endpoint",object),"__module__","?"),
+                })
+            except Exception:
+                out.append(str(r))
+        return {"count": len(out), "routes": out}
+
+    @app.get("/rt_env")
+    async def rt_env():
+    if os.getenv("RT_DEBUG_ROUTES","0")!="1":
+        raise HTTPException(status_code=404)
+        def lens(k):
+            v = os.getenv(k)
+            return len(v) if v else 0
+        return {
+            "RT_AGENTS": os.getenv("RT_AGENTS","<unset>"),
+            "OPENAI_API_KEY_len": lens("OPENAI_API_KEY"),
+            "GROK_API_KEY_len": lens("GROK_API_KEY"),
+            "GOOGLE_API_KEY_len": lens("GOOGLE_API_KEY"),
+        }
+
+    # 置換してから新ハンドラを登録
+    _remove_post_orchestrate(app)
+
+    @app.post("/orchestrate")
+    async def orchestrate(payload: dict = Body(...)):
+        task = payload.get("task","")
+        print("[rt] orchestrate: start", task)
+
+        # G1: 投票
+        votes: List[Dict[str, Any]] = await vote_all(task, timeout_s=30.0)
+
+        # 当面のフェイルオープン（ゼロならモック1票）
+        if not votes:
+            votes = [{
+                "ai_name":"ChatGPT",
+                "scores":{"speed":8,"quality":8,"creativity":8,"confidence":7},
+                "why":"fallback","needed_inputs":[],"constraints":[]
+            }]
+
+        # ダミー過去実績
+        hist = {
+            "Grok4": {"lead_time": 120, "rework_count": 0.5, "user_rating": 4.8},
+            "ChatGPT": {"lead_time": 90,  "rework_count": 1.0, "user_rating": 4.2},
+            "Perplexity": {"lead_time": 80, "rework_count": 1.2, "user_rating": 4.0},
+            "Gemini": {"lead_time": 85, "rework_count": 1.1, "user_rating": 4.1},
+        }
+
+        # コーディネーター選出
+        coordinator = select_coordinator(votes, hist, alpha=0.6)
+
+        # G2: 圧縮→仲裁（既存の compressor_arbitrator を使用）
+_t0 = time.time()
+_t0 = time.time()
+_lat = 0
+_lat = 0
+_lat = 0
+import time
+    _t0 = time.time()
+import time
+    _t0 = time.time()
+import time
+    _t0 = time.time()
+    compressed = [compress_proposal(task, v["ai_name"], "seed") for v in votes]
+    try:
+        __arb_res = arbitrate(compressed, speed_priority=True, quality_priority=False, task_description=task)
+
+            arb = (await __arb_res) if asyncio.iscoroutine(__arb_res) else __arb_res
+    _lat = int((time.time()-_t0)*1000)
+    _lat = int((time.time()-_t0)*1000)
+    _lat = int((time.time()-_t0)*1000)
+    _lat = int((time.time()-_t0)*1000)
+    _lat = int((time.time()-_t0)*1000)
+
+        except Exception as e:
+
+            print("[rt] ARB exception:", str(e))
+
+            print(traceback.format_exc())
+
+            from compressor_arbitrator import SynthesizedOutput, EvaluationWeights
+
+            arb = SynthesizedOutput(
+
+                differences_table=[], adopted_items=[], rejected_items=[],
+
+                synthesized_proposal=f"Synthesized (arb error fallback): {task}",
+
+                evaluation_weights=EvaluationWeights(speed_weight=0.7, quality_weight=0.3, other_weight=0.2,
+
+                                                   formula_used="fallback: arb exception")
+
+            )
+
+        # G3: JSONL
+        try:
+            _rtlog(task, votes, coordinator, (arb.dict() if hasattr(arb,"dict") else arb), "orchestrate_patch")
+        except Exception as e:
+            print("[rt] JSONL log error:", e)
+
+        return {
+            "task": task,
+            "votes": votes,
+            "coordinator": coordinator,
+            "arbitrated": (arb.dict() if hasattr(arb,"dict") else arb),
+            "source": "orchestrate_patch",
+            "next": "coordinatorが実行計画を作成 → Slack返信（未実装）"
+        }
