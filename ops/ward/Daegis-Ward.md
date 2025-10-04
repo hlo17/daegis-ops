@@ -111,3 +111,9 @@
 - 2025-10-04T19:00:19Z ACL enable howto をRunbookに補足
 
 - 2025-10-04T19:02:06Z ACL有効化を確認：anon=DENY / user(f)=ALLOW を検証（pub/sub）。
+
+## dfctl 状況（2025-10-04T19:13:59Z）
+- state: 利用停止（Pi未配置のためコマンド無効）
+- note: 機能説明は Geminiログ参照（管理系CLIツール）
+- 保管想定: ~/daegis/ops/dfctl.py （未配置）
+- 再開条件: Pi上に dfctl.py を配置後、 ~/bin/dfctl にリンクを張る

@@ -13,3 +13,4 @@
 2025-10-05: ops CLI 常設—rt-smoke/rt-health 統一・logrun 再生成・~/bin リンク確立。
 2025-10-05: Baseline確立—rt/mqtt/units=GREEN、ACL準備配置（未有効）。
 2025-10-05: Mosquitto ACL 有効化—anon拒否・認証成功を確認。
+2025-10-05: dfctl 利用停止—Pi未配置のため無効化。保管先 ~/daegis/ops/dfctl.py を予約。
