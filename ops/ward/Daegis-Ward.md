@@ -93,3 +93,5 @@
 - policy: f=readwrite(暫定, dev用) / others=最小権限。最終化はM5後半。
 
 - 2025-10-04T18:42:20Z rt-health を ward-selftest に組み込み（/health→/orchestrate フォールバック一元化）
+
+- 2025-10-04T18:43:44Z ops小改修: rt-smoke標準化/mqtt-smoke追加、mosquitto.acl.sample用意、linger有効
