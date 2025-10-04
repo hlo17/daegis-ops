@@ -117,3 +117,8 @@
 - note: 機能説明は Geminiログ参照（管理系CLIツール）
 - 保管想定: ~/daegis/ops/dfctl.py （未配置）
 - 再開条件: Pi上に dfctl.py を配置後、 ~/bin/dfctl にリンクを張る
+
+## ACL cleanup & verify (2025-10-04T19:23:32Z)
+- action: mqtt-retain-clear で `daegis/selftest/acl`, `daegis/factory` の retained を一掃
+- verify: anon=blocked(handshake) / auth=PASS / anon publish=not visible
+- note: ward-selftest に anon blocked チェックを追加済み
