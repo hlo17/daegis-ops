@@ -101,3 +101,10 @@
 ## Ops CLI hardening (bin links)
 - when: 2025-10-04T18:56:18Z
 - done: rt-smoke を rt-health 経由に統一、logrun を再生成（rc 伝播・stdin/argv 両対応）
+
+## Baseline Snapshot (2025-10-04T18:57:28Z)
+- rt: [health ok: orchestrate-fallback]
+- smoke: [rt-smoke ok]
+- mqtt: [mqtt quiet-ok]
+
+### systemd failed (should be empty)

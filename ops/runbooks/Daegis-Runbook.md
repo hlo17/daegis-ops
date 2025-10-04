@@ -115,3 +115,14 @@ Lexicon簡易版: Bus=メッセージ基盤、Ark=深層保管庫、ACAP=AI協�
 - updated: 2025-10-04T18:56:18Z
 - tools→bin: rt-health / rt-smoke / mqtt-smoke / ward-selftest / ward-selftest-run / logrun
 - note: 実行は常に『bash --noprofile --norc -lc』。対話rcは軽量維持。
+
+### Quick Ref — 日常確認
+- ヘルス: `rt-health`（/health→/orchestrate フォールバック）
+- スモーク: `rt-smoke`
+- MQTT: `mqtt-smoke`
+- Wardセルフテストログ: `ls -1t ~/daegis/logs/ward/selftest_*.log | head -1 | xargs -r tail -n +1`
+
+### Mosquitto ACL（準備のみ）
+- 設定雛形: `/etc/mosquitto/acl.daegis.sample`
+- 有効化手順（後日）:
+  `sudo sed -i "s/^# $begin:math:text\\|allow_anonymous\:math:text$/\1/" /etc/mosquitto/conf.d/90-daegis-acl.conf && sudo systemctl reload mosquitto`
