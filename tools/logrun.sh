@@ -4,11 +4,19 @@ name="${1:-run}"; shift || true
 [ "${1:-}" = "--" ] && shift
 ts="$(date -u +%Y%m%dT%H%M%SZ)"
 log="$HOME/daegis/logs/${name}_${ts}.log"
-mkdir -p "${log%/*}"
+
+echo "[$(date -u +%FT%TZ)] logrun start: $name" | tee "$log"
+
 rc=0
-trap 'printf "[%(%FT%TZ)T] logrun end: rc=%s\n" -1 "$rc"' EXIT
-{
-  printf "[%(%FT%TZ)T] logrun start: %s\n" -1 "$name"
-  if [ "$#" -gt 0 ]; then "$@" || rc=$?; else rc=0; fi
-} 2>&1 | tee "$log"
-exit "$rc"
+if [ $# -gt 0 ]; then
+  # 引数を安全に1文字列へ（bash -lcに渡す）
+  cmd="$*"
+  bash -lc "$cmd" |& tee -a "$log"; rc=${PIPESTATUS[0]}
+else
+  # 標準入力をそのまま実行（ヒアドキュメント等の想定）
+  cmd="$(cat)"
+  bash -lc "$cmd" |& tee -a "$log"; rc=${PIPESTATUS[0]}
+fi
+
+echo "[$(date -u +%FT%TZ)] logrun end: rc=$rc" | tee -a "$log"
+exit $rc

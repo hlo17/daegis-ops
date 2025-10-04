@@ -110,3 +110,8 @@ Lexicon簡易版: Bus=メッセージ基盤、Ark=深層保管庫、ACAP=AI協�
 ### 小粒仕上げ
 - updated: 2025-10-04T18:43:44Z
 - 追加: rt-smoke（rt-health内蔵）、mqtt-smoke、ACLサンプル、user-linger有効化
+
+### User bin コマンド常設
+- updated: 2025-10-04T18:56:18Z
+- tools→bin: rt-health / rt-smoke / mqtt-smoke / ward-selftest / ward-selftest-run / logrun
+- note: 実行は常に『bash --noprofile --norc -lc』。対話rcは軽量維持。

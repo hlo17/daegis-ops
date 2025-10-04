@@ -95,3 +95,9 @@
 - 2025-10-04T18:42:20Z rt-health を ward-selftest に組み込み（/health→/orchestrate フォールバック一元化）
 
 - 2025-10-04T18:43:44Z ops小改修: rt-smoke標準化/mqtt-smoke追加、mosquitto.acl.sample用意、linger有効
+
+- 2025-10-04T18:45:42Z ops小粒: aliases自動読込、ACLサンプルを/etcへステージ、日常確認の定型コマンド整備
+
+## Ops CLI hardening (bin links)
+- when: 2025-10-04T18:56:18Z
+- done: rt-smoke を rt-health 経由に統一、logrun を再生成（rc 伝播・stdin/argv 両対応）
