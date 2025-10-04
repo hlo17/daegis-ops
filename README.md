@@ -5,3 +5,7 @@ Daegis の運用 Runbook / Sentry スクリプト置き場。
 
 ## Hooks
 Run `bash tools/setup-hooks.sh` after cloning.
+
+## Hooks
+Run `bash tools/setup-hooks.sh` after cloning.
+

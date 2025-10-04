@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
 RED=$'\e[31m'; YEL=$'\e[33m'; RST=$'\e[0m'
+ALLOW=".secrets-allowlist"
 
-# upstream があれば @{u}..HEAD、無ければ origin/main..HEAD
+# upstream があればそれを使用、無ければ origin/main..HEAD
 if git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
   RANGE="@{u}..HEAD"
 else
@@ -11,21 +11,28 @@ else
 fi
 
 COMMITS=$(git rev-list --no-merges "$RANGE" 2>/dev/null || true)
-[ -z "${COMMITS:-}" ] && exit 0
+[[ -z "${COMMITS:-}" ]] && exit 0
 
-# BLOB を直接検索（作業ツリーは見ない）＋重いディレクトリは除外
-if HIT=$(git grep -nE 'https://hooks\.slack\.com/' \
-  $COMMITS -- \
+# BLOB 検索（重い/外部依存は除外）
+hits=$(git grep -nE 'https://hooks\.slack\.com/' $COMMITS -- \
   . \
   ':!venv/**' ':!**/venv/**' ':!**/site-packages/**' \
   ':!node_modules/**' ':!**/*.log' ':!**/*.bak*' ':!**/*.backup*' ':!**/*.env' \
   ':!ops/staging-snap/**' ':!ops/**/notifiers.bak/**' ':!ops/**/contact-points*.yaml' \
-  || true); then
-  if [[ -n "$HIT" ]]; then
-    echo "$HIT" >&2
+  || true)
+
+if [[ -n "$hits" ]]; then
+  if [[ -f "$ALLOW" ]]; then
+    remaining=$(printf "%s" "$hits" | grep -Ev -f "$ALLOW" || true)
+  else
+    remaining="$hits"
+  fi
+
+  if [[ -n "$remaining" ]]; then
+    printf "%s\n" "$remaining" >&2
     echo "${RED}[pre-push] Slack Webhook らしき文字列を検出。push を中止します。${RST}" >&2
-    echo "${YEL}対処: 対象コミットから機微情報を除去（revert / filter-repo / BFG）して再 push。${RST}" >&2
-    echo "(一時的に無視するには: git push --no-verify) " >&2
+    echo "${YEL}対処: 該当コミットからの除去（revert / filter-repo / BFG 等）。${RST}" >&2
+    echo "(一時的に無視: git push --no-verify)" >&2
     exit 1
   fi
 fi
