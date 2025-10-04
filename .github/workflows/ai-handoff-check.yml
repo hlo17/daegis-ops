@@ -5,11 +5,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
       - name: Verify Handoff & Manifest
-        shell: bash
         run: |
           set -eu
-          test -f "ops/runbooks/AI-Handoff.md" || { echo "::error::AI-Handoff.md missing"; exit 1; }
-          test -f ".ai/manifest.json" || { echo "::error::manifest.json missing"; exit 1; }
-          echo "OK"
+          test -f ops/runbooks/AI-Handoff.md || { echo "::error::AI-Handoff.md missing"; exit 1; }
+          test -f .ai/manifest.json         || { echo "::error::.ai/manifest.json missing"; exit 1; }
+          echo OK
