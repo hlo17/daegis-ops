@@ -8,3 +8,6 @@ hk_rt_smoke() {
     return 1
   fi
 }
+hk_acap_grok()    { tools/acap-escalate.sh grok   "${1:-issue}" "${*:2}"; }
+hk_acap_gemini()  { tools/acap-escalate.sh gemini "${1:-issue}" "${*:2}"; }
+hk_acap_chappie() { tools/acap-escalate.sh chappie "${1:-issue}" "${*:2}"; }
