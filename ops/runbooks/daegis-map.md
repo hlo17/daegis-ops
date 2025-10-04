@@ -14,3 +14,6 @@
 - 表記: `Mac:` / `Pi:`。変更後: `__pycache__`掃除→systemd再起動→経路テスト。
 - 切り分け順: Broker → Relay → Scribe → Slack。
 - 詳細: [[command-execution-guide.md]]
+
+### Self-Defense & Auto-Maintenance Layer
+- Daegisは自己防衛・自動整備レイヤを採用し、Runbook/Hotkeys/Guards/CIを標準構成とする。恒久的な引き継ぎ窓口は `ops/runbooks/AI-Handoff.md` と `.ai/manifest.json`。
