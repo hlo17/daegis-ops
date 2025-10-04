@@ -38,3 +38,5 @@ node_modules/
 # backups
 *.bak
 *.bak.*
+logs/*.log
+logs/dfsnap_*.txt
