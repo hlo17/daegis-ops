@@ -10,3 +10,22 @@
 - 事後テスト: echo "ok" | python3 ops/bin/mdput_clip.py "$HOME/daegis/Daegis Ledger.md" --clean --from-clip
 - 追記先に空白がある場合はダブルクォートで保護すること
 - 非対話での検証: bash --noprofile --norc -lc 'echo [ok] bare'
+
+## Git/Logs hardening
+- created: 2025-10-04T17:24:10Z
+- change: logs/ を .gitignore に恒久除外。dfsnap は API鍵を自動 REDACTED 化。
+- reason: GitHub Push Protection が secrets を検知→安全側でブロック。再発防止のため。
+- note: 既存の問題コミットは破棄（reset --hard origin/brief-rollup 済）。
+
+- 2025-10-04T17:34:28Z: API keys rotated (OpenAI/xAI). secrets.json.enc refreshed; services restarted.
+
+- 2025-10-04T17:40:15Z: GPG perms & agent 修復＋logrun再構築を実施、非対話スモーク通過。
+
+## Shell policy hardening
+- created: 2025-10-04T17:58:07Z
+- decision: 実行は常に "bash --noprofile --norc"。対話は各自自由（軽量rc）
+- notes: .bashrc を非対話ガードに統一。Starship等の重い初期化は封印
+
+## Shell policy finalized
+- created: 2025-10-04T18:01:57Z
+- decision: 実行=素のbash固定、対話=軽量rc。Runbookに反映・ヘルスチェック追加
