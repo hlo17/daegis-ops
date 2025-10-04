@@ -1,0 +1,14 @@
+# ===== Daegis SoT (minimal, single listener, no include) =====
+per_listener_settings true
+listener 1883 127.0.0.1
+
+allow_anonymous false
+password_file /etc/mosquitto/passwd
+acl_file /etc/mosquitto/acl.daegis.sample
+
+# ログを広めに（検証用）
+log_type all
+
+# （任意）保持先の明示
+persistence true
+persistence_location /var/lib/mosquitto/
