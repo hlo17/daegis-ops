@@ -40,3 +40,8 @@ node_modules/
 *.bak.*
 logs/*.log
 logs/dfsnap_*.txt
+venv/
+snapshots/**
+logs/**
+.DS_Store
+*.log

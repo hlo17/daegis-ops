@@ -33,3 +33,16 @@ bash --noprofile --norc -lc '
 ### トラブルシュート（抜粋）
 - 退出トリガ疑い: `grep -nE "^[[:space:]]*(exit|return[[:space:]]+0)\b" ~/.bashrc || echo "[clean]"`
 - GPG 非対話: `~/.gnupg` の perms 700/600、gpg.conf の `pinentry-mode loopback`
+
+## Components (canonical)
+- Core Agents → Halu, Grok, Perplexity, Gemini, ChatGPT, NotebookLM
+- Interaction → Slack + (Halu Relay: OFF until Slack digest wired)
+- Bus → Mosquitto :1883 (ACL=最小, WSS=OFF)
+- Observability & Records → Prometheus, Alertmanager, Sentry, Logbook, Ledger, Ark
+- Infrastructure → Raspberry, Caddy, Cloudflare Tunnel, Citadel
+
+### Toggles (default)
+Sentry=ON / WSS=OFF / ACAP=OFF / SlackDigest=OFF / HaluRelay=OFF
+
+### Exec discipline
+実行は常に `bash --noprofile --norc -lc '…'`。対話は軽量rc。logs/** は Git 管理外、dfsnap は REDACTED。
