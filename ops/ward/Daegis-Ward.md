@@ -46,3 +46,9 @@
 - pruning: assets→docs/assets, poc→ark/_attic, link_resolver_v2→link_resolver.py
 - cli: tools/df.sh を唯一の正
 - exec-policy: run = "bash --noprofile --norc -lc '…'", dialog = light rc
+
+## System map refresh (Grok-based)
+- created: 2025-10-04T18:16:47Z
+- scope: 全体像整理・冗長排除・統合
+- action: Runbookへ5層整理＋次アクション追記、ObservabilityへWard/Sentry統合方針を明記
+- status: 反映済（Runbook 2025-10-05 版）
