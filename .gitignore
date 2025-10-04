@@ -34,3 +34,7 @@ venv/
 **/venv/
 node_modules/
 *.jar
+
+# backups
+*.bak
+*.bak.*
