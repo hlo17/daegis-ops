@@ -122,3 +122,5 @@
 - action: mqtt-retain-clear で `daegis/selftest/acl`, `daegis/factory` の retained を一掃
 - verify: anon=blocked(handshake) / auth=PASS / anon publish=not visible
 - note: ward-selftest に anon blocked チェックを追加済み
+
+- 2025-10-04T19:33:37Z Mosquitto SoT化（/etc/mosquitto/mosquitto.conf 単独）・localhost限定・ACL強制。anon拒否/認証OKを確認。

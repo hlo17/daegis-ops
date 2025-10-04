@@ -15,3 +15,4 @@
 2025-10-05: Mosquitto ACL 有効化—anon拒否・認証成功を確認。
 2025-10-05: dfctl 利用停止—Pi未配置のため無効化。保管先 ~/daegis/ops/dfctl.py を予約。
 2025-10-05: ACL掃除→再検証—anon遮断/auth通過を確定、再発検知はward-selftestに委譲。
+2025-10-05: Mosquitto SoT確立＆ACL強制—auth PASS/anon BLOCKを恒常化。
