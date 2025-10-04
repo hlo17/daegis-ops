@@ -126,3 +126,6 @@ Lexicon簡易版: Bus=メッセージ基盤、Ark=深層保管庫、ACAP=AI協�
 - 設定雛形: `/etc/mosquitto/acl.daegis.sample`
 - 有効化手順（後日）:
   `sudo sed -i "s/^# $begin:math:text\\|allow_anonymous\:math:text$/\1/" /etc/mosquitto/conf.d/90-daegis-acl.conf && sudo systemctl reload mosquitto`
+
+> **補足（2025-10-04T19:00:19Z）**: 上の `sed` 行が化けた場合の正しいコマンド  
+> `sudo sed -i 's/^# :math:text\|allow_anonymous:math:text$/\1/' /etc/mosquitto/conf.d/90-daegis-acl.conf && sudo systemctl reload mosquitto`

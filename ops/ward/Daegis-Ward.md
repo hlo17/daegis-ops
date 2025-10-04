@@ -108,3 +108,4 @@
 - mqtt: [mqtt quiet-ok]
 
 ### systemd failed (should be empty)
+- 2025-10-04T19:00:19Z ACL enable howto をRunbookに補足
