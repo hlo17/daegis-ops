@@ -1,7 +1,8 @@
 {
   "start_here": "ops/runbooks/AI-Handoff.md",
+  "brief_path": "ops/ai/brief.md",
   "runbooks": [
-    "ops/runbooks/AI-Handoff.md"
-  ],
-  "hooks_path": ".githooks/"
+    "ops/runbooks/AI-Handoff.md",
+    "ops/runbooks/Daegis Utility Manual.md"
+  ]
 }
