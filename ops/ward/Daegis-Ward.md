@@ -109,3 +109,5 @@
 
 ### systemd failed (should be empty)
 - 2025-10-04T19:00:19Z ACL enable howto をRunbookに補足
+
+- 2025-10-04T19:02:06Z ACL有効化を確認：anon=DENY / user(f)=ALLOW を検証（pub/sub）。
