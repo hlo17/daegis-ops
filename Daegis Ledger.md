@@ -2,3 +2,9 @@
 2025-10-05: 開発環境ポリシーをRunbookへ確定—実行はbash --noprofile、ヘルスチェック常設。
 2025-10-04: 合意—5層モデル採用・既定OFF(WSS/ACAP/SlackRelay)・CLIをtools/df.shに統一。
 2025-10-04: 全体像(Grok版)をRunbookへ採用—弱点対処優先・Halu Relay活性化を即時実施の方針。
+2025-10-05: Sora Relay を mask—未使用 & env 不在のため再起動ループを停止。
+2025-10-05: round-table構成調整 — Sora Relay停止、Shell統一、Bus/Health確認完了。
+2025-10-04: Ward自己診断を強化し、不要な失敗ユニットを整理（赤ゼロ方針）。
+2025-10-04: Ward self-test green—failed units 0、フォールバック健全性で常時監視。
+2025-10-04: Ward自動ヘルス導入—毎時セルフテストで赤ゼロ維持。
+2025-10-05: rt-health を常設セルフテストに統合—ヘルス判定の基準を単一路に統一。

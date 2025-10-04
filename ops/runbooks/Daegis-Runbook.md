@@ -96,3 +96,13 @@ Lexicon簡易版: Bus=メッセージ基盤、Ark=深層保管庫、ACAP=AI協�
 ### Vision Roadmap（M6-M9）
 - **Sora / Zappie / ACAP**（M6:セキュリティ, M7:公開, M8:検索, M9:ゲート）⏸（新規ACAP統合）
 > 依存: **全集大成 → 完全自動化**
+
+### Ward 自動ヘルスチェック（常設）
+- updated: 2025-10-04T18:38:33Z
+- hourly: `systemd --user timer` → `tools/ward-selftest.sh`
+- 判定: [units ok] / [relay masked ok] / [health ok (fallback可)] / [bus quiet-ok]
+
+### rt-health ヘルパー
+- updated: 2025-10-04T18:42:20Z
+- 機能: /health が無い/プレーン文字の環境でも /orchestrate ping でフォールバック確認
+- 呼び出し: `tools/rt-health.sh`（ward-selftest からも自動実行）

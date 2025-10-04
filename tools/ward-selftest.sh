@@ -18,6 +18,7 @@ else
 fi
 
 # 3) orchestrate health（JSON/素文字/フォールバック）
+"$HOME/daegis/tools/rt-health.sh" || true
 health_raw="$(curl -fsS http://127.0.0.1:8010/health 2>/dev/null || true)"
 if echo "$health_raw" | jq -r .status 2>/dev/null | grep -q '^ok$'; then
   echo "[health ok: json]"

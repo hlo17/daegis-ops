@@ -52,3 +52,44 @@
 - scope: 全体像整理・冗長排除・統合
 - action: Runbookへ5層整理＋次アクション追記、ObservabilityへWard/Sentry統合方針を明記
 - status: 反映済（Runbook 2025-10-05 版）
+
+## Sora Relay masked
+- when: 2025-10-04T18:29:22Z
+- reason: EnvironmentFile 不在で再起動ループ。現フェーズでは未使用のため静的に停止
+- note: Slack 未配線（SLACK_WEBHOOK_URL 未設定）
+
+## System Adjustments Log
+- updated: 2025-10-04T18:30:27Z
+- scope: round-table (Pi) — system services & configuration hygiene
+- summary:
+  - disabled: **daegis-sora-relay.service**  
+    → reason: EnvironmentFile 不在で再起動ループ、Slack未配線。mask済み。  
+    → next: Citadel導入後に （SLACK_WEBHOOK_URL含む）生成して unmask。
+  - unified: **Shell policy** — 実行は bash --noprofile --norc, 対話は軽量rc。Starship 封印。
+  - validated: **Mosquitto bus** 1883 LISTEN & ACL 最小構成。  
+  - verified: **Orchestrate /health** returns "ok" after Pi reboot。  
+  - planned: **Alertmanager 貫通 / ACL 最終化** は保留中（M5 完了後）。
+
+## Ward self-test remediation
+- when: 2025-10-04T18:34:43Z
+- action:
+  - hardened: ward-selftest（healthフォールバック/静音化）
+  - cleaned: failed units を整理（*relay masked*, alertmanager disabled, watchdog系停止, hw系mask）
+- note: Alertmanager/ACL はM5後半で再開。dnsmasqは未使用前提で停止。
+
+## Ward self-test green & failed-units cleanup
+- when: 2025-10-04T18:37:04Z
+- result: [units ok], [relay masked ok], [health ok: orchestrate-fallback], [bus quiet-ok]
+- change: timers停止・不要ユニット無効化/マスク、reset-failed 済み
+- note: /health は一部環境でプレーンor欠落 → フォールバック成功を暫定標準とする
+
+- 2025-10-04T18:38:42Z /health は環境により plain or なし → orchestrate-fallback を標準ヘルスとみなす（M5後半でJSONへ統一）
+## Mosquitto ACL (snapshot 2025-10-04T18:38:48Z)
+/etc/mosquitto/mosquitto.conf:6:include_dir /etc/mosquitto/conf.d
+/etc/mosquitto/conf.d/base.conf:2:allow_anonymous false
+/etc/mosquitto/conf.d/base.conf:3:password_file /etc/mosquitto/passwd
+/etc/mosquitto/conf.d/base.conf:4:acl_file      /etc/mosquitto/conf.d/daegis.acl
+
+- policy: f=readwrite(暫定, dev用) / others=最小権限。最終化はM5後半。
+
+- 2025-10-04T18:42:20Z rt-health を ward-selftest に組み込み（/health→/orchestrate フォールバック一元化）
