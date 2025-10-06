@@ -51,3 +51,6 @@ snapshots/
 *.bak.*
 *.backup.*
 .env.local
+
+# secrets
+ops/monitoring/alertmanager/secret/
