@@ -5,7 +5,7 @@ services:
       - --config.file=/etc/am/alertmanager.yml
       - --web.listen-address=:9093
     volumes:
-      - ../monitoring/alertmanager/alertmanager.yml:/etc/am/alertmanager.yml:ro
+      - ../docker/alertmanager/alertmanager.yml:/etc/am/alertmanager.yml:ro
     env_file:
       - ~/.config/daegis/.env.local
     ports:

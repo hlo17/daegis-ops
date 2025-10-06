@@ -1,4 +1,1 @@
-route:
-  receiver: null
-receivers:
-  - name: null
+../../docker/alertmanager/alertmanager.yml
