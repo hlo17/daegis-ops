@@ -1,5 +1,5 @@
-# tools/ (Daegis)
-- ローカル運用コマンドの置き場。PATHに $HOME/daegis/tools を通す。
-- 代表: ward, mdappend, mdput, logbook_commit.py, audit-halu.sh, backup-halu-now.sh
-
-## 一覧（自動生成: tools/open-catalog でも可）
+# tools/
+- core/: 主要ユーティリティ（ward, mdappend など）
+- ops/:  運用補助（deliver-*, sync-*, hk* など）
+- local/: 個人環境（local.sh など、Git追跡しない想定）
+PATH: $HOME/daegis/tools/core:$HOME/daegis/tools/ops

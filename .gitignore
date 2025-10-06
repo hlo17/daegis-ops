@@ -54,3 +54,4 @@ snapshots/
 
 # secrets
 ops/monitoring/alertmanager/secret/
+venv/
