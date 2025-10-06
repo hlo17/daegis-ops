@@ -1,0 +1,9 @@
+apiVersion: 1
+providers:
+  - name: Daegis
+    type: file
+    options:
+      path: /etc/grafana/dashboards
+      # 手動編集を守りたいなら false 推奨（手で直したらJSONをエクスポート→差し替え運用）
+      # true にするとUIで触った変更を .json に書き戻せます（開発中は便利）
+      allowUiUpdates: false

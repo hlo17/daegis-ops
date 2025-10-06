@@ -1,0 +1,16 @@
+# Daegis Raspberry Node (pi-node)
+- Role: user systemd で常駐実行
+- Owner: f
+- Run Location: Pi（round-table）
+- Entrypoint/Units: ~/.config/systemd/user/* ; halu-runner.service, halu-backup.timer
+- Dependencies: —
+- Config/Secrets: —
+- Data/Logs: —
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

@@ -1,0 +1,4 @@
+Scenario,Tasks/day,Avg in/out tokens per call,Grok4 (daily $),ChatGPT (daily $),Gemini (daily $),Perplexity (daily $),NotebookLM (daily $),Daily total $,Monthly total $
+Low,10,1200/800,16.0,18.0,0.0,16.8,5.6,56.4,1240.8
+Medium,30,1800/1200,144.0,162.0,50.4,151.2,25.2,532.8,11721.6
+High,80,2500/1800,825.6,948.0,390.4,878.4,195.2,3237.6,71227.2

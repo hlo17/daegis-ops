@@ -1,0 +1,80 @@
+{
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.renderControlCharacters": true,
+  "editor.renderWhitespace": "all",
+  "editor.acceptSuggestionOnEnter": "off",
+  "editor.formatOnSave": true,
+  "editor.wordWrap": "off",
+  "editor.rulers": [
+    100
+  ],
+  "files.autoSave": "onFocusChange",
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.eol": "\n",
+  "explorer.confirmDelete": false,
+  // ---- YAML / Docker Compose ----
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml",
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "[dockercompose]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "advanced",
+    "editor.quickSuggestions": {
+      "other": true,
+      "comments": false,
+      "strings": true
+    },
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  // ---- Shell / Bash（shfmt + ShellCheck）----
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+  "shellformat.path": "/opt/homebrew/bin/shfmt",
+  "shellformat.flag": "-i 2 -ci",
+  "shellcheck.executablePath": "/opt/homebrew/bin/shellcheck",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.shellcheck": "explicit"
+  },
+  // ---- Python（Black）----
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.formatOnSave": true
+  },
+  "python.formatting.provider": "none",
+  "python.analysis.typeCheckingMode": "basic",
+  // ---- Terminal / PATH（macOS）----
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.env.osx": {
+    "PATH": "${env:PATH}:/opt/homebrew/bin"
+  },
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "/bin/zsh",
+      "args": [
+        "-l"
+      ]
+    }
+  },
+  // ---- 便利（任意でOFF可）----
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.pytest_cache": true,
+    "**/__pycache__": true
+  },
+  "editor.folding": false,
+  "terminal.integrated.scrollback": 100000,
+  "files.trimFinalNewlines": true,
+  "terminal.integrated.defaultProfile.linux": "bash"
+}

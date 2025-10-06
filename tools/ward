@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WARD_DIR="$HOME/daegis/ops/ward"
+REG_DIR="$HOME/daegis/registry"
+
+is_macos(){ [ "$(uname)" = "Darwin" ]; }
+have(){ command -v "$1" >/dev/null 2>&1; }
+
+open_path(){
+  local p="$1"
+  if is_macos; then open -R "$p" 2>/dev/null || true; fi
+  have code && code "$p" >/dev/null 2>&1 || true
+}
+
+usage(){
+  cat <<USAGE
+Ward-Lookup: ops/ward と registry を横断検索
+  ward find <query>     # マッチ行を一覧
+  ward files <query>    # ヒットしたファイルのみ一覧
+  ward open <query>     # 最初のヒットを開く
+  ward recent           # 最近触った Ward/Registry を表示
+USAGE
+}
+
+search_lines(){
+  local q="$1"
+  if have rg; then
+    rg -n --no-heading -S -g '*.md' "$q" "$WARD_DIR" "$REG_DIR" 2>/dev/null || true
+  else
+    grep -RIn "$q" "$WARD_DIR" "$REG_DIR" --include='*.md' 2>/dev/null || true
+  fi
+}
+
+case "${1:-}" in
+  find)
+    shift; [ $# -ge 1 ] || { usage; exit 2; }
+    search_lines "$*"
+    ;;
+  files)
+    shift; [ $# -ge 1 ] || { usage; exit 2; }
+    search_lines "$*" | awk -F: 'NF>=2{print $1}' | sort -u
+    ;;
+  open)
+    shift; [ $# -ge 1 ] || { usage; exit 2; }
+    target="$(search_lines "$*" | head -n1 | awk -F: 'NF>=1{print $1}')"
+    [ -n "${target:-}" ] && { echo "[open] $target"; open_path "$target"; } || { echo "[warn] no match"; exit 1; }
+    ;;
+  recent)
+    if have gfind; then
+      gfind "$WARD_DIR" "$REG_DIR" -type f -name '*.md' -printf '%T@ %p\n' 2>/dev/null \
+        | sort -nr | head -20 | awk '{ $1=""; sub(/^ /,""); print }'
+    else
+      # BSD/macOS: stat -f '%m %N'
+      find "$WARD_DIR" "$REG_DIR" -type f -name '*.md' -exec stat -f '%m %N' {} + 2>/dev/null \
+        | sort -nr | head -20 | awk '{ $1=""; sub(/^ /,""); print }'
+    fi
+    ;;
+  ""|-h|--help|help)
+    usage ;;
+  *)
+    search_lines "$*"
+    ;;
+esac

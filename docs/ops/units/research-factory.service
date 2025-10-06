@@ -1,0 +1,15 @@
+[Unit]
+Description=Daegis Research Factory (mRNA DAG)
+After=network-online.target mosquitto.service
+Wants=mosquitto.service
+
+[Service]
+User=f
+WorkingDirectory=/home/f/daegis
+# 既存の venv を使うなら ExecStart=/home/f/daegis/venv/bin/python /home/f/daegis/research_factory.py
+ExecStart=/usr/bin/python3 /home/f/daegis/research_factory.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

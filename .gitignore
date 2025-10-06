@@ -38,3 +38,16 @@ node_modules/
 # backups
 *.bak
 *.bak.*
+# daegis ignores
+.DS_Store
+.vscode/
+venv/
+ark/backups/
+ark/logbook/**/*
+snapshots/
+*.tgz
+*.zst
+*.bak
+*.bak.*
+*.backup.*
+.env.local

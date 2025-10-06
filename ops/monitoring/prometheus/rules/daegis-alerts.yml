@@ -1,0 +1,45 @@
+groups:
+  - name: daegis-kpi
+    interval: 30s
+    rules:
+      - alert: DaegisP95Warn
+        expr: 1000 * histogram_quantile(0.95, sum by (le)(rate(daegis_smoke_latency_seconds_bucket[5m]))) > 1.4
+        for: 5m
+        labels: { severity: warn }
+        annotations:
+          summary: "p95 > 500ms (5m)"
+          runbook_url: https://runbook.example/daegis/p95
+
+      - alert: DaegisP95Crit
+        expr: 1000 * histogram_quantile(0.95, sum by (le)(rate(daegis_smoke_latency_seconds_bucket[5m]))) > 1.4
+        for: 3m
+        labels: { severity: crit }
+        annotations:
+          summary: "p95 > 1000ms (5m)"
+          runbook_url: https://runbook.example/daegis/p95
+
+      - alert: DaegisFailRateWarn
+        expr: 100 * rate(daegis_smoke_fail_total[5m]) /
+          (rate(daegis_smoke_fail_total[5m]) + rate(daegis_smoke_success_total[5m])) > 2
+        for: 5m
+        labels: { severity: warn }
+        annotations:
+          summary: "Fail rate > 2% (5m)"
+          runbook_url: https://runbook.example/daegis/failrate
+
+      - alert: DaegisFailRateCrit
+        expr: 100 * rate(daegis_smoke_fail_total[5m]) /
+          (rate(daegis_smoke_fail_total[5m]) + rate(daegis_smoke_success_total[5m])) > 5
+        for: 3m
+        labels: { severity: crit }
+        annotations:
+          summary: "Fail rate > 5% (5m)"
+          runbook_url: https://runbook.example/daegis/failrate
+
+      - alert: BrokerDown
+        expr: max_over_time(daegis_broker_up[5m]) < 1
+        for: 3m
+        labels: { severity: crit }
+        annotations:
+          summary: "Mosquitto not reachable (5m)"
+          runbook_url: https://runbook.example/daegis/broker

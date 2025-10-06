@@ -1,0 +1,8 @@
+# 暫定: 開発ユーザ f に最小限のreadwrite、その他は明示denyが原則
+user f
+topic readwrite daegis/#
+
+# 参考：必要になったら個別に追加
+# user bot_x
+# topic read daegis/factory/#
+# topic write daegis/events/#

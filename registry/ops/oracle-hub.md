@@ -1,0 +1,16 @@
+# Daegis Oracle (oracle-hub)
+- Role: RAG/問合せ集約ハブ
+- Owner: f
+- Run Location: Pi/Mac
+- Entrypoint/Units: —
+- Dependencies: halu-runner, daegis-bus
+- Config/Secrets: —
+- Data/Logs: —
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

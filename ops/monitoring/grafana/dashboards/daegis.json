@@ -1,0 +1,29 @@
+{
+  "title": "Daegis: Quick Health",
+  "panels": [
+    {
+      "type": "timeSeries",
+      "title": "p95 latency (ms, 5m)",
+      "targets": [
+        {
+          "expr": "1000 * histogram_quantile(0.95, sum by (le)(rate(daegis_smoke_latency_seconds_bucket[5m])))",
+          "datasource": {"type": "prometheus", "uid": "prometheus"}
+        }
+      ],
+      "gridPos": {"h": 9, "w": 24, "x": 0, "y": 0}
+    },
+    {
+      "type": "stat",
+      "title": "metrics target up",
+      "targets": [
+        {
+          "expr": "up{job=\"daegis-metrics\"}",
+          "datasource": {"type": "prometheus", "uid": "prometheus"}
+        }
+      ],
+      "gridPos": {"h": 6, "w": 24, "x": 0, "y": 9}
+    }
+  ],
+  "schemaVersion": 38,
+  "version": 1
+}

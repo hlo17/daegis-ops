@@ -1,0 +1,18 @@
+services:
+  latency-prober:
+    image: python:3.11-slim
+    command: sh -lc "pip install -q -r /app/requirements.txt && python /app/prober/app.py"
+    volumes:
+      - ./metrics:/app
+    environment:
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
+      ASK: daegis/ask/halu
+      REPLY: daegis/reply/halu
+      RATE: "1.0"
+      TIMEOUT: "3.0"
+      INJECT_MS: ${LP_INJECT_MS:-0}    # ← 可変にした（下の注入で使う）
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    networks: [halu_net]

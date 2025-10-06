@@ -1,0 +1,6 @@
+Provider,in_per_1k,out_per_1k,flat_per_call
+Grok4,0.8,0.8,0.0
+ChatGPT,0.5,1.5,0.0
+Gemini,0.4,0.8,0.0
+Perplexity,0.6,1.2,0.0
+NotebookLM,0.2,0.4,0.0

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+OUTDIR="${MD_OUTDIR:-$HOME/daegis/docs}"
+arg="${1:-}"
+[[ -n "$arg" ]] || { echo "usage: mdput <path-or-file>"; exit 1; }
+
+case "$arg" in
+  /*) target="$arg" ;;
+  *)  target="$OUTDIR/$arg" ;;
+esac
+
+mkdir -p "$(dirname "$target")"
+tmp="$(mktemp)"
+cat > "$tmp"
+mv "$tmp" "$target"
+echo "wrote: $target"

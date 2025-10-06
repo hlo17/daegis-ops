@@ -1,0 +1,96 @@
+
+services:
+  mosquitto:
+    image: eclipse-mosquitto:2
+    ports: ["1883:1883"]
+    volumes:
+      - ./conf/mosquitto.conf:/mosquitto/config/mosquitto.conf:ro
+      - mosquitto_data:/mosquitto/data
+      - mosquitto_log:/mosquitto/log
+    healthcheck:
+      test: ["CMD-SHELL","mosquitto_sub -h localhost -t '$$SYS/broker/version' -C 1 -W 5 || exit 1"]
+      interval: 10s
+      timeout: 6s
+      retries: 3
+    networks: [halu_net]
+
+  halu:
+    build: .
+    env_file: .env
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    networks: [halu_net]
+    volumes:
+      - ./logbook:/data/logbook
+
+  metrics:
+    image: python:3.11-slim
+    command: sh -lc "pip install -q -r /app/requirements.txt && python /app/app.py"
+    volumes: ["./metrics:/app"]
+    environment:
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
+      MQTT_ASK_TOPIC: daegis/ask/halu
+      MQTT_REPLY_TOPIC: daegis/reply/halu
+    depends_on:
+      mosquitto:
+        condition: service_healthy
+    networks: [halu_net]
+
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prom_data:/prometheus
+    command: --config.file=/etc/prometheus/prometheus.yml
+    ports: ["9090:9090"]
+    depends_on: [metrics]
+    networks: [halu_net]
+
+  alertmanager:
+    image: prom/alertmanager
+    ports: ["9093:9093"]
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+      - --log.level=debug
+    env_file:
+      - .env
+    environment:
+      - SLACK_WEBHOOK_URL
+      - SMTP_SMARTHOST
+      - SMTP_FROM
+      - SMTP_TO
+      - SMTP_USER
+      - SMTP_PASSWORD
+    networks: [halu_net]
+    depends_on: [prometheus]
+
+  mailhog:
+    image: mailhog/mailhog
+    ports: ["1025:1025","8025:8025"]
+    networks: [halu_net]
+
+  grafana:
+    image: grafana/grafana:latest
+    ports: ["3000:3000"]
+    depends_on: [prometheus]
+    networks: [halu_net]
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/etc/grafana/dashboards
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=your-strong-pass
+
+networks:
+  halu_net: {}
+
+volumes:
+  grafana_data:
+  prom_data:
+  mosquitto_data:
+  mosquitto_log:

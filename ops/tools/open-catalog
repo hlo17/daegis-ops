@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+open -R "$HOME/daegis/docs/Standards/naming.md"
+code "$HOME/daegis/docs/Standards" "$HOME/daegis/docs/Registry" >/dev/null 2>&1 || true

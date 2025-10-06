@@ -1,0 +1,16 @@
+time=2025-09-24T07:46:26.308Z level=DEBUG source=dispatch.go:165 msg="Received alert" component=dispatcher alert=DaegisP95Crit[164d6f4][active]
+time=2025-09-24T07:46:56.295Z level=DEBUG source=dispatch.go:165 msg="Received alert" component=dispatcher alert=DaegisP95Warn[f293534][active]
+time=2025-09-24T07:46:56.642Z level=DEBUG source=dispatch.go:530 msg=flushing component=dispatcher aggrGroup={}:{} alerts="[DaegisP95Crit[164d6f4][active] DaegisP95Warn[f293534][active]]"
+time=2025-09-24T07:47:50.188Z level=DEBUG source=silence.go:430 msg="Running maintenance" component=silences
+time=2025-09-24T07:47:50.188Z level=DEBUG source=nflog.go:338 msg="Running maintenance" component=nflog
+time=2025-09-24T07:47:50.215Z level=DEBUG source=silence.go:438 msg="Maintenance done" component=silences duration=23.526823ms size=133
+time=2025-09-24T07:47:50.215Z level=DEBUG source=nflog.go:345 msg="Maintenance done" component=nflog duration=26.249752ms size=86
+time=2025-09-24T07:47:56.303Z level=DEBUG source=dispatch.go:165 msg="Received alert" component=dispatcher alert=DaegisP95Crit[164d6f4][active]
+time=2025-09-24T07:48:26.312Z level=DEBUG source=dispatch.go:165 msg="Received alert" component=dispatcher alert=DaegisP95Warn[f293534][active]
+time=2025-09-24T07:48:56.655Z level=DEBUG source=dispatch.go:530 msg=flushing component=dispatcher aggrGroup={}:{} alerts="[DaegisP95Crit[164d6f4][active] DaegisP95Warn[f293534][active]]"
+time=2025-09-24T07:49:26.307Z level=DEBUG source=dispatch.go:165 msg="Received alert" component=dispatcher alert=DaegisP95Crit[164d6f4][active]
+time=2025-09-24T07:49:56.326Z level=DEBUG source=dispatch.go:165 msg="Received alert" component=dispatcher alert=DaegisP95Warn[f293534][active]
+time=2025-09-24T07:50:32.750Z level=DEBUG source=dispatch.go:165 msg="Received alert" component=dispatcher alert=TestAlert[dcdf77d][active]
+time=2025-09-24T07:50:56.283Z level=DEBUG source=dispatch.go:165 msg="Received alert" component=dispatcher alert=DaegisP95Crit[164d6f4][active]
+time=2025-09-24T07:50:56.660Z level=DEBUG source=dispatch.go:530 msg=flushing component=dispatcher aggrGroup={}:{} alerts="[TestAlert[dcdf77d][active] DaegisP95Crit[164d6f4][active] DaegisP95Warn[f293534][active]]"
+time=2025-09-24T07:50:56.961Z level=DEBUG source=notify.go:876 msg="Notify success" component=dispatcher receiver=slack integration=slack[0] aggrGroup={}:{} attempts=1 duration=298.394627ms alerts="[TestAlert[dcdf77d][active] DaegisP95Crit[164d6f4][active] DaegisP95Warn[f293534][active]]"

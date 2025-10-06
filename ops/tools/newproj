@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+name="${1:-}"; [ -n "$name" ] || { echo "usage: newproj <name>"; exit 1; }
+base="$HOME/daegis/projects/$name"
+[ -e "$base" ] && { echo "exists: $base"; exit 1; }
+cp -r "$HOME/daegis/projects/_template" "$base"
+# Registry に追記
+reg="$HOME/daegis/docs/Registry/systems.md"
+printf '| %s | %s | %s | %s | %s |\n' "$name" "$name" "$USER" "$base" 'project' >> "$reg"
+echo "[newproj] created $base and registered to $(basename "$reg")"

@@ -1,0 +1,16 @@
+# Daegis ACL (daegis-acl)
+- Role: Bus/Slack/Webhookの最小権限セット
+- Owner: f
+- Run Location: Mac
+- Entrypoint/Units: —
+- Dependencies: —
+- Config/Secrets: —
+- Data/Logs: —
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

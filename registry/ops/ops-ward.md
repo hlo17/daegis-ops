@@ -1,0 +1,16 @@
+# Daegis Ward (ops-ward)
+- Role: ヘルス/リンタ/監査ノート集約
+- Owner: f
+- Run Location: Mac
+- Entrypoint/Units: ops/ward/*
+- Dependencies: —
+- Config/Secrets: —
+- Data/Logs: ~/daegis/ops/ward
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

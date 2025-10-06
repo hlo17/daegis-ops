@@ -1,0 +1,16 @@
+# Roundtable Brief (roundtable-brief)
+- Role: 合議要約の書式・署名・保全
+- Owner: f
+- Run Location: Mac
+- Entrypoint/Units: —
+- Dependencies: —
+- Config/Secrets: —
+- Data/Logs: —
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

@@ -1,0 +1,16 @@
+[Unit]
+Description=Gemini Runner (MQTT control)
+After=network-online.target mosquitto.service
+Wants=mosquitto.service
+
+[Service]
+User=f
+WorkingDirectory=/home/f/daegis
+Environment=PYTHONUNBUFFERED=1
+# 既存の venv を使うなら /home/f/daegis/venv/bin/python に変更
+ExecStart=/usr/bin/python3 /home/f/daegis/gemini_runner.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

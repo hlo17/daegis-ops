@@ -1,0 +1,16 @@
+# Daegis Ark / Memory (ark-core)
+- Role: Logbook長期保全・ローテ
+- Owner: f
+- Run Location: Mac/Pi
+- Entrypoint/Units: ~/daegis/ark/*
+- Dependencies: —
+- Config/Secrets: —
+- Data/Logs: ~/daegis/ark/logbook ; backups: ~/daegis/ark/backups/halulog.YYYY-MM-DD.tgz
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

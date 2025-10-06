@@ -1,0 +1,16 @@
+# ACAP Protocol (acap-protocol)
+- Role: AI協調プロトコル（会話役割/I-O規範）
+- Owner: f
+- Run Location: Mac
+- Entrypoint/Units: —
+- Dependencies: —
+- Config/Secrets: —
+- Data/Logs: —
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

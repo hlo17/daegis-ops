@@ -1,0 +1,15 @@
+groups:
+- name: daegis-latency
+  rules:
+  - alert: DaegisP95LatencyWarn
+    expr: histogram_quantile(0.95, sum(rate(daegis_roundtrip_seconds_bucket[5m])) by (le)) > 0.5
+    for: 5m
+    labels: {severity: warn}
+    annotations:
+      summary: "p95 latency > 500ms (5m)"
+  - alert: DaegisP95LatencyCrit
+    expr: histogram_quantile(0.95, sum(rate(daegis_roundtrip_seconds_bucket[5m])) by (le)) > 1.0
+    for: 5m
+    labels: {severity: crit}
+    annotations:
+      summary: "p95 latency > 1s (5m)"

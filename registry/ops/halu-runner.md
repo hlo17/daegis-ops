@@ -1,0 +1,16 @@
+# Halu Runner (halu-runner)
+- Role: 常駐推論 & 軽量学習
+- Owner: f
+- Run Location: Pi 常駐（Macは開発）
+- Entrypoint/Units: ~/halu/ops/run-local.sh ; halu-runner.service
+- Dependencies: daegis-bus, ark-core
+- Config/Secrets: ~/.config/daegis/.env.local
+- Data/Logs: ~/halu/logs -> ~/daegis/ark/logbook
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

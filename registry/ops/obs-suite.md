@@ -1,0 +1,16 @@
+# Daegis Observability Suite (obs-suite)
+- Role: Prometheus+Alertmanager+Grafana+Sentry
+- Owner: f
+- Run Location: Pi/Mac(docker)
+- Entrypoint/Units: ops/monitoring/*
+- Dependencies: daegis-bus, ops-ward
+- Config/Secrets: ~/.config/daegis/.env.local
+- Data/Logs: ~/daegis/ark/logbook
+- Health/Monitor: 
+- Operations:
+  - Start:
+  - Test:
+  - Backup:
+- Security/ACL:
+- Runbook:
+- Status: 🚧 2025-10-06

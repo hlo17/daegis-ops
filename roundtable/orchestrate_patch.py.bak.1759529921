@@ -1,3 +1,0 @@
-# minimal safe no-op patch
-def register(app):  # app.py で呼ばれても落ちないように
-    return app
