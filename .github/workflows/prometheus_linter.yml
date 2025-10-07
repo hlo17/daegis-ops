@@ -14,7 +14,7 @@ on:
 jobs:
   lint:
     runs-on: ubuntu-latest
-    
+
     # Prometheusの公式Dockerイメージを利用して、ツールを簡単に使えるようにする
     container:
       image: prom/prometheus:v2.45.0
@@ -32,13 +32,13 @@ jobs:
       # amtoolは別イメージなので、別のジョブで実行
   lint-alertmanager:
     runs-on: ubuntu-latest
-    
+
     container:
       image: quay.io/prometheus/alertmanager:v0.25.0
-      
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+
       - name: Check Alertmanager config
         run: amtool check-config prometheus/alertmanager.yml

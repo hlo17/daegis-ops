@@ -1,0 +1,11 @@
+id,source,raw_event_json,expect_sections
+1,grafana,"{""alert"":""High CPU"", ""host"":""web-1"", ""pct"":92}","事象/影響/暫定/担当"
+2,cloudwatch,"{""elb5xx"":""3%""}","事象/影響/暫定/担当"
+3,uptime,"{""check"":""api"", ""down"":true}","事象/影響/暫定/担当"
+4,app,"{""errors_per_min"":25}","事象/影響/暫定/担当"
+5,db,"{""replica_lag"":""180s""}","事象/影響/暫定/担当"
+6,k8s,"{""pod_restart"":5}","事象/影響/暫定/担当"
+7,queue,"{""backlog"":1200}","事象/影響/暫定/担当"
+8,cdn,"{""miss_ratio"":0.6}","事象/影響/暫定/担当"
+9,security,"{""ips"":""10.0.0.2""}","事象/影響/暫定/担当"
+10,billing,"{""refund_spike"":true}","事象/影響/暫定/担当"

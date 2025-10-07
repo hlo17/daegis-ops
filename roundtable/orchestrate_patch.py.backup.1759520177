@@ -79,7 +79,7 @@ _orch_log(task, votes, coordinator, {}, "orchestrate_patch", arb_backend="openai
             task_description=task
         )
 
-        
+
     # --- DRL fallback: no proposals guard ---
     try:
         pass

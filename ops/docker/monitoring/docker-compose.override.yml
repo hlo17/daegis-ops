@@ -1,0 +1,18 @@
+services:
+  prometheus:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - /etc/prometheus-mon:/etc/prometheus:ro
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+
+  alertmanager:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "9094:9093"
+    volumes:
+      - /etc/alertmanager-mon:/etc/alertmanager:ro
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"   # ← 明示

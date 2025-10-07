@@ -96,7 +96,7 @@ import os
 async def rt_env():
     agents = os.getenv("RT_AGENTS","<unset>")
     # 鍵は値長のみ
-    def lens(k): 
+    def lens(k):
         v = os.getenv(k)
         return len(v) if v else 0
     return {

@@ -62,12 +62,12 @@
 - updated: 2025-10-04T18:30:27Z
 - scope: round-table (Pi) — system services & configuration hygiene
 - summary:
-  - disabled: **daegis-sora-relay.service**  
-    → reason: EnvironmentFile 不在で再起動ループ、Slack未配線。mask済み。  
+  - disabled: **daegis-sora-relay.service**
+    → reason: EnvironmentFile 不在で再起動ループ、Slack未配線。mask済み。
     → next: Citadel導入後に （SLACK_WEBHOOK_URL含む）生成して unmask。
   - unified: **Shell policy** — 実行は bash --noprofile --norc, 対話は軽量rc。Starship 封印。
-  - validated: **Mosquitto bus** 1883 LISTEN & ACL 最小構成。  
-  - verified: **Orchestrate /health** returns "ok" after Pi reboot。  
+  - validated: **Mosquitto bus** 1883 LISTEN & ACL 最小構成。
+  - verified: **Orchestrate /health** returns "ok" after Pi reboot。
   - planned: **Alertmanager 貫通 / ACL 最終化** は保留中（M5 完了後）。
 
 ## Ward self-test remediation
@@ -131,3 +131,18 @@
 - state: 保留（構想段階。実装serviceなし）
 - role: Pull Request自動レビュア／未来差分可視化
 - next: GitHub Actions統合時に再設計予定
+
+- 2025-10-04T19:58:48Z MQTT ACL: bot_research 権限を正規化（read=factory/research/#, write=events/#）。動作確認済。
+- 2025-10-06: halu-dev を daegis に統合。監視/compose/コード/ログを標準配置へ再編。
+  後方互換: ~/halu-dev は ~/daegis への symlink。徐々に参照を新パスへ置換。
+
+## Host Matrix (2025-10-06)
+- Mac (Fs-MacBook-Pro): , , 可視化/開発用。
+- Pi  (round-table):    ランタイム最小構成（学習/KPI/監視エージェント）。 と  は**未配置が正**。
+- ルートは共通で **~/daegis が唯一の正**。ホスト差分は  に配置。
+
+## Halu setup snapshot (2025-10-06T18:24:33+0900)
+- halu base: /home/f/halu
+- env: /home/f/.config/daegis/.env.local -> halu/.config/halu/.env.local (missing)
+- copied: docker-compose.yml, mosquitto.conf.sample (if present)
+- linked: logs, docs

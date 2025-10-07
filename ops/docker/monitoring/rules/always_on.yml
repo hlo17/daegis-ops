@@ -1,0 +1,10 @@
+groups:
+- name: smoke
+  rules:
+  - alert: DaegisTestAlert
+    expr: vector(1)
+    for: 0m
+    labels:
+      severity: info
+    annotations:
+      summary: "Daegis monitoring stack test alert"

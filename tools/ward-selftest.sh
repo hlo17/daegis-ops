@@ -38,3 +38,4 @@ timeout 1s mosquitto_sub -h 127.0.0.1 -p 1883 -t daegis/# -C 1 -v >/dev/null 2>&
   && echo "[bus rx]" || echo "[bus quiet-ok]"
 
 echo "[ward-selftest] done"
+# timeout 1s mosquitto_sub -h 127.0.0.1 -p 1883 -u f -P nknm -t daegis/selftest/acl/ping -C 1 -v >/dev/null 2>&1 || echo "[anon blocked-ok]"

@@ -1,0 +1,16 @@
+route:
+  receiver: slack-notify
+  group_wait: 0s
+  group_interval: 30s
+  repeat_interval: 4h
+
+receivers:
+- name: slack-notify
+  slack_configs:
+  - send_resolved: true
+    api_url_file: /run/secrets/slack_webhook
+    channel: '#daegis-alerts'
+    text: |-
+      {{- range .Alerts -}}
+      {{ .Annotations.summary }}
+      {{- end }}

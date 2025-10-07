@@ -1,0 +1,18 @@
+mqtt:
+  host: round-table
+  port: 1883
+  user: f
+  topics:
+    halu_inbox: daegis/halu/train/inbox
+    halu_outbox: daegis/halu/train/outbox
+    notify: daegis/halu/notify
+halu_runner:
+  unit: halu-runner.service
+  script: /home/f/daegis/ops/halu/halu_runner.py
+  venv: /home/f/daegis/ops/env/venv
+backup:
+  unit_timer: backup-halulog.timer
+  artifact_dir: /home/f/daegis/snapshots/archive
+backup_alt:
+  unit_timer: backup-halulog.timer
+  artifact_dir: /home/f/daegis/snapshots/archive

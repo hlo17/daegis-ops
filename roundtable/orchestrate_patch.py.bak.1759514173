@@ -76,7 +76,7 @@ def register(app: FastAPI):
             task_description=task
         )
 
-        
+
     # --- DRL fallback: no proposals guard ---
     try:
         pass

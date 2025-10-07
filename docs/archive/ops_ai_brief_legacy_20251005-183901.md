@@ -12,7 +12,7 @@ _generated: 2025-10-04T14:19:50Z_
 2) 便利資産は `.githooks/`, `tools/`, `ops/runbooks/`
 
 ### First Aid
-端末が落ちる/起動しない場合は、`~/.bashrc` の冒頭3行（未定義ガード＋非対話 return）を確認。  
+端末が落ちる/起動しない場合は、`~/.bashrc` の冒頭3行（未定義ガード＋非対話 return）を確認。
 配達は `tools/deliver-*.sh` を“素の bash”で実行できるため、hk に依存せず復旧可能。
 
 ## Day 2 – Review / Handoff
@@ -46,11 +46,11 @@ Daegis の原則「協調・適応・検証」を AI 間の運用に落とし込
   - “emergency” 合図 → 全AIへ Ping、**議長**が最短復旧策を選定し即実施。
 
 ### 3. 依頼テンプレ（コピペ可）
-- Grok:  
+- Grok:
   > 「Grok、同系エラーが2回。現象/ログ/推定の3行スナップを送る。根因と再発防止を3行で返して」
-- Gemini:  
+- Gemini:
   > 「Gemini、実装が停滞。要件Xの代替アーキ/構成案を2通り、長所短所/撤退線付きで」
-- Chappie:  
+- Chappie:
   > 「Chappie、Alert/ACLのUXが不足。テンプレ更新（title/text/リンク）とテスト証跡取得をお願い」
 
 ### 4. 記録（軽量）
@@ -76,7 +76,7 @@ Daegis の原則「協調・適応・検証」を AI 間の運用に落とし込
 2) 便利資産は `.githooks/`, `tools/`, `ops/runbooks/`
 
 ### First Aid
-端末が落ちる/起動しない場合は、`~/.bashrc` の冒頭3行（未定義ガード＋非対話 return）を確認。  
+端末が落ちる/起動しない場合は、`~/.bashrc` の冒頭3行（未定義ガード＋非対話 return）を確認。
 配達は `tools/deliver-*.sh` を“素の bash”で実行できるため、hk に依存せず復旧可能。
 
 ## Day 2 – Review / Handoff
@@ -110,11 +110,11 @@ Daegis の原則「協調・適応・検証」を AI 間の運用に落とし込
   - “emergency” 合図 → 全AIへ Ping、**議長**が最短復旧策を選定し即実施。
 
 ### 3. 依頼テンプレ（コピペ可）
-- Grok:  
+- Grok:
   > 「Grok、同系エラーが2回。現象/ログ/推定の3行スナップを送る。根因と再発防止を3行で返して」
-- Gemini:  
+- Gemini:
   > 「Gemini、実装が停滞。要件Xの代替アーキ/構成案を2通り、長所短所/撤退線付きで」
-- Chappie:  
+- Chappie:
   > 「Chappie、Alert/ACLのUXが不足。テンプレ更新（title/text/リンク）とテスト証跡取得をお願い」
 
 ### 4. 記録（軽量）

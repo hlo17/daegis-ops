@@ -1,0 +1,10 @@
+{
+  "title": "Daegis Starter",
+  "timezone": "browser",
+  "panels": [
+    { "type": "stat", "title": "Prometheus Up", "targets":[{"expr":"up"}], "id":1, "gridPos":{"h":6,"w":8,"x":0,"y":0}},
+    { "type": "table", "title": "Alerts (active)", "targets":[{"expr":"ALERTS{alertstate=\"firing\"}"}], "id":2, "gridPos":{"h":10,"w":24,"x":0,"y":6}}
+  ],
+  "schemaVersion": 39,
+  "version": 1
+}

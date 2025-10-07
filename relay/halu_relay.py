@@ -1,21 +1,32 @@
+from fastapi.responses import JSONResponse
+import json
+import logging
+import os
+import sys
+import time
 
 # ---- de-dup (5min TTL) ----
-import time
+
 RECENT_EVENT_TTL = 300  # seconds
 _recent = {}
-def _now(): return int(time.time())
+
+
+def _now():
+    return int(time.time())
+
+
 def _purge_recent():
     t = _now()
     for k, v in list(_recent.items()):
         if t - v > RECENT_EVENT_TTL:
             _recent.pop(k, None)
+
+
 def _event_key(payload, event):
     # 優先: client_msg_id > event_id > event_ts
-    return (
-        event.get('client_msg_id')
-        or payload.get('event_id')
-        or event.get('event_ts')
-    )
+    return event.get("client_msg_id") or payload.get("event_id") or event.get("event_ts")
+
+
 def is_duplicate(payload, event):
     _purge_recent()
     k = _event_key(payload, event)
@@ -25,19 +36,20 @@ def is_duplicate(payload, event):
         return True
     _recent[k] = _now()
     return False
-import os, sys, json, logging
-from datetime import datetime, timezone
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from paho.mqtt import client as mqtt_client
+
+
+ datetime
+
+ Request
+ as mqtt_client
 
 # ---- env ----
-SLACK_TOKEN  = os.getenv("SLACK_BOT_TOKEN", "")
+SLACK_TOKEN = os.getenv("SLACK_BOT_TOKEN", "")
 SLACK_SECRET = os.getenv("SLACK_SIGNING_SECRET", "")
-MQTT_HOST    = os.getenv("MQTT_HOST", "127.0.0.1")
-MQTT_PORT    = int(os.getenv("MQTT_PORT", "1883"))
-MQTT_USER    = os.getenv("MQTT_USER", "halu_relay")
-MQTT_PASS    = os.getenv("MQTT_PASS", "")
+MQTT_HOST = os.getenv("MQTT_HOST", "127.0.0.1")
+MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
+MQTT_USER = os.getenv("MQTT_USER", "halu_relay")
+MQTT_PASS = os.getenv("MQTT_PASS", "")
 
 # ---- logger (明示してstdoutへ) ----
 log = logging.getLogger("halu-relay")
@@ -51,10 +63,15 @@ log.propagate = False
 # ---- signature verifier ----
 try:
     from slack_sdk.signature import SignatureVerifier
-    _verifier = SignatureVerifier(
-        signing_secret=SLACK_SECRET,
-        timestamp_skew_in_seconds=300,   # ±5分
-    ) if SLACK_SECRET else None
+
+    _verifier = (
+        SignatureVerifier(
+            signing_secret=SLACK_SECRET,
+            timestamp_skew_in_seconds=300,  # ±5分
+        )
+        if SLACK_SECRET
+        else None
+    )
 except Exception:
     _verifier = None
 
@@ -74,11 +91,13 @@ try:
 except Exception as e:
     log.error(f"[relay] MQTT connect failed: {e}")
 
+
 # ---- Health ----
 @app.get("/health")
 async def health():
     log.info("[relay] /health hit")
     return {"ok": True}
+
 
 # ---- Slack Events ----
 @app.post("/slack/events")
@@ -107,15 +126,17 @@ async def slack_events(request: Request):
         # 署名検証
         if _verifier:
             headers_case = {
-                "X-Slack-Signature": request.headers.get("x-slack-signature") or request.headers.get("X-Slack-Signature"),
-                "X-Slack-Request-Timestamp": request.headers.get("x-slack-request-timestamp") or request.headers.get("X-Slack-Request-Timestamp"),
+                "X-Slack-Signature": request.headers.get("x-slack-signature")
+                or request.headers.get("X-Slack-Signature"),
+                "X-Slack-Request-Timestamp": request.headers.get("x-slack-request-timestamp")
+                or request.headers.get("X-Slack-Request-Timestamp"),
             }
             sig = headers_case.get("X-Slack-Signature")
-            ts  = headers_case.get("X-Slack-Request-Timestamp")
-            ok  = _verifier.is_valid_request(body, headers_case)
+            ts = headers_case.get("X-Slack-Request-Timestamp")
+            ok = _verifier.is_valid_request(body, headers_case)
             log.info(f"[relay] verify sig={(sig or '')[:18]} ts={ts} ok={ok}")
             if not ok:
-                return JSONResponse({"status":"invalid signature"}, status_code=403)
+                return JSONResponse({"status": "invalid signature"}, status_code=403)
         else:
             log.warning("[relay] signing secret not set or verifier missing; skipping verification")
 
@@ -127,14 +148,19 @@ async def slack_events(request: Request):
         # app_mention → MQTT 中継（必要に応じて 'message' も扱うならここに条件を追加）
         if etype == "app_mention":
             try:
-                mqttc.publish("daegis/relay/in", json.dumps({
-                    "origin":  "slack",
-                    "type":    "slack_in",
-                    "channel": event.get("channel"),
-                    "user":    event.get("user"),
-                    "text":    event.get("text"),
-                    "ts":      event.get("ts") or datetime.now(timezone.utc).isoformat()
-                }))
+                mqttc.publish(
+                    "daegis/relay/in",
+                    json.dumps(
+                        {
+                            "origin": "slack",
+                            "type": "slack_in",
+                            "channel": event.get("channel"),
+                            "user": event.get("user"),
+                            "text": event.get("text"),
+                            "ts": event.get("ts") or datetime.now(UTC).isoformat(),
+                        }
+                    ),
+                )
                 log.info("[relay] published to MQTT daegis/relay/in")
             except Exception as e:
                 log.error(f"[relay] publish failed: {e}")
@@ -145,7 +171,9 @@ async def slack_events(request: Request):
         log.exception(f"[relay] handler error: {e}")
         return JSONResponse({"status": "ok"})
 
+
 # ---- dev run ----
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)

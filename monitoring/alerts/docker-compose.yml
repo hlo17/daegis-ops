@@ -1,0 +1,10 @@
+services:
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    ports:
+      - "9094:9093"          # ← ホスト9094へ統一
+    volumes:
+      - /etc/alertmanager:/etc/alertmanager:ro
+    command: ["--config.file=/etc/alertmanager/alertmanager.yml"]
+    restart: unless-stopped

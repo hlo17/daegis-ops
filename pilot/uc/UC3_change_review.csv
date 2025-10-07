@@ -1,0 +1,11 @@
+id,repo_or_doc,diff_snippet,expect
+1,daegis/router,"+ add cost cap check in /chat","追加/変更/削除 表 + 注意点"
+2,infra/runbook,"- remove sudo in step3","+/−/× 一覧 + リスク"
+3,ux/spec,"+ new field `tags`","UI影響/互換性/移行"
+4,ops/pipeline,"~ change topic `daegis/#` to scoped","セキュ/到達性/巻き戻し"
+5,api/v1,"+ timeout=60 -> 30","SLA/互換/監視"
+6,db/migration,"+ index users(created_at)","性能/ロールバック/検証"
+7,docs/policy,"+ retention 90d -> 30d","法務/監査/周知"
+8,terraform,"~ instance type change","コスト/性能/リスク"
+9,helm,"+ probes tuned","安定性/影響/次アクション"
+10,playbook,"+ rollback button","手順/安全/教育"

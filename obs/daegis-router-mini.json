@@ -1,0 +1,25 @@
+{
+  "title": "Daegis Router — Top4",
+  "timezone": "browser",
+  "panels": [
+    {
+      "type":"timeseries","title":"QPS (rt_requests_total)",
+      "targets":[{"expr":"sum(rate(rt_requests_total[1m]))"}]
+    },
+    {
+      "type":"timeseries","title":"P95 latency (ms)",
+      "targets":[{"expr":"histogram_quantile(0.95, sum(rate(rt_latency_ms_bucket[5m])) by (le))"}]
+    },
+    {
+      "type":"timeseries","title":"Router Up",
+      "targets":[{"expr":"avg_over_time(router_up[5m])"}]
+    },
+    {
+      "type":"timeseries","title":"Cost (USD, 1h sum; 0 fallback)",
+      "targets":[{"expr":"sum(increase(rt_cost_usd_total[1h])) OR on() vector(0)"}]
+    }
+  ],
+  "templating":{"list":[]},
+  "annotations":{"list":[]},
+  "schemaVersion":39
+}

@@ -1,0 +1,19 @@
+services:
+  router:
+    build: .
+    container_name: router
+    ports: ["8080:8080"]
+    env_file: [./config/router.env]
+    healthcheck:
+      test: ["CMD","python","-c","import sys,urllib.request; resp=urllib.request.urlopen('http://127.0.0.1:8080/metrics',timeout=3); sys.exit(0 if resp.status==200 else 1)"]
+      interval: 10s
+      timeout: 4s
+      retries: 6
+      start_period: 25s
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    name: monitoring_default
+    external: true

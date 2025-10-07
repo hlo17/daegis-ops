@@ -1,0 +1,10 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    { "label": "compose: up",   "type": "shell", "command": "make up",   "group": "build" },
+    { "label": "compose: down", "type": "shell", "command": "make down" },
+    { "label": "logs",          "type": "shell", "command": "make logs", "group": "test" },
+    { "label": "sub",           "type": "shell", "command": "make sub" },
+    { "label": "pub: ping",     "type": "shell", "command": "make pub-ping" }
+  ]
+}

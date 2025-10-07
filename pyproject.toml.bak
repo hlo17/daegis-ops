@@ -1,0 +1,11 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+lint.select = ["E","F","I","B","UP","SIM"]
+lint.ignore = ["E501","E701","E702","E741"]
+exclude = ["build","dist",".venv","venv*"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-q --maxfail=1 -ra"
+testpaths = ["tests"]

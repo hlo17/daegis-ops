@@ -1,0 +1,10 @@
+route:
+  receiver: slack-notify
+
+receivers:
+  - name: slack-notify
+    slack_configs:
+      - api_url: 'SLACK_WEBHOOK_REDACTED'  # ← 実際のWebhookに置換
+        channel: '#daegis-alerts'
+        title: '[Daegis] {{ .CommonLabels.alertname }} ({{ .CommonLabels.severity }})'
+        text: "{{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
