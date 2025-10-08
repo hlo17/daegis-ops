@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Port Guard (8080/9091)",
+      "type": "shell",
+      "command": "${workspaceFolder}/scripts/port_guard.sh",
+      "presentation": { "reveal": "never", "panel": "dedicated", "clear": true }
+    },
+    {
+      "label": "Uvicorn (copilot-exec)",
+      "type": "shell",
+      "command": "python3 -m uvicorn router.app:app --host 0.0.0.0 --port 8080",
+      "dependsOn": ["Port Guard (8080/9091)"],
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true, "group": "copilot-exec" },
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "Prometheus (docker, 9091)",
+      "type": "shell",
+      "command": "docker ps --format '{{.Names}}' | grep -q '^prometheus$' && docker restart prometheus || echo 'hint: start via compose; expected port mapping 9091:9090'",
+      "presentation": { "reveal": "never", "panel": "dedicated" }
+    },
+    {
+      "label": "Smoke: MISS/HIT/504",
+      "type": "shell",
+      "command": "bash -lc \"curl -isS -XPOST :8080/chat -H 'Content-Type: application/json' -d '{\\\"q\\\":\\\"hello\\\"}' | head -n12; curl -isS -XPOST :8080/chat -H 'Content-Type: application/json' -d '{\\\"q\\\":\\\"hello\\\"}' | head -n12; curl -isS -XPOST :8080/chat -H 'Content-Type: application/json' -d '{\\\"q\\\":\\\"slow\\\",\\\"delay\\\":4}' | head -n20\"",
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Metrics: grep rt_*",
+      "type": "shell",
+      "command": "bash -lc \"curl -s :8080/metrics | grep -E 'rt_latency_ms_bucket|rt_cache_(hits|misses)_total' || echo 'no data yet'\"",
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Router: Dev (reload)",
+      "type": "shell",
+      "command": "python -m uvicorn router.app:app --host 0.0.0.0 --port 8080 --reload",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true },
+      "options": { "cwd": "${workspaceFolder}" }
+    },
+    {
+      "label": "Router: Smoke (headers)",
+      "type": "shell",
+      "command": "bash -c \"curl -s -D - -o /dev/null -X POST http://127.0.0.1:8080/chat -H 'Content-Type: application/json' -d '{\\\"q\\\":\\\"test1\\\"}' | tr -d '\\r' | grep -iE '^(HTTP/|x-cache|x-corr-id|x-episode-id)'; curl -s -D - -o /dev/null -X POST http://127.0.0.1:8080/chat -H 'Content-Type: application/json' -d '{\\\"q\\\":\\\"test1\\\"}' | tr -d '\\r' | grep -iE '^(HTTP/|x-cache|x-corr-id|x-episode-id)'; curl -s -D - -o /dev/null -X POST http://127.0.0.1:8080/chat -H 'Content-Type: application/json' -d '{\\\"q\\\":\\\"slow\\\",\\\"delay\\\":4}' | tr -d '\\r' | grep -iE '^(HTTP/|x-cache|x-corr-id|x-episode-id)'\"",
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Router: Metrics",
+      "type": "shell",
+      "command": "curl -s http://127.0.0.1:8080/metrics | egrep 'rt_cache_(hits|misses)_total|rt_latency_ms_bucket' || true",
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    }
+  ]
+}

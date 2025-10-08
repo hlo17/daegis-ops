@@ -31,6 +31,29 @@ from typing import Dict, Tuple
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
+# --- add: Daegis decision logging (stdlib only) ---
+import json, os
+from datetime import datetime
+from uuid import uuid4
+
+try:
+    with open(os.path.join("ops", "policy", "compass.json"), "r") as _f:
+        _DAEGIS_COMPASS = json.load(_f)
+except Exception:
+    _DAEGIS_COMPASS = {"weights": {"quality": 0.4, "latency": 0.3, "cost": 0.2, "safety": 0.1}}
+
+def _daegis_corr_id(headers):
+    # 既存の相関IDヘッダがあれば尊重。なければ生成。
+    for k in ("X-Corr-ID", "X-Correlation-ID", "X-Request-ID"):
+        v = headers.get(k)
+        if v:
+            return v
+    return f"cid-{uuid4().hex[:12]}"
+
+def _daegis_episode_id(corr_id: str) -> str:
+    return f"{datetime.utcnow().strftime('%Y%m%d')}-{corr_id}"
+# --- end add ---
+
 app = FastAPI(title="DAEGIS Router")
 
 # ---- very small in-memory cache --------------------------------------------
@@ -80,6 +103,75 @@ async def chat(body: ChatIn):
 
 # [PASTE-GUARD EOF v1] 5c6da0d0
 
+# --- add: prometheus histogram + /metrics + ASGI timing middleware ---
+try:
+    from prometheus_client import Histogram, generate_latest, CONTENT_TYPE_LATEST
+    from fastapi import Response
+    from fastapi.responses import PlainTextResponse
+    _PROM_OK = True
+except Exception:
+    from fastapi.responses import PlainTextResponse
+    _PROM_OK = False
+
+if _PROM_OK:
+    rt_latency_ms = Histogram(
+        "rt_latency_ms",
+        "Request latency in milliseconds",
+        ["route"],
+    )
+
+    @app.middleware("http")
+    async def _rt_latency_mw(request, call_next):
+        import time
+        start = time.perf_counter()
+        try:
+            response = await call_next(request)
+            return response
+        finally:
+            dur_ms = (time.perf_counter() - start) * 1000.0
+            route = getattr(request.scope.get("route"), "path", request.url.path)
+            rt_latency_ms.labels(route=route).observe(dur_ms)
+
+    @app.get("/metrics")
+    async def _metrics():
+        return Response(generate_latest(), media_type=CONTENT_TYPE_LATEST)
+else:
+    @app.get("/metrics")
+    async def _metrics_unavailable():
+        return PlainTextResponse("# prometheus_client not installed\n", status_code=500)
+# --- end add ---
+
 # --- chat cache/timeout patch ---
 from router.chat_cache_timeout import install_chat_patch
 install_chat_patch(app)
+
+# --- add: Daegis episode & decision logging middleware ---
+@app.middleware("http")
+async def _daegis_episode_mw(request, call_next):
+    # /chat POST のみ対象（末尾スラッシュも吸収）
+    path = request.url.path.rstrip("/")
+    if path == "/chat" and request.method == "POST":
+        corr_id = (
+            request.headers.get("X-Corr-ID")
+            or request.headers.get("X-Correlation-ID")
+            or f"cid-{uuid4().hex[:12]}"
+        )
+        episode_id = _daegis_episode_id(corr_id)
+
+        response = await call_next(request)
+        response.headers["X-Episode-ID"] = episode_id
+
+        # 意思決定ログを stdout へ
+        print(json.dumps({
+            "event": "decision",
+            "episode": episode_id,
+            "corr_id": corr_id,
+            "intent": "chat_answer",
+            "compass_snapshot": _DAEGIS_COMPASS,
+            "ts_decision": time.time(),
+        }), flush=True)
+
+        return response
+
+    return await call_next(request)
+# --- end add ---
