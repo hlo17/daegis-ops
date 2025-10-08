@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2221,SC2222  # caseパターンの意図的な順序
+#!/usr/bin/env bash
 # === Daegis Deploy Helper v3 (sudo/remote-safe + extra hooks) ===
 set -euo pipefail
 TARGET="${SAVE_TO:?SAVE_TO を指定してください}"
 : "${RUN:=0}"; : "${ARGS:=}"; : "${BACKUP:=1}"; : "${HOOKS:=0}"; : "${QUIET:=0}"
 
 log(){ [ "$QUIET" = "1" ] || echo -e "$@"; }
-need_sudo(){ [ -w "$(dirname "$1")" ] && ([ ! -e "$1" ] || [ -w "$1" ]) || [ "$(id -u)" = "0" ] || return 0; return 1; }
+need_sudo(){ [ -w "$(dirname "$1")" ] && { [ ! -e "$1" ] || [ -w "$1" ]; } || [ "$(id -u)" = "0" ] || return 0; return 1; }
 
 # --- ensure dir ---
 DIR=$(dirname -- "$TARGET")
@@ -68,9 +70,9 @@ fi
 if [ "$RUN" = "1" ]; then
   log "🏃 Run     : $TARGET ${ARGS}"
   set +e
-  if [ -x "$TARGET" ]; then "$TARGET" ${ARGS:-}; rc=$?; else bash "$TARGET" ${ARGS:-}; rc=$?; fi
+  if [ -x "$TARGET" ]; then "$TARGET" "${ARGS:-}"; rc=$?; else bash "$TARGET" "${ARGS:-}"; rc=$?; fi
   set -e
-  [ $rc -eq 0 ] && log "✅ 実行完了" || { log "❌ 実行エラー: $rc"; exit $rc; }
+if [ "$rc" -eq 0 ]; then log "✅ 実行完了"; else log "❌ 実行エラー: $rc"; exit "$rc"; fi
 else
   log "👉 実行    : $TARGET ${ARGS}"
 fi

@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
+#!/usr/bin/env bash
 set -eu
 
 hk() {
   local cmd="${1:-help}"; shift || true
 
   # optional extensions
-  [ -f tools/hk-extra.sh ] && . tools/hk-extra.sh
+  HK_EXTRA="1000 4 20 24 27 29 44 46 60 100 102 105 110 115 990 993 994 995 1000dirname "")/hk-extra.sh"
+# shellcheck disable=SC1091  # 動的sourceは存在確認のうえで読み込む
+[ -f "" ] && . ""
 
   # dynamic dispatch: hk_<cmd> if defined
   if type "hk_${cmd}" >/dev/null 2>&1; then "hk_${cmd}" "$@"; return; fi

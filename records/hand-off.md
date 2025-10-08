@@ -67,3 +67,20 @@
   - Mosquitto: mosquitto.conf / 01-listener.conf / acl / passwd.redacted
   - Monitoring: alerts.halu.yml（あれば）/ prom_heartbeat_now.json / prom_heartbeat_absent_15m.json
   - Logs: halu-relay.log / mosquitto_listen.txt / docker_ps.txt
+
+
+## Ops note: MQTT/監視まわりの是正 & 開発ガード導入
+**When:** 2025-10-08 08:51:19 UTC
+
+### 変更サマリ
+- mosquitto: main最小 + `conf.d/01-listener.conf` 単一に統一、`02-hardening.conf` は退避。
+- Heartbeat: `mosquitto_pub/sub` 手動疎通 OK、Prometheus 欠損検知は解消を確認。
+- Pushgateway: 起動検証のみ（本番導入は保留）。
+- Dev guard:
+  - VS Code Tasks（precheck / restart(safe-run) / smoke）を追加。
+  - `~/.local/bin/safe-run` で危険操作の確認＋transcript ログ化。
+  - `pre-commit` に shellcheck + 整形フックを導入。致命系は修正、スタイル系は暫定除外。
+
+### TODO（次段）
+- 除外した ShellCheck ルール（SC2012/2034/2126/2209/2235）を段階的に戻す。
+- Tasks: `Mosquitto: smoke` を運用ヘルスチェックのミニテストとして継続。

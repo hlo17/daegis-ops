@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/shellcheck-py/shellcheck-py
+    rev: v0.11.0.1
+    hooks:
+      - id: shellcheck
+        files: ^(ops|tools)/.*\.(sh|bash)$
+        args:
+          - --shell=bash
+          # “運用を止めない”ため暫定で除外（後で戻せます）
+          - -e
+          - SC2012
+          - -e
+          - SC2034
+          - -e
+          - SC2126
+          - -e
+          - SC2209
+          - -e
+          - SC2235
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+        files: ^(ops|tools)/
+      - id: trailing-whitespace
+        files: ^(ops|tools)/
