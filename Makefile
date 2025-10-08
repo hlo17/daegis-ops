@@ -1,31 +1,31 @@
 .RECIPEPREFIX := >
-VENV := .venv
-PY := $(VENV)/bin/python
-PIP := $(VENV)/bin/pip
-PRECOMMIT := $(VENV)/bin/pre-commit
-PYTEST := $(VENV)/bin/pytest
-
 .PHONY: bootstrap check test kpi weekly
 
 bootstrap:
-> test -d $(VENV) || python3 -m venv $(VENV)
-> $(PY) -m pip install -U pip
-> $(PIP) install pre-commit pytest ruff
-> $(PRECOMMIT) install
+> python -m pip install -U pip pre-commit pytest ruff
+> pre-commit install
 
 check:
-> $(PRECOMMIT) run -a
-> $(PYTEST) -q
+> pre-commit run -a
+> pytest -q
 
 test:
-> $(PYTEST) -q
+> pytest -q
 
 # 例: make kpi TASK=router-health TTR=12 KS=30 ACC=10 TOT=24 PASS=1
 kpi:
-> $(PY) scripts/kpi_update.py \
->   "$$(jq -nc --arg task "$(TASK)" --argjson ttr_min $(TTR) --argjson keystrokes $(KS) \
->   --argjson copilot_accepts $(ACC) --argjson copilot_total $(TOT) --argjson test_pass $(PASS) \
->   '{task:$$task,ttr_min:$$ttr_min,keystrokes:$$keystrokes,copilot_accepts:$$copilot_accepts,copilot_total:$$copilot_total,test_pass:$$test_pass}')"
+> python - <<'PY'
+> import json,os,subprocess
+> d={
+>   "task": os.getenv("TASK","unknown"),
+>   "ttr_min": float(os.getenv("TTR","0")),
+>   "keystrokes": int(os.getenv("KS","0")),
+>   "copilot_accepts": int(os.getenv("ACC","0")),
+>   "copilot_total": int(os.getenv("TOT","0")),
+>   "test_pass": int(os.getenv("PASS","0")),
+> }
+> subprocess.check_call(["python","scripts/kpi_update.py", json.dumps(d)])
+> PY
 
 weekly:
-> $(PY) scripts/kpi_weekly_summary.py
+> python scripts/kpi_weekly_summary.py

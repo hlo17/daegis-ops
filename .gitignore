@@ -23,3 +23,4 @@ venv*/
 # OS
 .DS_Store
 .venv/
+ops/docker/monitoring/secrets/

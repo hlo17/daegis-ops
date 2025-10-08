@@ -1,47 +1,12 @@
-from fastapi.responses import JSONResponse
 import json
 import logging
 import os
 import sys
-import time
+from datetime import UTC, datetime
 
-# ---- de-dup (5min TTL) ----
-
-RECENT_EVENT_TTL = 300  # seconds
-_recent = {}
-
-
-def _now():
-    return int(time.time())
-
-
-def _purge_recent():
-    t = _now()
-    for k, v in list(_recent.items()):
-        if t - v > RECENT_EVENT_TTL:
-            _recent.pop(k, None)
-
-
-def _event_key(payload, event):
-    # 優先: client_msg_id > event_id > event_ts
-    return event.get("client_msg_id") or payload.get("event_id") or event.get("event_ts")
-
-
-def is_duplicate(payload, event):
-    _purge_recent()
-    k = _event_key(payload, event)
-    if not k:
-        return False
-    if k in _recent:
-        return True
-    _recent[k] = _now()
-    return False
-
-
- datetime
-
- Request
- as mqtt_client
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from paho.mqtt import client as mqtt_client
 
 # ---- env ----
 SLACK_TOKEN = os.getenv("SLACK_BOT_TOKEN", "")

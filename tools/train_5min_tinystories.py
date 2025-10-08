@@ -55,6 +55,7 @@ def _sig(_s, _f):
     sys.exit(0)
 
 
+start_time = time.time()
 signal.signal(signal.SIGINT, _sig)
 signal.signal(signal.SIGTERM, _sig)
 

@@ -1,8 +1,8 @@
 {
   "params_m": 0.99,
-  "elapsed_sec": 304,
+  "elapsed_sec": 308,
   "device": "cpu",
   "stop_reason": "BUDGET",
-  "avg_loss": 4.072432,
-  "ppl": 58.69952086302961
+  "avg_loss": 1.017377,
+  "ppl": 2.7659290958077163
 }

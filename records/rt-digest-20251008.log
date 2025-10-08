@@ -1,0 +1,12 @@
+[2025-10-08 08:59:03] Digest BEGIN
+[2025-10-08 08:59:03] OK hand-off.md found (1548 bytes)
+[rt-digest] KPI summary:
+{
+  "override_rate": 0.29,
+  "ppl": 9.4,
+  "improvement": 0.11,
+  "p_value": 0.041,
+  "samples": 128
+}
+[rt-digest] decision: deploy (p=0.041, Δ=0.11)
+[rt-digest] write: /srv/round-table/ab-result.json
