@@ -98,3 +98,40 @@ export LOG_DECISION=1  # enable decision logs (default)
 - Metrics collection is optional in production
 - Can use sidecar pattern or external monitoring
 - Decision logs can be disabled with `LOG_DECISION=0`
+
+## Release & Rollback
+
+### Create Release Tag
+```bash
+# Auto-generated timestamp tag
+scripts/release/cut.sh
+
+# Custom version tag
+scripts/release/cut.sh v1.2.3
+```
+
+### Safe Rollback
+```bash
+# Guided rollback to specific tag (revert-based, no hard reset)
+scripts/release/rollback.sh v1.2.2
+
+# Follow prompts: inspect diff → create revert → review → commit & push
+```
+
+**Principle**: Always use tag-based rollback with `git revert` for safety.
+
+## Alert Simulation
+
+### Test Alert Conditions
+```bash
+# Induce 504 timeout and check metrics response
+scripts/dev/simulate_alerts.sh
+
+# Expected: HTTP 504, then metrics check (200 if prometheus_client installed)
+```
+
+### Smoke Test All Paths
+```bash
+# Quick header verification (MISS → HIT → 504)
+scripts/dev/smoke.sh
+```
