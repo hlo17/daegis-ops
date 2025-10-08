@@ -57,3 +57,19 @@ ops/monitoring/alertmanager/secret/
 venv/
 tools/local/
 ops/env/venv/
+# Local dev / Python
+venv*/
+**/__pycache__/
+.pytest_cache/
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+
+# Grafana local exports/backups
+*.bak
+*.backup.json
