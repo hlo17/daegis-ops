@@ -9,7 +9,7 @@ if command -v gdate >/dev/null 2>&1; then
   START=$($D -u +"%FT%TZ")
   END=$($D -u -d "+2 min" +"%FT%TZ")
 else
-  D=date
+  D="date"
   START=$($D -u +"%FT%TZ")
   # BSD date には -d がないので -v+2M を使う
   END=$($D -u -v+2M +"%FT%TZ")

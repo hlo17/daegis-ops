@@ -1,0 +1,9 @@
+services:
+  pushgateway:
+    image: prom/pushgateway:v1.8.0
+    restart: unless-stopped
+    ports:
+      - "9092:9091"
+    # 監視スタックと同じネットワークに置く
+    networks:
+      - default

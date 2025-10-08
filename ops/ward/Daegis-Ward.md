@@ -62,12 +62,12 @@
 - updated: 2025-10-04T18:30:27Z
 - scope: round-table (Pi) — system services & configuration hygiene
 - summary:
-  - disabled: **daegis-sora-relay.service**  
-    → reason: EnvironmentFile 不在で再起動ループ、Slack未配線。mask済み。  
+  - disabled: **daegis-sora-relay.service**
+    → reason: EnvironmentFile 不在で再起動ループ、Slack未配線。mask済み。
     → next: Citadel導入後に （SLACK_WEBHOOK_URL含む）生成して unmask。
   - unified: **Shell policy** — 実行は bash --noprofile --norc, 対話は軽量rc。Starship 封印。
-  - validated: **Mosquitto bus** 1883 LISTEN & ACL 最小構成。  
-  - verified: **Orchestrate /health** returns "ok" after Pi reboot。  
+  - validated: **Mosquitto bus** 1883 LISTEN & ACL 最小構成。
+  - verified: **Orchestrate /health** returns "ok" after Pi reboot。
   - planned: **Alertmanager 貫通 / ACL 最終化** は保留中（M5 完了後）。
 
 ## Ward self-test remediation
@@ -141,21 +141,21 @@
 - impact: 学習とダッシュ更新が断続停止。A/B の値は据え置きで比較不能に。
 
 ### Root cause (まとめ)
-1) **スクリプト末尾のゴミ行混入**で `train_5min_tinystories.py` / `halu-kpi.sh` が壊れた  
-2) **短文コーパス**で `randint` 範囲負値→RuntimeError  
-3) **CPU過負荷/手動停止**で途中終了、メトリクス未保存  
-4) **Slack 未配線**（`SLACK_WEBHOOK_URL` なし）に起因する 404 ノイズ  
+1) **スクリプト末尾のゴミ行混入**で `train_5min_tinystories.py` / `halu-kpi.sh` が壊れた
+2) **短文コーパス**で `randint` 範囲負値→RuntimeError
+3) **CPU過負荷/手動停止**で途中終了、メトリクス未保存
+4) **Slack 未配線**（`SLACK_WEBHOOK_URL` なし）に起因する 404 ノイズ
 5) 以前の PPL(≈1.1) は別実装の数値で **非比較**（モデル/手順が異なる）
 
 ### Fix (実施)
 - 学習スクリプトを堅牢化（短文耐性・CPUスレッド制限・優雅停止・安全PPL保存）
 - KPI 集計を安全化（jq 失敗許容・直前比・直近7件）
-- systemd 経由を一旦外し、**手動一周スクリプト**で健全性確認  
+- systemd 経由を一旦外し、**手動一周スクリプト**で健全性確認
   `rt-digest-exec.sh: train → kpi → plot`
 - ダッシュ/PNG の生成を確認済み
 
 ### Prevent (恒久策)
-- **File Permission Recovery** を日次ジョブ化  
+- **File Permission Recovery** を日次ジョブ化
   `chown -R f:f ~/daegis && chmod -R u+rwX ~/daegis`
 - **Shell policy**: 非対話は `bash --noprofile --norc -lc '…'` 固定
 - **Ward self-test** を継続（failed units / /health フォールバック）
@@ -176,7 +176,7 @@ ls -lh ~/daegis/records/kpi.png
 - 正式ルート: ~/daegis （~/halu-dev は互換 symlink）
 - 記載ルール: 1インシデント=1見出し、コマンドは再実行可能な形で。
 
-## Migration note (halu-dev backup → daegis) 
+## Migration note (halu-dev backup → daegis)
 - moved: logbook → ark/logbook/
 - sample: mosquitto.conf → ops/hosts/Fs-MacBook-Pro.local/mosquitto/mosquitto.conf.sample
 - moved: app/main.py → poc/app/main.py
@@ -193,9 +193,9 @@ ls -lh ~/daegis/records/kpi.png
 - copied: docker-compose.yml, mosquitto.conf.sample (if present)
 - linked: logs, docs
 
-## Sorting snapshot (2025-10-06T18:27:00+09:00) 
-- moved: relay/, roundtable/ -> ops/remote/ 
-- parked: context,factory,snapshots,metrics,logs -> snapshots/inbox/ 
+## Sorting snapshot (2025-10-06T18:27:00+09:00)
+- moved: relay/, roundtable/ -> ops/remote/
+- parked: context,factory,snapshots,metrics,logs -> snapshots/inbox/
 - policy: keep ~/halu independent
 
 ## Catalog index (auto)

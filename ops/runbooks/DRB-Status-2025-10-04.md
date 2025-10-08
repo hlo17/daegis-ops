@@ -113,4 +113,3 @@ hk hooks-fix         # フックのシバン/改行/pipefailを自動修復
     - 自動修正：bash tools/fix-typography.sh（修正後に git add して再コミット）
 - RT 正規化フォールバックの指定：
     /etc/roundtable/rt.env に RT_SYNTH_KEYS="summary,note,message,task" を設定 → systemctl restart roundtable
-

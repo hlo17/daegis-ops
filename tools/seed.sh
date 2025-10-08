@@ -28,7 +28,8 @@ MD
     echo
   fi
   echo "## Latest Decisions"
-  ls -1t "$ROOT"/logbook/*/*/*/*.md 2>/dev/null | head -20 | while IFS= read -r f; do
+  find "$ROOT/logbook" -type f -name "*.md" -printf "%T@ %p
+" 2>/dev/null | sort -nr | head -20 | cut -d" " -f2- | while IFS= read -r f; do
     echo
     echo "---"
     echo "### $(basename "$f")"

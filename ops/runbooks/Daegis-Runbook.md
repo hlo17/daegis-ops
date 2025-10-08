@@ -26,9 +26,9 @@ bash --noprofile --norc -lc '
 ```
 
 ### ヘルスチェック手順
-1) **Roundtable**: /orchestrate に60連投 → 成功で [smoke-ok]  
-2) **Mosquitto**: 127.0.0.1:1883 の LISTEN を確認  
-3) **ログ**: `loglast` で直近 run の JSON を確認  
+1) **Roundtable**: /orchestrate に60連投 → 成功で [smoke-ok]
+2) **Mosquitto**: 127.0.0.1:1883 の LISTEN を確認
+3) **ログ**: `loglast` で直近 run の JSON を確認
 
 ### トラブルシュート（抜粋）
 - 退出トリガ疑い: `grep -nE "^[[:space:]]*(exit|return[[:space:]]+0)\b" ~/.bashrc || echo "[clean]"`
@@ -48,7 +48,7 @@ Sentry=ON / WSS=OFF / ACAP=OFF / SlackDigest=OFF / HaluRelay=OFF
 実行は常に `bash --noprofile --norc -lc '…'`。対話は軽量rc。logs/** は Git 管理外、dfsnap は REDACTED。
 
 ## Daegisプロジェクト全体像の再整理（2025-10-05）
-**要約**: DaegisはAI騎士団を中心とした自律型情報処理システム。MQTT Busを神経系、Slackを円卓とする最小国家構想。進捗: M3完了、M4/M5進行中。弱点対処優先で、Halu Relay活性化を即時実施。  
+**要約**: DaegisはAI騎士団を中心とした自律型情報処理システム。MQTT Busを神経系、Slackを円卓とする最小国家構想。進捗: M3完了、M4/M5進行中。弱点対処優先で、Halu Relay活性化を即時実施。
 Lexicon簡易版: Bus=メッセージ基盤、Ark=深層保管庫、ACAP=AI協調プロトコル。
 
 ### 次アクション（弱点対処・円卓開通）
@@ -127,7 +127,7 @@ Lexicon簡易版: Bus=メッセージ基盤、Ark=深層保管庫、ACAP=AI協�
 - 有効化手順（後日）:
   `sudo sed -i "s/^# $begin:math:text\\|allow_anonymous\:math:text$/\1/" /etc/mosquitto/conf.d/90-daegis-acl.conf && sudo systemctl reload mosquitto`
 
-> **補足（2025-10-04T19:00:19Z）**: 上の `sed` 行が化けた場合の正しいコマンド  
+> **補足（2025-10-04T19:00:19Z）**: 上の `sed` 行が化けた場合の正しいコマンド
 > `sudo sed -i 's/^# :math:text\|allow_anonymous:math:text$/\1/' /etc/mosquitto/conf.d/90-daegis-acl.conf && sudo systemctl reload mosquitto`
 
 ### ACL有効化コマンド（正）

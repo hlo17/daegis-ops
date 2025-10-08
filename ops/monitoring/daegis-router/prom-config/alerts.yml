@@ -1,0 +1,14 @@
+groups:
+- name: daegis-router.rules
+  rules:
+  - alert: RouterDown
+    expr: (up{job="daegis-router"} == 0) or (router_up == 0)
+    for: 2m
+    labels: {severity: critical}
+    annotations: {summary: "Router is DOWN (no scrape or router_up==0)"}
+
+  - alert: DayCostExceeded
+    expr: increase(rt_cost_usd_total[24h]) > 2
+    for: 5m
+    labels: {severity: warning}
+    annotations: {summary: "Daily router cost over $2 (last 24h)"}
