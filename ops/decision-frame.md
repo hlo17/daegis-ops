@@ -74,3 +74,5 @@
 
 ## AI出力の末尾ルール
 - ルール追記が要ると判断した回は**回答末尾に追記提案**を添える（対象ファイルも明記）。
+
+- 2025-10-08: Adopt  as AI ground truth; add  index; no new runtime deps/services without approval; router  defaults (60s in-mem cache, 3s timeout, X-Cache, keep rt_*).

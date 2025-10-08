@@ -206,3 +206,9 @@ ls -lh ~/daegis/records/kpi.png
 
 ## Registry index
 - [Registry](../../registry/index.md)
+
+## 2025-10-08 — Copilot Integration Phase 1
+- `docs/copilot/` を新設（Copilot向け**索引**・自動更新方針を明記）
+- `.github/copilot-instructions.md` を索引に連携（Copilotはまずここを見る）
+- Router `app.py` に **Paste-Guard v1**（header/footer哨戒、heredoc漏れ検出）を導入
+- 今後、Ground Truth更新時は `docs/copilot/` と Instructions を**同時更新**

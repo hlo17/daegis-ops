@@ -57,3 +57,5 @@ ops/monitoring/alertmanager/secret/
 venv/
 tools/local/
 ops/env/venv/
+venv*/
+__pycache__/

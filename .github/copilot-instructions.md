@@ -55,3 +55,9 @@ If the editor or latest chat suggests destructive edits (delete/rename/mass-gene
 ✅ `git diff --stat` small (≤2 files / ≤80 lines)  
 ✅ `/metrics` shows `rt_*` unchanged (only allowed additions)  
 ✅ No new deps/services added without approval
+
+---
+### Copilot Notes
+- Use `docs/copilot/README.md` as the index to canonical docs.
+- Do **not** add new runtime deps/services without explicit approval (e.g., Redis).
+- Latest chat / open file can bias; this index keeps you anchored.
