@@ -42,6 +42,9 @@ try:
 except Exception:
     _DAEGIS_COMPASS = {"weights": {"quality": 0.4, "latency": 0.3, "cost": 0.2, "safety": 0.1}}
 
+# --- add: decision log toggle ---
+LOG_DECISION = os.getenv("LOG_DECISION", "1") == "1"
+
 def _daegis_corr_id(headers):
     # 既存の相関IDヘッダがあれば尊重。なければ生成。
     for k in ("X-Corr-ID", "X-Correlation-ID", "X-Request-ID"):
@@ -162,16 +165,31 @@ async def _daegis_episode_mw(request, call_next):
         response.headers["X-Episode-ID"] = episode_id
 
         # 意思決定ログを stdout へ
-        print(json.dumps({
-            "event": "decision",
-            "episode": episode_id,
-            "corr_id": corr_id,
-            "intent": "chat_answer",
-            "compass_snapshot": _DAEGIS_COMPASS,
-            "ts_decision": time.time(),
-        }), flush=True)
+        if LOG_DECISION:
+            print(json.dumps({
+                "event": "decision",
+                "episode": episode_id,
+                "corr_id": corr_id,
+                "intent": "chat_answer",
+                "compass_snapshot": _DAEGIS_COMPASS,
+                "ts_decision": time.time(),
+            }), flush=True)
 
         return response
 
     return await call_next(request)
+# --- end add ---
+
+# --- add: Safety fallback mode header ---
+from pathlib import Path
+
+@app.middleware("http")
+async def _safety_mode_header(request, call_next):
+    response = await call_next(request)
+    
+    if request.url.path.rstrip("/") == "/chat" and request.method == "POST":
+        if Path("ops/policy/mode.safe").exists():
+            response.headers["X-Mode"] = "SAFE"
+    
+    return response
 # --- end add ---

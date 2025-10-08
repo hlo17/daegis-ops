@@ -48,3 +48,53 @@ curl -s http://127.0.0.1:8080/metrics | egrep 'rt_cache_(hits|misses)_total|rt_l
 # Note: Returns 500 "prometheus_client not installed" when package missing
 curl -i http://127.0.0.1:8080/metrics
 ```
+
+## Safety Fallback
+
+### Enable/Disable Safe Mode
+```bash
+# Enable safe mode (adds X-Mode: SAFE header to /chat responses)
+scripts/guard/safe_fallback.sh --enable
+
+# Disable safe mode
+scripts/guard/safe_fallback.sh --disable
+```
+
+### Check Metrics and Get Recommendation
+```bash
+# Analyze current metrics and recommend action
+scripts/guard/safe_fallback.sh
+
+# Example outputs:
+# "metrics OK (p95 ratio: 0.98)"
+# "RECOMMEND SAFE MODE (p95 ratio: 0.89)"
+# "metrics unavailable; no action"
+```
+
+### What to Observe
+- **Safe Mode ON**: `/chat` responses include `X-Mode: SAFE` header
+- **Safe Mode OFF**: No `X-Mode` header present  
+- **Decision Logs**: Unchanged; continue logging normally
+- **Behavior**: No timeout/cache changes; header-only indication
+
+**Note**: `/metrics` requires `prometheus_client` package. If absent, script prints advisory only.
+
+## Metrics (dev only)
+
+### Development Setup
+```bash
+# Install prometheus_client for development metrics
+pip install -r requirements-dev.txt
+
+# Verify metrics endpoint
+./scripts/dev/metrics_check.sh
+
+# Toggle decision logging (default: enabled)
+export LOG_DECISION=0  # disable decision logs
+export LOG_DECISION=1  # enable decision logs (default)
+```
+
+### Production Notes
+- Metrics collection is optional in production
+- Can use sidecar pattern or external monitoring
+- Decision logs can be disabled with `LOG_DECISION=0`
