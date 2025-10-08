@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# Make a single, stable "context packet" for AIs from docs/
+set -euo pipefail
+
+MAX_BYTES="${MAX_BYTES:-120000}"   # 上限バイト（AIに合わせて可変）
+MAX_LINES="${MAX_LINES:-}"         # 上限行数（未指定なら制限しない）
+HEADER="${HEADER:-DAEGIS CONTEXT PACKET v1}"
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+
+cd "$ROOT"
+
+# 入口案内は固定で冒頭に置く
+{
+  echo "### $HEADER"
+  echo "- entry: docs/copilot/README.md"
+  echo "- note: prefer relative links from docs/copilot/"
+  echo
+
+  # docs/copilot/** を優先的に列挙（deterministicのために sort）
+  rg -n -H -S \
+    --glob 'docs/copilot/**' \
+    -g '!**/node_modules/**' -g '!**/.venv/**' -g '!**/venv/**' \
+    -g '!**/dist/**' -g '!**/build/**' \
+    -e '.' --no-heading --color=never \
+  | LC_ALL=C sort \
+  | sed 's/^[^:]*:[0-9]\+:/- /'
+} | head -c "$MAX_BYTES" | ( [ -z "${MAX_LINES}" ] && cat || head -n "$MAX_LINES" )

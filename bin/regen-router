@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+OUT="$ROOT/router/app.py"
+TMP="$(mktemp)"
+
+cat >"$TMP" <<'PY'
+# DAEGIS ROUTER · FASTAPI
+# GOAL: /chat は最小差分で改良。Prometheusメトリクス必須。
+# RULES:
+# - cache: 60s TTL (user+contentキー)
+# - timeout: 3.0s（外部IO） TimeoutError→HTTP 504
+# - metrics: rt_requests_total / rt_latency_ms / rt_cache_{hits,misses}_total
+# - tests: pytest名は <機能>_<期待> (例: cache_hit_is_faster)
+
+# ---- paste-guard (header/footer) -------------------------------------------
+_PG_HEADER = "# DAEGIS ROUTER · FASTAPI"
+_PG_FOOTER = "# [PASTE-GUARD EOF v1] 5c6da0d0"
+
+def _paste_guard():
+    import sys, pathlib
+    p = pathlib.Path(__file__)
+    s = p.read_text(encoding="utf-8", errors="strict")
+    errs = []
+    if not s.splitlines()[0].startswith(_PG_HEADER):
+        errs.append("header missing (first line broken)")
+    if _PG_FOOTER not in s:
+        errs.append("footer missing (EOF truncated or extra junk)")
+    if "cat > router/app.py <<'PY'" in s:
+        errs.append("heredoc marker leaked into file (shell pasted incorrectly)")
+    if errs:
+        sys.stderr.write("[paste-guard] file appears corrupted:\n - " + "\n - ".join(errs) + "\n")
+        sys.exit(2)
+# ---------------------------------------------------------------------------
+
+import time, hashlib, asyncio
+from typing import Dict, Tuple
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI(title="DAEGIS Router")
+
+# ---- very small in-memory cache --------------------------------------------
+_TTL = 60.0
+_Cache: Dict[str, Tuple[float, dict]] = {}
+_CacheHits = 0
+_CacheMisses = 0
+
+def _cache_key(user: str, content: str) -> str:
+    return hashlib.sha256(f"{user}::{content}".encode()).hexdigest()
+
+def _get_cached(k: str):
+    global _CacheHits, _CacheMisses
+    now = time.time()
+    v = _Cache.get(k)
+    if v and now - v[0] <= _TTL:
+        _CacheHits += 1
+        return v[1]
+    _CacheMisses += 1
+    return None
+
+def _set_cached(k: str, payload: dict):
+    _Cache[k] = (time.time(), payload)
+
+class ChatIn(BaseModel):
+    user: str
+    content: str
+
+@app.post("/chat")
+async def chat(body: ChatIn):
+    _paste_guard()
+    k = _cache_key(body.user, body.content)
+    cached = _get_cached(k)
+    if cached:
+        return {"cached": True, **cached}
+
+    try:
+        async def _work():
+            await asyncio.sleep(0.05)
+            return {"reply": f"echo: {body.content}"}
+        res = await asyncio.wait_for(_work(), timeout=3.0)
+    except asyncio.TimeoutError:
+        raise HTTPException(status_code=504, detail="upstream timeout")
+    payload = {"cached": False, **res}
+    _set_cached(k, payload)
+    return payload
+
+# [PASTE-GUARD EOF v1] 5c6da0d0
+PY
+
+# quick guard
+head -n1 "$TMP" | grep -q "DAEGIS ROUTER · FASTAPI"
+grep -q "\[PASTE-GUARD EOF v1\] 5c6da0d0" "$TMP"
+
+mkdir -p "$ROOT/router"
+mv "$TMP" "$OUT"
+echo "wrote $OUT"
