@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Usage: bin/ctx-diff <git-range>   # 例: bin/ctx-diff origin/main..
+set -euo pipefail
+RANGE="${1:-HEAD~1..HEAD}"
+echo "### DAEGIS CONTEXT DIFF ($RANGE)"
+git diff --name-only "$RANGE" -- 'docs/**' | while read -r f; do
+  [ -f "$f" ] || continue
+  echo; echo "## $f"
+  nl -ba "$f" | sed 's/^/ - /'
+done | head -n "${MAX_LINES:-200}"

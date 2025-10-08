@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cat <<'TXT'
+You are my coding copilot. Follow these rules:
+- Prefer docs under docs/copilot/* as the entry index; resolve to Ground Truth listed there.
+- When suggestions conflict with Ground Truth, ask before changing.
+- Aim for minimal, observable, reversible diffs; no new runtime deps without approval.
+- If you need missing context, ask with a 1–2 line question.
+
+--- CONTEXT (30 lines) ---
+TXT
+MAX_LINES=30 bin/ctx

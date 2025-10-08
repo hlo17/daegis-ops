@@ -1,3 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(git rev-parse --show-toplevel 2>/dev/null || pwd)"
+OUT="$ROOT/router/app.py"
+TMP="$(mktemp)"
+
+cat >"$TMP" <<'PY'
 # DAEGIS ROUTER · FASTAPI
 # GOAL: /chat は最小差分で改良。Prometheusメトリクス必須。
 # RULES:
@@ -79,7 +87,12 @@ async def chat(body: ChatIn):
     return payload
 
 # [PASTE-GUARD EOF v1] 5c6da0d0
+PY
 
-# --- chat cache/timeout patch ---
-from router.chat_cache_timeout import install_chat_patch
-install_chat_patch(app)
+# quick guard
+head -n1 "$TMP" | grep -q "DAEGIS ROUTER · FASTAPI"
+grep -q "\[PASTE-GUARD EOF v1\] 5c6da0d0" "$TMP"
+
+mkdir -p "$ROOT/router"
+mv "$TMP" "$OUT"
+echo "wrote $OUT"
