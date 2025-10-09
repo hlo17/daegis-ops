@@ -1,0 +1,8 @@
+intents:
+  - id: chat_answer
+    goal: "Give helpful answer"
+    links: [reduce_cost, keep_latency_ok]
+  - id: reduce_cost
+    goal: "Lower spend"
+  - id: keep_latency_ok
+    goal: "Keep p95 under 3s"
