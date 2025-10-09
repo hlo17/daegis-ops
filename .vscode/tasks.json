@@ -151,6 +151,12 @@
       "problemMatcher": []
     },
     {
+      "label": "Review: Gate (API x3)",
+      "type": "shell",
+      "command": "bash scripts/dev/review_gate.sh",
+      "problemMatcher": []
+    },
+    {
       "label": "Copilot: Sync README from INSTRUCTIONS",
       "type": "shell",
       "command": "bash scripts/dev/sync_copilot_readme.sh",

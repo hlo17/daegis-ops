@@ -78,3 +78,8 @@ venv*/
 server.log
 nohup.out
 .coverage
+# VS Code: track only tasks.json
+.vscode/
+!.vscode/
+.vscode/*
+!.vscode/tasks.json
