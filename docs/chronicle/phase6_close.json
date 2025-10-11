@@ -1,0 +1,10 @@
+{
+  "phase": "VI",
+  "title": "Learning Integration / Factory Unification",
+  "closed_utc": "2025-10-11T13:02:51Z",
+  "status": "completed",
+  "components": ["learn","scribe","oracle","factory"],
+  "summary": "Reward normalization, confidence calibration, counterfactual logging, Factory queue integration, RBAC/HMAC/WORM completed.",
+  "next_phase": "VII",
+  "next_focus": "Cortex Bridge & Counterfactual Expansion"
+}
