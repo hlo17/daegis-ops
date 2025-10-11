@@ -1048,3 +1048,5 @@ _Appended by scripts/dev/dashboard_lite.sh_
   verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=434 window=1800s
 ### KPI (fixed)
   verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=434 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=438 window=1800s

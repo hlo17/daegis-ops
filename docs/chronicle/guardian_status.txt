@@ -20,3 +20,25 @@ nodes:
   - ops.cron
 
 --- Last 10 Ledger Entries ---
+-	Phase V	oracle.l13	Canary判定（plan/publish中心、5分窓併用）
+-	Phase V	apply.l10_5_gate	Auto-Adopt Gate（L13/VETO/COOLDOWN連動）
+-	Phase V	learn.sb2_pipeline	SimBrain v2 提案 + confidence タグ注入
+-	Phase V	scribe.dashboard_lite	Dashboard Lite 拡張（ALLOW/cooldown表示など）
+-	Phase V	ops.cron	常設ジョブ（enrich/verdict/ready/sb2）
+-	Phase VI	vi.bootstrap	Reward Normalize / Confidence Calibrate / Counterfactual 初期導入
+
+--- Flags ---
+  L5_VETO: present
+  L105_COOLDOWN_UNTIL: present
+
+--- WORM evidence ---
+  cron_snapshot: OK
+  dashboard_lite: OK
+  dash_snapshot_today: OK
+
+--- Next Actions (from summary.md) ---
+## Next Actions (Phase V → VI)
+
+1) Dashboard KPI 証跡の固定化 …
+2) Cron 実在証跡の保存 …
+3) trace_id 採番ルールの固定 …
