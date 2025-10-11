@@ -4,9 +4,9 @@
   "kpi": {
     "canary_verdict": "FAIL",
     "hold_rate": 0.2241,
-    "e5xx": 394.0,
+    "e5xx": 394,
     "p95_ms": 3005.72,
-    "adopt_block_last200": "unknown"
+    "adopt_block_last200": 4
   },
   "components_status": {
     "oracle.l13": "FAIL",

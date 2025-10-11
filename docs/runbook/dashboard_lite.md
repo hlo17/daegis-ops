@@ -1028,3 +1028,17 @@ _Appended by scripts/dev/dashboard_lite.sh_
   verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=414 window=1800s
 ### KPI (fixed)
   verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=416 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=420 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=423 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=423 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=423 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=423 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=429 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=429 window=1800s
