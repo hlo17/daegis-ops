@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="${ROOT:-$(cd "$SELF_DIR/../.." && pwd)}"
+CMD="${1:-menu}"
+
+run_status(){   exec "$ROOT/scripts/guardian/status.sh"; }
+run_park(){     exec "$ROOT/scripts/guardian/closeout.sh"; }
+run_docs(){     bash "$ROOT/scripts/dev/regenerate_docs_full.sh" || true; echo "[done] regenerated 6 docs"; }
+run_beacon(){   exec "$ROOT/scripts/guardian/beacon.sh"; }
+run_auto(){     "$ROOT/scripts/guardian/status.sh" || true; "$ROOT/scripts/guardian/closeout.sh" || true; bash "$ROOT/scripts/dev/regenerate_docs_full.sh" || true; echo "[AUTO] status→park→docs done."; }
+run_diff(){     bash "$ROOT/scripts/guardian/diff.sh"; }
+run_explain(){  cat <<'EOT'
+run_copilot_brief(){ exec "$ROOT/scripts/guardian/copilot_brief.sh"; }
+Guardian 出力の見方:
+- Phase / KPI / Flags / Last Events / WORM証跡 / Next Actions を上から順に確認
+- 再開の第一歩は「Last Events」→「Next Actions」
+- canary=PASS なら採択ゲート可、FAILなら先に保留率/5xxを是正
+EOT
+}
+
+menu(){
+  echo "Guardian — choose an action:"
+  select opt in \
+    "Status" \
+    "Safe Park" \
+    "Regenerate 6 Docs" \
+    "Auto (status→park→docs)" \
+    "Diff (since last commit)" \
+    "Beacon (compact export)" \
+    "Copilot Brief" \
+    "Explain" \
+    "Quit"; do
+    case "$REPLY" in
+      1) run_status;;
+      2) run_park;;
+      3) run_docs;;
+      4) run_auto;;
+      5) run_diff;;
+      6) run_beacon;;
+      7) run_copilot_brief;;
+      8) run_explain;;
+      9) exit 0;;
+      *) echo "pick 1-8";;
+    esac
+  done
+}
+
+case "$CMD" in
+  ""|menu)                 menu;;
+  status)                  run_status;;
+  park|close|closeout)     run_park;;
+  docs|6docs|regen)        run_docs;;
+  auto)                    run_auto;;
+  diff)                    run_diff;;
+  beacon)                  run_beacon;;
+  explain|-h|--help|help)  run_explain;;
+    copilot-brief) run_copilot_brief;;
+  *) echo "[err] unknown command: $CMD" >&2; exit 1;;
+esac
