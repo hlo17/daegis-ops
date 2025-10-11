@@ -1,0 +1,15 @@
+0 18 * * * /home/f/daegis/tools/rt-digest.sh >> /home/f/daegis/logs/rt-digest.log 2>&1
+0 9 * * * /home/f/daegis/tools/daily-auto-handoff.sh >> /home/f/daegis/logs/daily-auto-handoff.log 2>&1
+*/10 * * * * cd ~/daegis && . .venv/bin/activate && python3 scripts/learn/decision_enrich.py && python3 scripts/learn/canary_verdict.py >> /tmp/l13_loop.log 2>&1
+*/15 * * * * cd ~/daegis && . .venv/bin/activate && SB_MIN_CONF_TAG="${SB_MIN_CONF_TAG:-mid}" bash scripts/dev/sb2_pipeline.sh >> /tmp/sb2_pipeline.log 2>&1
+*/30 * * * * cd ~/daegis && . .venv/bin/activate && AUTO_TUNE_ALLOW_INTENTS="plan,publish" bash scripts/learn/auto_adopt_when_ready.sh >> /tmp/l105_ready.log 2>&1
+*/30 * * * * cd ~/daegis && . .venv/bin/activate && bash scripts/dev/auto_adopt_when_ready.sh >> /tmp/l105.log 2>&1
+*/30 * * * * cd ~/daegis && . .venv/bin/activate && python3 scripts/learn/simbrain.py && python3 scripts/learn/bandit_shadow.py && python3 scripts/learn/auto_tune_dry.py >> /tmp/learn_pipeline.log 2>&1
+*/30 * * * * cd ~/daegis && . .venv/bin/activate && python3 scripts/learn/simbrain_v2.py && python3 scripts/learn/bandit_shadow.py && python3 scripts/learn/auto_tune_dry.py && python3 scripts/learn/apply_planner.py && bash scripts/guard/safety_sentinel.sh >> /tmp/learn_pipeline.log 2>&1
+55 23 * * * bash -lc '/home/f/daegis/tools/snapshot.sh'
+5 9 1 * * GRAFANA_ADMIN_PASS=nknm /home/f/daegis/tools/update-grafana-key.sh >> /home/f/daegis/logs/update-grafana-key.log 2>&1
+5 9 1 * * GRAFANA_ADMIN_PASS=nknm /home/f/daegis/tools/update-grafana-token.sh >> /home/f/daegis/logs/update-grafana-token.log 2>&1
+* * * * * bash -lc "$HOME/daegis/obs/canary.sh"
+*/30 * * * * cd ~/daegis && ./ops/run-profile oracle >> logs/cron_oracle.log 2>&1
+0 2 * * * cd ~/daegis && ./ops/run-profile guardian >> logs/cron_guardian.log 2>&1
+0 3 * * * cd ~/daegis && ./ops/run-profile scribe >> logs/cron_scribe.log 2>&1

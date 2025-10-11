@@ -1,0 +1,162 @@
+{
+  "generated_at": "now",
+  "phase_active": "Phase V",
+  "nodes": [
+    {
+      "id": "oracle.l13",
+      "phase": "Phase V",
+      "layer": [
+        "observability",
+        "agents"
+      ],
+      "topic": "Canary判定（plan/publish中心、5分窓併用）",
+      "status": "Confirmed",
+      "evaluation": {
+        "verdict": "FAIL",
+        "reason": "from l13 tail",
+        "factors": []
+      },
+      "files": [
+        "scripts/learn/decision_enrich.py",
+        "scripts/learn/canary_verdict.py",
+        "logs/policy_canary_verdict.jsonl"
+      ],
+      "interfaces": {
+        "inputs": [
+          "logs/decision.jsonl"
+        ],
+        "outputs": [
+          "logs/policy_canary_verdict.jsonl"
+        ],
+        "side_effects": []
+      }
+    },
+    {
+      "id": "apply.l10_5_gate",
+      "phase": "Phase V",
+      "layer": [
+        "agents",
+        "governance",
+        "sentry"
+      ],
+      "topic": "Auto-Adopt Gate（L13/VETO/COOLDOWN連動）",
+      "status": "Confirmed",
+      "evaluation": {
+        "verdict": "PASS",
+        "reason": "gate respected L13 FAIL (adopt_block)",
+        "factors": [
+          "adopt_block present"
+        ]
+      },
+      "files": [
+        "scripts/learn/auto_adopt_gate.sh",
+        "logs/policy_apply_controlled.jsonl",
+        "flags/L5_VETO",
+        "flags/L105_COOLDOWN_UNTIL"
+      ],
+      "interfaces": {
+        "inputs": [
+          "logs/policy_canary_verdict.jsonl",
+          "flags/L5_VETO"
+        ],
+        "outputs": [
+          "logs/policy_apply_controlled.jsonl"
+        ],
+        "side_effects": []
+      }
+    },
+    {
+      "id": "learn.sb2_pipeline",
+      "phase": "Phase V",
+      "layer": [
+        "agents"
+      ],
+      "topic": "SimBrain v2 提案 + confidence タグ注入",
+      "status": "Confirmed",
+      "evaluation": {
+        "verdict": "PASS",
+        "reason": "apply_plan events present",
+        "factors": [
+          "policy_apply_plan tail exists"
+        ]
+      },
+      "files": [
+        "scripts/dev/sb2_pipeline.sh",
+        "logs/policy_auto_tune.jsonl",
+        "logs/policy_apply_plan.jsonl"
+      ],
+      "interfaces": {
+        "inputs": [
+          "logs/simbrain_proposals.jsonl",
+          "logs/policy_auto_tune.jsonl"
+        ],
+        "outputs": [
+          "logs/policy_apply_plan.jsonl"
+        ],
+        "side_effects": []
+      }
+    },
+    {
+      "id": "scribe.dashboard_lite",
+      "phase": "Phase V",
+      "layer": [
+        "docs",
+        "observability"
+      ],
+      "topic": "Dashboard Lite 拡張（ALLOW/cooldown表示など）",
+      "status": "Confirmed",
+      "evaluation": {
+        "verdict": "INSUFFICIENT",
+        "reason": "unknown",
+        "factors": []
+      },
+      "files": [
+        "scripts/dev/dashboard_lite.sh",
+        "docs/runbook/dashboard_lite.md"
+      ],
+      "interfaces": {
+        "inputs": [
+          "logs/*",
+          "flags/L105_COOLDOWN_UNTIL"
+        ],
+        "outputs": [
+          "docs/runbook/dashboard_lite.md"
+        ],
+        "side_effects": []
+      }
+    },
+    {
+      "id": "ops.cron",
+      "phase": "Phase V",
+      "layer": [
+        "observability",
+        "scheduler"
+      ],
+      "topic": "常設ジョブ（enrich/verdict/ready/sb2）",
+      "status": "Confirmed",
+      "evaluation": {
+        "verdict": "INSUFFICIENT",
+        "reason": "unknown",
+        "factors": []
+      },
+      "files": [
+        "(user) crontab",
+        "scripts/dev/sb2_pipeline.sh"
+      ],
+      "interfaces": {
+        "inputs": [],
+        "outputs": [],
+        "side_effects": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "from": "oracle.l13",
+      "to": "apply.l10_5_gate",
+      "type": "data",
+      "reason": "policy_canary_verdict.jsonl → gate input"
+    }
+  ],
+  "conflicts": []
+}

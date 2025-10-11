@@ -1018,13 +1018,3 @@ _Appended by scripts/dev/dashboard_lite.sh_
 - cooldown: none
 
 _Appended by scripts/dev/dashboard_lite.sh_
-### KPI (fixed)
-  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=402 window=300s
-### KPI (fixed)
-  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=412 window=1800s
-### KPI (fixed)
-  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=414 window=1800s
-### KPI (fixed)
-  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=414 window=1800s
-### KPI (fixed)
-  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=416 window=1800s
