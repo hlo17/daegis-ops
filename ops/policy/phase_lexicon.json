@@ -1,0 +1,49 @@
+{
+  "version": "2025-10-11",
+  "six_docs": {
+    "Map": {
+      "path": "docs/chronicle/system_map.json",
+      "kind": "json",
+      "desc": "構成マップ（nodes/edges）"
+    },
+    "Ledger": {
+      "path": "docs/chronicle/phase_ledger.jsonl",
+      "kind": "jsonl",
+      "desc": "監査台帳（append-only原本）"
+    },
+    "Chronicle": {
+      "path": "docs/chronicle/chronicle.md",
+      "kind": "md",
+      "desc": "台帳→時系列サマリ"
+    },
+    "Brief": {
+      "path": "docs/chronicle/brief.md",
+      "kind": "md",
+      "desc": "要約＋KPIスナップショット"
+    },
+    "Runbook": {
+      "path": "docs/runbook/dashboard_lite.md",
+      "kind": "md",
+      "desc": "運用現況ダッシュ"
+    },
+    "Charter": {
+      "path": "docs/chronicle/charter.md",
+      "kind": "md",
+      "desc": "目的・ガードレール（方針）"
+    }
+  },
+  "notes": [
+    "Instructions は 6文書に含めない（Copilot連携は docs/copilot/README.md で別運用）",
+    "すべて Append-only / API-one proof 原則"
+  ],
+  "tools": {
+    "guardian": {
+      "bin": "scripts/guardian/guardian",
+      "desc": "Status/Park/6-docs/Diff/Beacon"
+    },
+    "factory": {
+      "dir": "ops/factory",
+      "desc": "署名付き実行計画の実行 (RBAC+HMAC+WORM)"
+    }
+  }
+}
