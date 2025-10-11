@@ -13,3 +13,12 @@
 */30 * * * * cd ~/daegis && ./ops/run-profile oracle >> logs/cron_oracle.log 2>&1
 0 2 * * * cd ~/daegis && ./ops/run-profile guardian >> logs/cron_guardian.log 2>&1
 0 3 * * * cd ~/daegis && ./ops/run-profile scribe >> logs/cron_scribe.log 2>&1
+0 * * * * ROOT=$HOME/daegis bash $HOME/daegis/scripts/guardian/beacon.sh >/dev/null 2>&1
+0 3 * * * cd $HOME/daegis && \
+guardian beacon >> logs/beacon_daily.log 2>&1 && \
+mkdir -p archives/$(date +\%F) && \
+cp -f docs/chronicle/beacon.md archives/$(date +\%F)/beacon.md && \
+sha=$(sha256sum archives/$(date +\%F)/beacon.md | awk "{print \$1}") && \
+ts=$(date -u +\%FT\%TZ) && \
+printf "{\"ts\":\"%s\",\"event\":\"worm_beacon\",\"sha\":\"%s\",\"path\":\"archives/%s/beacon.md\"}\n" "$ts" "$sha" "$(date +\%F)" >> logs/worm/journal.jsonl && \
+find archives -type f -mtime +21 -delete >/dev/null 2>&1
