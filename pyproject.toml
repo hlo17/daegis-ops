@@ -1,0 +1,11 @@
+[tool.ruff]
+target-version = "py310"
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E","F"]                 # まずは基本のエラー系だけ
+ignore = ["E401","E402"]          # import系ノイズは無視
+exclude = ["archives","logs","tmp",".venv",".git"]
+
+# ファイル単位で一時的に無視（V0パッチの間だけ）
+per-file-ignores = { "router/app.py" = ["F821"] }
