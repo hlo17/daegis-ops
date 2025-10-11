@@ -157,9 +157,155 @@
       "problemMatcher": []
     },
     {
+      "label": "Review: Gate+Quorum",
+      "type": "shell",
+      "command": "bash scripts/dev/review_gate.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Audit: Link hashes",
+      "type": "shell",
+      "command": "bash scripts/dev/audit_link_hashes.sh",
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
       "label": "Copilot: Sync README from INSTRUCTIONS",
       "type": "shell",
       "command": "bash scripts/dev/sync_copilot_readme.sh",
+      "problemMatcher": []
+    },
+    {
+      "label": "Metrics: Probe (Phase V)",
+      "type": "shell",
+      "command": "bash scripts/dev/metrics_check.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Ledger: Hash-Relay (Phase VI PoC·dry)",
+      "type": "shell",
+      "command": "bash scripts/dev/hash_relay.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Dev: Run (env+clean)",
+      "type": "shell",
+      "command": "bash -lc 'source scripts/dev/env_local.sh && pgrep -f \"uvicorn.*router.app\" && kill $(pgrep -f \"uvicorn.*router.app\") || true; sleep 1; pgrep -f \"uvicorn.*router.app\" && kill -9 $(pgrep -f \"uvicorn.*router.app\") || true; : > /tmp/router.log; python -m uvicorn router.app:app --host 0.0.0.0 --port 8080'",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Proof: L2+ tuner smoke",
+      "type": "shell",
+      "command": "bash -lc 'curl -s -X POST http://127.0.0.1:8080/chat -H \"Content-Type: application/json\" -d ''{\"q\":\"tuner smoke\"}'' >/dev/null; tail -1 logs/decision.jsonl | jq -r ''.tuning.sla_suggested_ms // \"(no tuning)\"'''",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Metrics: Probe (L2+)",
+      "type": "shell",
+      "command": "bash scripts/dev/metrics_probe.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Ops: Sanity Combo",
+      "type": "shell",
+      "command": "bash scripts/dev/ops_sanity.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Learning: Probe (Cerebellum)",
+      "type": "shell",
+      "command": "bash scripts/dev/learning_probe.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Audit: Federate (push)",
+      "type": "shell",
+      "command": "bash scripts/dev/audit_federate.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Consensus: Federate (pull)",
+      "type": "shell",
+      "command": "bash scripts/dev/consensus_federate.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Audit: Federate (15m loop)",
+      "type": "shell",
+      "command": "bash -lc 'INT=900 COUNT=0 bash scripts/dev/audit_federate_loop.sh'",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Reflex: Eval (alerts)",
+      "type": "shell",
+      "command": "bash -lc 'HOLD_N=3 E5XX_N=2 bash scripts/guard/alert_eval.sh'",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Reflex: Eval (alerts, v2)",
+      "type": "shell",
+      "command": "bash -lc 'HOLD_N=3 E5XX_N=2 bash scripts/guard/alert_eval_v2.sh'",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Policy: Dry-Run (SLA)",
+      "type": "shell",
+      "command": "bash scripts/dev/policy_dryrun.sh logs/decision.jsonl",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Drill: Returnability (HOLD→recover)",
+      "type": "shell",
+      "command": "bash scripts/guard/returnability_drill.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Guard: Red-Team (smoke)",
+      "type": "shell",
+      "command": "bash scripts/guard/redteam_smoke.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Chronicle: Weekly snapshot",
+      "type": "shell",
+      "command": "bash scripts/dev/chronicle_weekly.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Chronicle: Run + Notify (now)",
+      "type": "shell",
+      "command": "bash -lc 'bash scripts/dev/chronicle_weekly.sh && bash scripts/dev/chronicle_weekly_notify.sh'",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Chronicle: Install weekly timer/cron",
+      "type": "shell",
+      "command": "bash scripts/dev/chronicle_timer_install.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Prometheus: Rebind (Daegis)",
+      "type": "shell",
+      "command": "bash scripts/dev/prometheus_rebind.sh",
+      "options": { "cwd": "${workspaceFolder}" },
       "problemMatcher": []
     }
   ]
