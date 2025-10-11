@@ -1,0 +1,22 @@
+=== Guardian Status ===
+Phase: Phase VI
+
+--- KPI (rollup/current.json) ---
+{
+  "canary_verdict": "FAIL",
+  "hold_rate": 0.2241,
+  "e5xx": 394,
+  "p95_ms": 3005.72,
+  "adopt_block_last200": 4
+}
+
+--- System Map (nodes / edges) ---
+nodes=5 edges=1
+nodes:
+  - oracle.l13
+  - apply.l10_5_gate
+  - learn.sb2_pipeline
+  - scribe.dashboard_lite
+  - ops.cron
+
+--- Last 10 Ledger Entries ---
