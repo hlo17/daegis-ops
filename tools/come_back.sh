@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+cd "$HOME/daegis"
+echo "== Guardian =="
+guardian status || true
+echo; echo "== Introspect (latest) =="
+jq -r '.[]|[.id,.status,.to,.topic]|@tsv' logs/introspect.latest.jsonl 2>/dev/null || true
+echo; echo "== Beacon tail =="
+tail -20 logs/beacon_daily.log 2>/dev/null || true
+echo; echo "== WORM tail =="
+tail -10 logs/worm/journal.jsonl 2>/dev/null || true
