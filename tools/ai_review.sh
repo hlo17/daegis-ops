@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+if [ -f docs/agents/assistant_profile.md ]; then
+  echo "== assistant_profile =="
+  sed -n "1,160p" docs/agents/assistant_profile.md
+fi
 set -euo pipefail
 cd "$HOME/daegis"
 topic="${1:-general}"
