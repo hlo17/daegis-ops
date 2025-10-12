@@ -1,6 +1,4 @@
-# How to use (Daegis × AGENTS.md)
-1. 設計は `docs/chronicle/plans.md` を編集（AIはまずここを読む）
-2. 仕様は `docs/agents/*.md` に追記（Mission/Exec Plan/Tests 必須）
-3. テスト: `make ci` または `guardian beacon`
-4. レビュー: `tools/ai_review.sh <topic>` を実行 → AIが Introspect 経由で応答
-5. 定期健診: `bash scripts/ops/agents_check.sh`（WORMに結果が残る）
+# agents.md — Daegis での使い方（最短版）
+- 設計は `docs/agents/*.md` に先に書く。実装はその後。
+- 大きめの変更は `docs/chronicle/plans.md` の **Exec Plan** を更新。
+- 検証は `scripts/ops/agents_check.sh`、`guardian beacon`、`/review <agent>`。
