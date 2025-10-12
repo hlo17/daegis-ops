@@ -1,4 +1,14 @@
-# Introspect Open Questions (as of 2025-10-12T19:12:01Z)
+# Introspect Open Questions (as of 2025-10-12T20:12:01Z)
+
+- **Windowカード: DNA Validate結果**  (#12c28d9f0af2)
+  - from: human:AEGIS → to: agent:kai
+  - ts: 2025-10-12T19:20:55Z
+  - reply: inbox/human_to_ai/12c28d9f0af2.md
+
+- **Windowカード: DNA diffメモ**  (#3122fe11003d)
+  - from: human:AEGIS → to: agent:kai
+  - ts: 2025-10-12T19:41:38Z
+  - reply: inbox/human_to_ai/3122fe11003d.md
 
 - **Windowカード: test wiring**  (#69b5cb02348f)
   - from: human:AEGIS → to: agent:luna
@@ -9,6 +19,11 @@
   - from: human:AEGIS → to: agent:oracle
   - ts: 2025-10-12T17:41:36Z
   - reply: inbox/human_to_ai/6d669c49eb50.md
+
+- **Windowカード: window_send二態**  (#c8b14ebbd277)
+  - from: human:AEGIS → to: agent:lyra
+  - ts: 2025-10-12T19:20:45Z
+  - reply: inbox/human_to_ai/c8b14ebbd277.md
 
 - **Windowカード: Window Send結果（trace露出）**  (#f7642c893e0a)
   - from: human:AEGIS → to: agent:lyra
