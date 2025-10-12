@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "ops/ledger/agent_dna.schema.json",
+  "type": "object",
+  "properties": {
+    "ts":      { "type": "string", "format": "date-time" },
+    "agent":   { "type": "string", "pattern": "^[a-z0-9_.-]+$" },
+    "kind":    { "type": "string", "enum": ["hash_rely","halu_rely","spirit_fingerprint","finalize"] },
+    "value":   {},
+    "identity": {
+      "type": "object",
+      "properties": {
+        "root_sha": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "files": { "type": "array", "items": {
+          "type": "object",
+          "properties": { "path": { "type": "string" }, "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" } },
+          "required": ["path","sha256"], "additionalProperties": false
+        } }
+      },
+      "additionalProperties": true
+    },
+    "lineage": {
+      "type": "object",
+      "properties": {
+        "reference": { "type": "array", "items": { "type": "string" } },
+        "assume":    { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "ratified_by": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+    "ext": { "type": "object" }
+  },
+  "required": ["ts","agent","kind"],
+  "additionalProperties": true
+}
