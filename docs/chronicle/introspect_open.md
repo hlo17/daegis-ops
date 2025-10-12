@@ -1,4 +1,4 @@
-# Introspect Open Questions (as of 2025-10-12T20:12:01Z)
+# Introspect Open Questions (as of 2025-10-12T21:12:01Z)
 
 - **Windowカード: DNA Validate結果**  (#12c28d9f0af2)
   - from: human:AEGIS → to: agent:kai
@@ -24,6 +24,11 @@
   - from: human:AEGIS → to: agent:lyra
   - ts: 2025-10-12T19:20:45Z
   - reply: inbox/human_to_ai/c8b14ebbd277.md
+
+- **Windowカード: Daily Digest 設計**  (#eb0e6dc226ac)
+  - from: human:AEGIS → to: agent:kai
+  - ts: 2025-10-12T21:05:12Z
+  - reply: inbox/human_to_ai/eb0e6dc226ac.md
 
 - **Windowカード: Window Send結果（trace露出）**  (#f7642c893e0a)
   - from: human:AEGIS → to: agent:lyra
