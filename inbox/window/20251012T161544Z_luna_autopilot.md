@@ -1,5 +1,5 @@
 ---
-window: daegis
+window: garden-gate
 type: review_request
 topic: "Luna autopilot: weight/mode の安全域レビュー"
 from: "human:AEGIS"

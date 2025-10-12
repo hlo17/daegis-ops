@@ -1,0 +1,13 @@
+{
+  "version": "v0",
+  "intents": [
+    {"id":"plan",        "owner":"architect", "autonomy_min":"L0", "metric":"hold_rate", "threshold":0.10, "rollback":"noop"},
+    {"id":"publish",     "owner":"scribe",    "autonomy_min":"L1", "metric":"e5xx",      "threshold":0,    "rollback":"revert_last"},
+    {"id":"analyze",     "owner":"oracle",    "autonomy_min":"L0", "metric":"p95_ms",    "threshold":2500, "rollback":"noop"},
+    {"id":"chat_answer", "owner":"roundtable","autonomy_min":"L1", "metric":"hold_rate", "threshold":0.20, "rollback":"withdraw"},
+    {"id":"gate",        "owner":"oracle",    "autonomy_min":"L2", "metric":"canary",    "threshold":"PASS","rollback":"close_gate"},
+    {"id":"review",      "owner":"reviewer",  "autonomy_min":"L0", "metric":"diff_risk", "threshold":"low","rollback":"request_changes"},
+    {"id":"play.explore","owner":"luna",      "autonomy_min":"L0", "metric":"cycles",    "threshold":"<=3/day","rollback":"stop"},
+    {"id":"play.tidy",   "owner":"luna",      "autonomy_min":"L0", "metric":"open_cards","threshold":"-","rollback":"stop"}
+  ]
+}

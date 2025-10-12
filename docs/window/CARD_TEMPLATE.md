@@ -1,5 +1,5 @@
 ---
-window: daegis
+window: garden-gate
 type: review_request   # review_request | handoff | decision
 topic: "<短い件名>"
 from: "human:AEGIS"

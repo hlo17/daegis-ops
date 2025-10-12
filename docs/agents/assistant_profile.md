@@ -11,3 +11,5 @@
   - agents.md/plans.md を唯一の真実源に
   - “決定の短歌”で判断理由を1〜3行に凝縮
   - 相談ログ(Introspect/Window)の往復を残す
+
+- 窓口: **Garden Gate**（相談/レビュー/決裁の統一カード運用）
