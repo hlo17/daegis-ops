@@ -1,0 +1,35 @@
+{
+  "id": 5,
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "df04lyc3gb9c0b"
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "options": {
+        "dedupStrategy": "none",
+        "showLabels": true,
+        "wrapLogMessage": true
+      },
+      "targets": [
+        {
+          "expr": "{job=\"daegis\", host=\"round-table\"} |= \"Slack投稿完了\"",
+          "refId": "A"
+        }
+      ],
+      "title": "rt-digest.log",
+      "type": "logs"
+    }
+  ],
+  "schemaVersion": 39,
+  "timezone": "browser",
+  "title": "Daegis — RT Digest / Cron Logs",
+  "uid": "75ad8a02-18c1-423b-a5eb-d49bae148cde",
+  "version": 2
+}
