@@ -30,3 +30,10 @@
 
 ## 承認ログ
 - Owner: あなた / Reviewer: Lyra / Approver: Chappie
+
+## INCIDENT / 失敗博物館（2025-10-13）
+- 事象: /metrics に非数値（TRACE_PLACEHOLDER）が混入し scrape 全落ち（unsupported character in float）
+- 原因: window_send.sh が `daegis_window_send_last_trace ... TRACE_PLACEHOLDER` を出力
+- 復旧: .prom を退避→最小2行で復帰→犯人のみ除去→nohup 常駐に変更
+- 恒久対策: 文字列は `*_info{...} 1` に統一／emit直前に ASCII/LF ガード／tmp→mv の原子的書き込みを徹底
+- Runbook: docs/ops/HANDOFF_MAP_v1.md#freshness-復旧ワンライナー
