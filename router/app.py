@@ -691,8 +691,42 @@ async def _daegis_episode_mw(request, call_next):
     # /chat POST のみ対象（末尾スラッシュも吸収）
     path = request.url.path.rstrip("/")
     if path == "/chat" and request.method == "POST":
-        t0_wall = _time.time()
-        t0_ns = time.monotonic_ns()
+        pass  # HALU hotfix: fill empty block
+    # Guard: ensure module aliases exist in function locals to avoid UnboundLocalError
+    try:
+        _os
+    except NameError:
+        import os as _os
+    try:
+        _json
+    except NameError:
+        import json as _json
+    try:
+        _time
+    except NameError:
+        import time as _time
+
+        os = __import__("os")
+        json = __import__("json")
+        time = __import__("time")
+        try:
+            _time
+        except NameError:
+            import time as _time
+        t0_wall = _time.time() 
+        try:
+            t0_ns = time.monotonic_ns()
+        except UnboundLocalError:
+            import time as _time
+            t0_ns = getattr(_time, "monotonic_ns", lambda: 0)()
+        except Exception:
+            try:
+                import logging
+                logging.getLogger("daegis").warning("t0_ns fallback triggered in _daegis_episode_mw")
+            except Exception:
+                pass
+            t0_ns = 0
+
         corr_id = (
             request.headers.get("X-Corr-ID") or request.headers.get("X-Correlation-ID") or f"cid-{uuid4().hex[:12]}"
         )
@@ -744,7 +778,30 @@ async def _daegis_episode_mw(request, call_next):
             except Exception:
                 pass
 
-        latency_ms = (time.monotonic_ns() - t0_ns) / 1_000_000.0
+        try:
+
+            latency_ms = (time.monotonic_ns() - t0_ns) / 1_000_000.0
+
+        except UnboundLocalError:
+
+            import time as _time
+
+            latency_ms = (getattr(_time, "monotonic_ns", lambda: 0)() - t0_ns) / 1_000_000.0
+
+        except Exception:
+
+            try:
+
+                import logging
+
+                logging.getLogger("daegis").warning("latency_ms fallback triggered in _daegis_episode_mw")
+
+            except Exception:
+
+                pass
+
+            latency_ms = 0.0
+
         response.headers["X-Episode-ID"] = episode_id
 
         # --- add: intent breadcrumb (header + ledger) ---
