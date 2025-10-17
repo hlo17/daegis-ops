@@ -1,4 +1,3 @@
-METRICS_INITED = False
 # DAEGIS ROUTER · FASTAPI
 # GOAL: /chat は最小差分で改良。Prometheusメトリクス必須。
 # RULES:
@@ -1725,9 +1724,6 @@ if _PROM_OK:
                 consensus_score.labels(intent=intent).set(PRIOR_SUPPORT / (PRIOR_SUPPORT + PRIOR_OBJECTION))
                 _priors_applied.add(intent)
 
-        if METRICS_INITED:
-            return
-        METRICS_INITED = True
         # one-time metrics init guard (function attribute; no globals)
         if getattr(bootstrap, '_metrics_inited', False):
             return
