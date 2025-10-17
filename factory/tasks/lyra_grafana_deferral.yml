@@ -1,0 +1,13 @@
+id: daegis_grafana_deferral
+title: "Grafana Dashboards は安定期に一括構築（延期）"
+phase: post-fusion
+owner: lyra
+labels: [daegis, lyra, grafana, ops]
+reason: "Exporter/Prometheus を先に安定化させるため"
+next:
+  - verify: "lyra_mode.prom の更新間隔と textfile_collector の権限"
+  - verify: "alert 'LyraNoSamples' の発火・復旧を手動テスト"
+  - verify: "recording rules（lyra, lyra_more, lyra_alerts）のロード状態"
+  - prepare: "Grafana 一括インポート用の cURL スクリプトを整備"
+  - prepare: "Factory テンプレ（例: lyra-dashboard.json.j2）で自動生成"
+status: open
