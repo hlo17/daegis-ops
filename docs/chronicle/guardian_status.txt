@@ -1,6 +1,6 @@
 === Guardian Status Snapshot ===
 === Guardian Status ===
-Phase: Phase VI→VII bridge
+Phase: unknown
 
 --- KPI (rollup/current.json) ---
 {
@@ -21,15 +21,16 @@ nodes:
   - ops.cron
 
 --- Last 10 Ledger Entries ---
--	Phase V	oracle.l13	Canary判定（plan/publish中心、5分窓併用）
--	Phase V	apply.l10_5_gate	Auto-Adopt Gate（L13/VETO/COOLDOWN連動）
--	Phase V	learn.sb2_pipeline	SimBrain v2 提案 + confidence タグ注入
--	Phase V	scribe.dashboard_lite	Dashboard Lite 拡張（ALLOW/cooldown表示など）
--	Phase V	ops.cron	常設ジョブ（enrich/verdict/ready/sb2）
--	Phase VI	vi.bootstrap	Reward Normalize / Confidence Calibrate / Counterfactual 初期導入
-1760187771	VI	unknown	phase_close
--	Phase VI	guardian.beacon	Guardian/Beacon 修復と運用安定化（NOW_修正・PATH整備・+x・可視化更新）
--	Phase VI→VII bridge	factory.daemon	Factory Daemon 最小実装（RBAC+Allowlist+HMAC 署名＋WORM監査）導入決定
+2025-10-16T12:30:01Z	unknown	garden_gate.window	(no-topic)
+2025-10-16T12:45:01Z	unknown	garden_gate.window	(no-topic)
+2025-10-16T13:00:02Z	unknown	garden_gate.window	(no-topic)
+2025-10-16T13:00:02Z	unknown	garden_gate.window	(no-topic)
+2025-10-16T13:15:01Z	unknown	garden_gate.window	(no-topic)
+2025-10-16T13:30:01Z	unknown	garden_gate.window	(no-topic)
+2025-10-16T13:30:01Z	unknown	garden_gate.window	(no-topic)
+2025-10-16T13:45:01Z	unknown	garden_gate.window	(no-topic)
+2025-10-17T10:58:51Z	unknown	garden_gate.window	(no-topic)
+2025-10-17T11:03:59Z	unknown	garden_gate.window	(no-topic)
 
 --- Flags ---
   L5_VETO: present
@@ -46,3 +47,12 @@ nodes:
 1) Dashboard KPI 証跡の固定化 …
 2) Cron 実在証跡の保存 …
 3) trace_id 採番ルールの固定 …
+## Daily Brief — 2025-10-14Z
+
+_(no entries)_\n
+## Daily Brief — 2025-10-15Z
+
+_(no entries)_\n
+## Daily Brief — 2025-10-16Z
+
+_(no entries)_\n
