@@ -1725,7 +1725,6 @@ if _PROM_OK:
                 consensus_score.labels(intent=intent).set(PRIOR_SUPPORT / (PRIOR_SUPPORT + PRIOR_OBJECTION))
                 _priors_applied.add(intent)
 
-        global METRICS_INITED
         if METRICS_INITED:
             return
         METRICS_INITED = True
