@@ -1,3 +1,4 @@
+METRICS_INITED = False
 # DAEGIS ROUTER · FASTAPI
 # GOAL: /chat は最小差分で改良。Prometheusメトリクス必須。
 # RULES:
@@ -1724,6 +1725,10 @@ if _PROM_OK:
                 consensus_score.labels(intent=intent).set(PRIOR_SUPPORT / (PRIOR_SUPPORT + PRIOR_OBJECTION))
                 _priors_applied.add(intent)
 
+        global METRICS_INITED
+        if METRICS_INITED:
+            return
+        METRICS_INITED = True
         logger.info(f"[PhaseV] Metrics initialized, intents={INTENTS}")
     except Exception as e:
         logger.warning(f"[PhaseV] Metrics init warning: {e}")
