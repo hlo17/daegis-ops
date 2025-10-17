@@ -691,7 +691,9 @@ async def _daegis_episode_mw(request, call_next):
     # /chat POST のみ対象（末尾スラッシュも吸収）
     path = request.url.path.rstrip("/")
     if path == "/chat" and request.method == "POST":
-        pass  # HALU hotfix: fill empty block
+        # HALU guard: bind builtin modules to local names once to avoid UnboundLocalError
+        import os as _os; import json as _json; import time as _time
+        os = _os; json = _json; time = _time
     # Guard: ensure module aliases exist in function locals to avoid UnboundLocalError
     try:
         _os
