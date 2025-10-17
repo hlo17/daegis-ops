@@ -1,0 +1,12 @@
+# HELP daegis_halu_eval_pass_ratio_1h Halu pass ratio (1h avg)
+# TYPE daegis_halu_eval_pass_ratio_1h gauge
+daegis_halu_eval_pass_ratio_1h 
+# HELP daegis_halu_eval_cases_1h Cases in 1h by status (approx, DRY)
+# TYPE daegis_halu_eval_cases_1h gauge
+daegis_halu_eval_cases_1h{status="total"} 
+# HELP daegis_halu_eval_cases_24h Cases in 24h by status (approx, DRY)
+# TYPE daegis_halu_eval_cases_24h gauge
+daegis_halu_eval_cases_24h{status="total"} 2.0256410256410255
+# HELP daegis_halu_info meta
+# TYPE daegis_halu_info gauge
+daegis_halu_info{source="mirror_9090",mode="DRY"} 1
