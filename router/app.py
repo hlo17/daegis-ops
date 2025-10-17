@@ -1729,6 +1729,10 @@ if _PROM_OK:
         if METRICS_INITED:
             return
         METRICS_INITED = True
+        # one-time metrics init guard (function attribute; no globals)
+        if getattr(bootstrap, '_metrics_inited', False):
+            return
+        bootstrap._metrics_inited = True
         logger.info(f"[PhaseV] Metrics initialized, intents={INTENTS}")
     except Exception as e:
         logger.warning(f"[PhaseV] Metrics init warning: {e}")
