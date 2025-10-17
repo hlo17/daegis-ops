@@ -1,3 +1,4 @@
+from router._guards import ensure_chat_locals, init_metrics_once
 # DAEGIS ROUTER · FASTAPI
 # GOAL: /chat は最小差分で改良。Prometheusメトリクス必須。
 # RULES:
@@ -691,9 +692,9 @@ async def _daegis_episode_mw(request, call_next):
     # /chat POST のみ対象（末尾スラッシュも吸収）
     path = request.url.path.rstrip("/")
     if path == "/chat" and request.method == "POST":
-        # HALU guard: bind builtin modules to local names once to avoid UnboundLocalError
-        import os as _os; import json as _json; import time as _time
-        os = _os; json = _json; time = _time
+        # guard -> helper call
+        _os,_json,_time = ensure_chat_locals()
+        os, json, time = _os, _json, _time
     # Guard: ensure module aliases exist in function locals to avoid UnboundLocalError
     try:
         _os
@@ -1726,8 +1727,8 @@ if _PROM_OK:
 
         # one-time metrics init guard (function attribute; no globals)
         if getattr(bootstrap, '_metrics_inited', False):
-            return
-        bootstrap._metrics_inited = True
+            bootstrap._metrics_inited = True
+            init_metrics_once()
         logger.info(f"[PhaseV] Metrics initialized, intents={INTENTS}")
     except Exception as e:
         logger.warning(f"[PhaseV] Metrics init warning: {e}")
