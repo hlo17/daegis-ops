@@ -83,3 +83,23 @@ nohup.out
 !.vscode/
 .vscode/*
 !.vscode/tasks.json
+# volatile
+logs/
+archives/
+backups/
+queue/
+www/*.svg
+
+# grafana runtime
+ops/grafana/grafana-data/
+
+# secrets & tokens
+config/.gc_token*
+config/*token*
+state/slack_webhook_url
+
+# misc
+*.pid
+*.gz
+*.out
+*.err
