@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+echo "== mini_brief =="; sed -n "1,20p" docs/chronicle/brief.md 2>/dev/null || true
+if [ -f docs/agents/AEGIS.parlance.md ]; then echo "== aegis_parlance =="; sed -n "1,120p" docs/agents/AEGIS.parlance.md; fi
 if [ -f docs/agents/assistant_profile.md ]; then
   echo "== assistant_profile =="
   sed -n "1,160p" docs/agents/assistant_profile.md

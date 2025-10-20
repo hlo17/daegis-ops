@@ -1,66 +1,73 @@
 #!/usr/bin/env bash
 set -euo pipefail
-SRC="logs/halu/eval_events.jsonl"
+
+# === config ===
+WINDOW_MIN=${WINDOW_MIN:-5}
+SRC="${SRC:-logs/halu/eval_events.jsonl}"
 OUT="logs/prom/halu_eval.prom"
 mkdir -p "$(dirname "$OUT")"
 
-# 直近5分だけを集計
-since=$(date -u -d '-5 min' +%s)
+if [[ ! -s "$SRC" ]]; then
+  echo "[WARN] SRC not found or empty: $SRC" >&2
+  # それでも空のメトリクスは出す（監視的に便利）
+fi
 
-# PASS/FAIL 件数（5分窓）
-pass=$(awk -v s="$since" '
-  BEGIN{c=0}
-  { if ($0!~/^\s*$/){
-      if (match($0, /"t":"([^"]+)"/, tm)){
-        t=tm[1]; gsub("Z","",t); gsub("T"," ",t);
-        ts=strftime("%s", t " UTC");
-        if (ts>=s && $0 ~ /"outcome":"PASS"/) c++
-      }
-    }
-  }
-  END{print c}' "$SRC" 2>/dev/null || echo 0)
+# 直近 WINDOW_MIN 分の下限（UTC epoch）
+SINCE=$(date -u -d "-${WINDOW_MIN} min" +%s)
+# PASS / FAIL 件数（outcome を小文字化して判定）
+PASS=0
+FAIL=0
 
-fail=$(awk -v s="$since" '
-  BEGIN{c=0}
-  { if ($0!~/^\s*$/){
-      if (match($0, /"t":"([^"]+)"/, tm)){
-        t=tm[1]; gsub("Z","",t); gsub("T"," ",t);
-        ts=strftime("%s", t " UTC");
-        if (ts>=s && $0 ~ /"outcome":"FAIL"/) c++
-      }
-    }
-  }
-  END{print c}' "$SRC" 2>/dev/null || echo 0)
+if [[ -f "$SRC" ]]; then
+  PASS=$(jq -r --argjson s "$SINCE" '
+    select(.t? and (.t|fromdateiso8601) >= $s)
+    | (.outcome|ascii_downcase) as $o
+    | select($o=="pass")
+    | 1
+  ' "$SRC" 2>/dev/null | wc -l | tr -d ' ')
 
-# 理由別 FAIL 集計（5分窓）
-tmp=$(mktemp)
-awk -v s="$since" '
-  { if ($0!~/^\s*$/){
-      if (match($0, /"t":"([^"]+)"/, tm)){
-        t=tm[1]; gsub("Z","",t); gsub("T"," ",t);
-        ts=strftime("%s", t " UTC");
-        if (ts>=s && $0 ~ /"outcome":"FAIL"/){
-          if (match($0, /"reason":"([^"]+)"/, m)){ cnt[m[1]]++ }
-        }
-      }
-    }
-  }
-  END{ for (r in cnt) printf "%s\t%d\n", r, cnt[r] }' "$SRC" > "$tmp" 2>/dev/null || true
+  FAIL=$(jq -r --argjson s "$SINCE" '
+    select(.t? and (.t|fromdateiso8601) >= $s)
+    | (.outcome|ascii_downcase) as $o
+    | select($o=="fail")
+    | 1
+  ' "$SRC" 2>/dev/null | wc -l | tr -d ' ')
+fi
 
-ts=$(date +%s)
+# 理由別 FAIL 集計
+tmp_reason=$(mktemp)
+if [[ -f "$SRC" ]]; then
+  jq -r --argjson s "$SINCE" '
+    select(.t? and (.t|fromdateiso8601) >= $s)
+    | (.outcome|ascii_downcase) as $o
+    | select($o=="fail")
+    | (.reason // "unknown")
+  ' "$SRC" 2>/dev/null \
+  | awk '{c[$0]++} END{for (k in c) printf "%s\t%d\n", k, c[k]}' > "$tmp_reason" || true
+fi
+TS=$(date +%s)
+
 {
-  echo '# TYPE daegis_halu_eval_cases_window_total counter'
-  echo "daegis_halu_eval_cases_window_total{result=\"pass\",window=\"5m\"} $pass"
-  echo "daegis_halu_eval_cases_window_total{result=\"fail\",window=\"5m\"} $fail"
+  echo '# TYPE daegis_halu_eval_cases_window_total gauge'
+  printf 'daegis_halu_eval_cases_window_total{result="pass",window="%sm"} %d\n' "$WINDOW_MIN" "$PASS"
+  printf 'daegis_halu_eval_cases_window_total{result="fail",window="%sm"} %d\n' "$WINDOW_MIN" "$FAIL"
 
-  echo '# TYPE daegis_halu_eval_cases_reason_window_total counter'
-  if [ -s "$tmp" ]; then
+  echo
+  echo '# TYPE daegis_halu_eval_cases_reason_window_total gauge'
+  if [[ -s "$tmp_reason" ]]; then
     while IFS=$'\t' read -r reason n; do
-      printf 'daegis_halu_eval_cases_reason_window_total{result="fail",reason="%s",window="5m"} %d\n' "$reason" "$n"
-    done < "$tmp"
+      esc=$(printf '%s' "$reason" | sed 's/"/\\"/g')
+      printf 'daegis_halu_eval_cases_reason_window_total{result="fail",reason="%s",window="%sm"} %d\n' "$esc" "$WINDOW_MIN" "$n"
+    done < "$tmp_reason"
   fi
 
+  echo
   echo '# TYPE daegis_halu_textfile_timestamp_seconds gauge'
-  echo "daegis_halu_textfile_timestamp_seconds $ts"
+  echo "daegis_halu_textfile_timestamp_seconds $TS"
 } > "$OUT"
-rm -f "$tmp"
+
+rm -f "$tmp_reason" 2>/dev/null || true
+
+# debug
+echo "[DBG] window=${WINDOW_MIN}m since=${SINCE} PASS=${PASS} FAIL=${FAIL}" >&2
+echo "[DBG] wrote $OUT (bytes=$(stat -c%s "$OUT" 2>/dev/null || echo 0))" >&2

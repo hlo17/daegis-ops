@@ -62,7 +62,7 @@ def main():
     dd = ts_utc.strftime("%d")
     outdir = LOGDIR / yyyy / mm / dd
     outdir.mkdir(parents=True, exist_ok=True)
-    fname = f"{d['decision_id'].split('::',1)[1]}.md"
+    fname = f"{d['decision_id'].split('::', 1)[1]}.md"
     outpath = outdir / fname
 
     fm = {
@@ -74,11 +74,7 @@ def main():
         "status": d.get("status", "approved"),
         "tags": d.get("tags", []),
     }
-    front = (
-        "---\n"
-        + "\n".join(f"{k}: {json.dumps(v, ensure_ascii=False)}" for k, v in fm.items())
-        + "\n---\n"
-    )
+    front = "---\n" + "\n".join(f"{k}: {json.dumps(v, ensure_ascii=False)}" for k, v in fm.items()) + "\n---\n"
     body = f"# {d.get('title') or d.get('answer') or 'Decision'}\n\n"
     body += "保存元: 自動書記官 / commit bot\n\n"
     body += "```json\n" + json.dumps(d, ensure_ascii=False, indent=2) + "\n```\n"

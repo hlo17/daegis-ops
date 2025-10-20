@@ -1,4 +1,14 @@
 # agents.md — Daegis での使い方（最短版）
-- 設計は `docs/agents/*.md` に先に書く。実装はその後。
-- 大きめの変更は `docs/chronicle/plans.md` の **Exec Plan** を更新。
-- 検証は `scripts/ops/agents_check.sh`、`guardian beacon`、`/review <agent>`。
+
+## Mission
+各エージェントの設計・計画・検証を単一点に集中し、AIが自走できる足場を提供する。
+
+## Exec Plan
+- まず docs/chronicle/plans.md を更新
+- docs/agents/*.md を先に直し、実装は後
+- /review と Garden Gate でレビュー→反映
+
+## Tests
+- scripts/ops/agents_check.sh
+- guardian beacon + WORM
+- PromQL で daegis_solaris_* が取れる

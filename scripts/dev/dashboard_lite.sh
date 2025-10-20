@@ -1,42 +1,25 @@
-#!/usr/bin/env sh
-set -eu
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="${DAEGIS_ROOT:-$HOME/daegis}"
+cd "$ROOT"
 OUT="docs/runbook/dashboard_lite.md"
-TS="$(date -u +%FT%TZ)"
-echo "## Dashboard Lite — $TS" >> "$OUT"
-echo "" >> "$OUT"
+mkdir -p "$(dirname "$OUT")"
 
-# decisions/holds
-if [ -f logs/decision.jsonl ]; then
-  total=$(wc -l < logs/decision.jsonl || echo 0)
-  holds=$(jq -r '.ethics.verdict' logs/decision.jsonl 2>/dev/null | grep -c '^HOLD$' || echo 0)
-  echo "- decisions: ${total}, holds: ${holds}" >> "$OUT"
-else
-  echo "- decisions: (no file)" >> "$OUT"
-fi
+{
+  echo "### KPI (fixed)"
+  if [ -f logs/policy_canary_verdict.jsonl ]; then
+    tac logs/policy_canary_verdict.jsonl \
+      | jq -r 'select(.event=="canary_verdict") | "  verdict=\(.verdict) p95_ms=\(.p95_ms//"NA") hold_rate=\(.hold_rate//"NA") e5xx=\(.e5xx//"NA") window=\(.window_sec//"NA")s"' \
+      | head -1
+  else
+    echo "  verdict=NA p95_ms=NA hold_rate=NA e5xx=NA window=NA"
+  fi
+  if [ -f logs/policy_apply_controlled.jsonl ]; then
+    tac logs/policy_apply_controlled.jsonl | head -200 \
+      | jq -r 'select(.event=="adopt_block") | 1' | wc -l | awk '{printf("  adopt_block_last200=%s\n",$1)}'
+  else
+    echo "  adopt_block_last200=0"
+  fi
+} >> "$OUT"
 
-# simbrain proposals
-if [ -f logs/simbrain_proposals.jsonl ]; then
-  echo "" >> "$OUT"; echo "### SimBrain proposals (tail 5)" >> "$OUT"
-  tail -5 logs/simbrain_proposals.jsonl | sed 's/^/  /' >> "$OUT"
-fi
-
-# policy dry-run
-if [ -f logs/policy_decision.jsonl ]; then
-  wins=$(jq -r '.win' logs/policy_decision.jsonl 2>/dev/null | grep -c '^true$' || echo 0)
-  tots=$(wc -l < logs/policy_decision.jsonl || echo 0)
-  echo "- policy dry-run wins: ${wins}/${tots}" >> "$OUT"
-fi
-
-# shadow apply
-if [ -f logs/policy_apply_shadow.jsonl ]; then
-  echo "" >> "$OUT"; echo "### Shadow apply (tail 5)" >> "$OUT"
-  tail -5 logs/policy_apply_shadow.jsonl | sed 's/^/  /' >> "$OUT"
-fi
-
-# canary/controlled (将来の証跡)
-[ -f logs/auto_tune_canary.jsonl ] && { echo ""; echo "### Canary (tail 3)"; } >> "$OUT" && tail -3 logs/auto_tune_canary.jsonl | sed 's/^/  /' >> "$OUT" || true
-[ -f logs/auto_tune_revoke.jsonl ] && { echo ""; echo "### Revokes (tail 3)"; } >> "$OUT" && tail -3 logs/auto_tune_revoke.jsonl | sed 's/^/  /' >> "$OUT" || true
-
-echo "" >> "$OUT"
-echo "_Appended by scripts/dev/dashboard_lite.sh_" >> "$OUT"
-echo "[dash-lite] appended → $OUT"
+echo "[ok] wrote KPI to $OUT"

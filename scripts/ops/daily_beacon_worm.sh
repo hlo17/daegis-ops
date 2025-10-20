@@ -37,3 +37,4 @@ fi
 # 4) 軽いローテ（WORM=保存→期限後整理という運用）
 find archives -type f -mtime +21 -delete >/dev/null 2>&1 || true
 bash "$HOME/daegis/scripts/ops/beacon_delta.sh" >> logs/beacon_daily.log 2>&1 || true
+bash "$HOME/daegis/scripts/ops/error_budget_guard.sh" >> logs/beacon_daily.log 2>&1 || true

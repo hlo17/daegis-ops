@@ -1,7 +1,7 @@
 # Beacon
-2025-10-11T11:17:33Z
+2025-10-17T11:14:35Z
 
-- phase: Phase VI
+- phase: unknown
 - KPI:
   - canary: FAIL
   - hold_rate: 0.2241
@@ -12,9 +12,9 @@
   - L5_VETO: absent
   - L105_COOLDOWN_UNTIL: present
 - last events:
-  - Phase V · oracle.l13 · Canary判定（plan/publish中心、5分窓併用）
-  - Phase V · apply.l10_5_gate · Auto-Adopt Gate（L13/VETO/COOLDOWN連動）
-  - Phase V · learn.sb2_pipeline · SimBrain v2 提案 + confidence タグ注入
-  - Phase V · scribe.dashboard_lite · Dashboard Lite 拡張（ALLOW/cooldown表示など）
-  - Phase V · ops.cron · 常設ジョブ（enrich/verdict/ready/sb2）
-  - Phase VI · vi.bootstrap · Reward Normalize / Confidence Calibrate / Counterfactual 初期導入
+  - unknown · garden_gate.window · (no-topic)
+  - unknown · garden_gate.window · (no-topic)
+  - unknown · garden_gate.window · (no-topic)
+  - unknown · garden_gate.window · (no-topic)
+  - unknown · garden_gate.window · (no-topic)
+  - unknown · garden_gate.window · (no-topic)

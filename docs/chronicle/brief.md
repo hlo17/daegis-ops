@@ -1,8 +1,8 @@
 # Brief
 
-_Snapshot @ 2025-10-11T10:20:52Z_
+_Snapshot @ 2025-10-11T12:56:23Z_
 
-- KPI: canary=FAIL, hold=0.2241, e5xx=394, p95=3005.72, adopt_last200=4
+- KPI: canary=FAIL, hold=0.2241, e5xx=394, p95=3005.72, adopt_last200=unknown
 - Nodes/Edges:
   - nodes=5, edges=1
   - node ids:
@@ -11,9 +11,3 @@ _Snapshot @ 2025-10-11T10:20:52Z_
     - learn.sb2_pipeline
     - scribe.dashboard_lite
     - ops.cron
-
-## Factory Metrics
-- jobs_ok: (tbd)
-- jobs_deny: (tbd)
-- jobs_fail: (tbd)
-- jobs_dry: (tbd)

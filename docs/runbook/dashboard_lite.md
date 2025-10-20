@@ -1,3 +1,95 @@
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_GREEN
+# badge:GARDEN_BLUE
+# badge:GARDEN_PURPLE
+# badge:GARDEN_PURPLE
 ## Dashboard Lite — 2025-10-10T06:57:20Z
 
 - decisions: 234, holds: 34
@@ -1056,3 +1148,13 @@ _Appended by scripts/dev/dashboard_lite.sh_
   verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=442 window=1800s
 ### KPI (fixed)
   verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=446 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=450 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=450 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=484 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=486 window=1800s
+### KPI (fixed)
+  verdict=FAIL p95_ms=3005.72 hold_rate=0.2241 e5xx=486 window=1800s

@@ -135,3 +135,13 @@ scripts/dev/simulate_alerts.sh
 # Quick header verification (MISS → HIT → 504)
 scripts/dev/smoke.sh
 ```
+
+- SAFEは二者承認(ops/quorum/HUMAN.ok, SECOND.ok の直近15分)が揃った場合のみ `scripts/guard/quorum_safe.sh` で有効化ヒントを出す（自動実行しない）。
+
+### § 7 — Phase II Safety Clauses
+
+1. 検証は API-one proof 原則（/chat or /api/v1/rules）。  
+2. 起動・停止は VS Code Tasks 経由のみ許可。  
+3. SAFE 操作は HUMAN.ok + SECOND.ok の二者承認が揃った場合のみ実施（自動実行しない）。  
+4. Prometheus systemd 版は mask 済。Docker(:9091) のみ運用。  
+5. すべての変更は Append-only とし、破壊変更は次フェーズへ回す。

@@ -2,6 +2,13 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "Guard: Safety Sentinel (L11)",
+      "type": "shell",
+      "command": "bash scripts/guard/safety_sentinel.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
       "label": "Port Guard (8080/9091)",
       "type": "shell",
       "command": "${workspaceFolder}/scripts/port_guard.sh",
@@ -305,6 +312,90 @@
       "label": "Prometheus: Rebind (Daegis)",
       "type": "shell",
       "command": "bash scripts/dev/prometheus_rebind.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "L5 Gate: Shadow-Apply log (tail)",
+      "type": "shell",
+      "command": "tail -f logs/policy_apply_shadow.jsonl",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "L5 Gate: Controlled Apply check",
+      "type": "shell",
+      "command": "tail -f logs/policy_apply_controlled.jsonl",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Learn: SimBrain (L7 · dry)",
+      "type": "shell",
+      "command": "python3 scripts/learn/simbrain.py",
+      "options": { "cwd": "${workspaceFolder}", "env": { "PYTHONUNBUFFERED":"1" } },
+      "problemMatcher": []
+    },
+    {
+      "label": "L6: Evaluate (manual)",
+      "type": "shell",
+      "command": "bash scripts/guard/l6_revoke_eval.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Learn: Bandit Shadow (L8 · dry)",
+      "type": "shell",
+      "command": "python3 scripts/learn/bandit_shadow.py",
+      "options": { "cwd": "${workspaceFolder}", "env": { "PYTHONUNBUFFERED":"1" } },
+      "problemMatcher": []
+    },
+    {
+      "label": "Learn: Auto-Tune (L9 · dry)",
+      "type": "shell",
+      "command": "python3 scripts/learn/auto_tune_dry.py",
+      "options": { "cwd": "${workspaceFolder}", "env": { "PYTHONUNBUFFERED":"1" } },
+      "problemMatcher": []
+    },
+    {
+      "label": "Plan: Apply Planner (L10)",
+      "type": "shell",
+      "command": "python3 scripts/learn/apply_planner.py",
+      "options": { "cwd": "${workspaceFolder}", "env": { "PYTHONUNBUFFERED":"1" } },
+      "problemMatcher": []
+    },
+    {
+      "label": "Apply: Auto-Adopt (L10.5)",
+      "type": "shell",
+      "command": "python3 scripts/learn/apply_autoadopt.py",
+      "options": { "cwd": "${workspaceFolder}", "env": { "PYTHONUNBUFFERED":"1" } },
+      "problemMatcher": []
+    },
+    {
+      "label": "L10.6: Adopt when cooldown ready",
+      "type": "shell",
+      "command": "bash scripts/dev/auto_adopt_when_ready.sh",
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "Learn: SB2 Pipeline",
+      "type": "shell",
+      "command": "bash scripts/dev/sb2_pipeline.sh",
+      "options": { "cwd": "${workspaceFolder}", "env": { "PYTHONUNBUFFERED":"1" } },
+      "problemMatcher": []
+    },
+    {
+      "label": "Learn: SB2 Tag Inject (manual)",
+      "type": "shell",
+      "command": "python3 scripts/learn/sb2_tag_inject.py",
+      "options": { "cwd": "${workspaceFolder}", "env": { "PYTHONUNBUFFERED":"1" } },
+      "problemMatcher": []
+    },
+    {
+      "label": "Dashboard: Lite snapshot",
+      "type": "shell",
+      "command": "bash scripts/dev/dashboard_lite.sh",
       "options": { "cwd": "${workspaceFolder}" },
       "problemMatcher": []
     }

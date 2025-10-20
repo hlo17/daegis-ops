@@ -1,9 +1,8 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI
 from roundtable_orchestrator import vote_all, select_coordinator
 from compressor_arbitrator import compress_proposal, arbitrate
 from pydantic import BaseModel
 from typing import Optional, Dict, Any, List
-import asyncio
 
 # 内部モジュール（G1相当の最小実装 or 既存を import）
 try:
@@ -12,21 +11,30 @@ except Exception:
     # G1 未配置でも動く簡易モック
     async def vote_all(task_text: str, timeout_s: float = 30.0) -> List[Dict[str, Any]]:
         return [
-            {"ai_name":"Grok4","scores":{"speed":8,"quality":9,"creativity":7,"confidence":9},"why":"mock"},
-            {"ai_name":"ChatGPT","scores":{"speed":9,"quality":8,"creativity":10,"confidence":8},"why":"mock"}
+            {"ai_name": "Grok4", "scores": {"speed": 8, "quality": 9, "creativity": 7, "confidence": 9}, "why": "mock"},
+            {
+                "ai_name": "ChatGPT",
+                "scores": {"speed": 9, "quality": 8, "creativity": 10, "confidence": 8},
+                "why": "mock",
+            },
         ]
+
     def select_coordinator(votes, historical_metrics, alpha: float = 0.6) -> Optional[str]:
         return votes[0]["ai_name"] if votes else None
 
+
 app = FastAPI(title="Daegis Roundtable MVP")
+
 
 class OrchestrateIn(BaseModel):
     task: str
     mode: Optional[str] = "mock"  # "mock" でモック投票
 
+
 @app.get("/health")
 async def health():
     return {"ok": True}
+
 
 @app.post("/orchestrate")
 async def orchestrate(payload: OrchestrateIn):
@@ -48,24 +56,25 @@ async def orchestrate(payload: OrchestrateIn):
         "task": payload.task,
         "votes": votes,
         "coordinator": coordinator,
-        "next": "coordinatorが実行計画を作成 → Slack返信（今は未実装）"
+        "next": "coordinatorが実行計画を作成 → Slack返信（今は未実装）",
     }
     return plan
     # --- G2: 圧縮→仲裁のダミー ---
-    compressed = [
-        compress_proposal(payload.task, v["ai_name"], "raw text") for v in votes
-    ]
+    compressed = [compress_proposal(payload.task, v["ai_name"], "raw text") for v in votes]
     arb = arbitrate(compressed, speed_priority=True, quality_priority=False, task_description=payload.task)
     plan["arbitrated"] = arb.dict()
+
 
 # （既存に /rt/slash があるなら必要に応じて残す）
 @app.post("/rt/slash")
 async def rt_slash():
     return {"ok": True, "note": "slash placeholder"}
 
+
 # --- force-register roundtable orchestrate patch (tail-injected) ---
 try:
     from orchestrate_patch import register as _rt_reg_tail
+
     _rt_reg_tail(app)
     print("[rt] tail register injected")
 except Exception as e:

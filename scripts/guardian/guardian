@@ -1,18 +1,21 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# どこから呼んでも動くように ROOT を決定
 SELF_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-ROOT="${ROOT:-$(cd "$SELF_DIR/../.." && pwd)}"
+ROOT="${ROOT:-"$(cd "$SELF_DIR/../.." && pwd)"}"
+
 CMD="${1:-menu}"
 
-run_status(){   exec "$ROOT/scripts/guardian/status.sh"; }
-run_park(){     exec "$ROOT/scripts/guardian/closeout.sh"; }
-run_docs(){     bash "$ROOT/scripts/dev/regenerate_docs_full.sh" || true; echo "[done] regenerated 6 docs"; }
-run_beacon(){   exec "$ROOT/scripts/guardian/beacon.sh"; }
-run_auto(){     "$ROOT/scripts/guardian/status.sh" || true; "$ROOT/scripts/guardian/closeout.sh" || true; bash "$ROOT/scripts/dev/regenerate_docs_full.sh" || true; echo "[AUTO] status→park→docs done."; }
-run_diff(){     bash "$ROOT/scripts/guardian/diff.sh"; }
-run_explain(){  cat <<'EOT'
-run_copilot_brief(){ exec "$ROOT/scripts/guardian/copilot_brief.sh"; }
+run_status()   { exec "$ROOT/scripts/guardian/status.sh"; }
+run_park()     { exec "$ROOT/scripts/guardian/closeout.sh"; }
+run_docs()     { bash "$ROOT/scripts/dev/regenerate_docs_full.sh" || true; echo "[done] regenerated 6 docs"; }
+run_beacon()   { exec "$ROOT/scripts/guardian/beacon.sh"; }
+run_auto()     { "$ROOT/scripts/guardian/status.sh" || true; "$ROOT/scripts/guardian/closeout.sh" || true; bash "$ROOT/scripts/dev/regenerate_docs_full.sh" || true; echo "[AUTO] status→park→docs done."; }
+run_diff()     { bash "$ROOT/scripts/guardian/diff.sh"; }
+
+run_explain()  {
+  cat <<'EOT'
 Guardian 出力の見方:
 - Phase / KPI / Flags / Last Events / WORM証跡 / Next Actions を上から順に確認
 - 再開の第一歩は「Last Events」→「Next Actions」
@@ -20,7 +23,16 @@ Guardian 出力の見方:
 EOT
 }
 
-menu(){
+run_copilot_brief() {
+  if [ -x "$ROOT/scripts/guardian/copilot_brief.sh" ]; then
+    exec "$ROOT/scripts/guardian/copilot_brief.sh"
+  else
+    echo "[hint] scripts/guardian/copilot_brief.sh が見つかりません。必要なければ無視してOK。"
+    exit 0
+  fi
+}
+
+menu() {
   echo "Guardian — choose an action:"
   select opt in \
     "Status" \
@@ -31,7 +43,8 @@ menu(){
     "Beacon (compact export)" \
     "Copilot Brief" \
     "Explain" \
-    "Quit"; do
+    "Quit"
+  do
     case "$REPLY" in
       1) run_status;;
       2) run_park;;
@@ -42,20 +55,20 @@ menu(){
       7) run_copilot_brief;;
       8) run_explain;;
       9) exit 0;;
-      *) echo "pick 1-8";;
+      *) echo "pick 1-9";;
     esac
   done
 }
 
 case "$CMD" in
-  ""|menu)                 menu;;
-  status)                  run_status;;
-  park|close|closeout)     run_park;;
-  docs|6docs|regen)        run_docs;;
-  auto)                    run_auto;;
-  diff)                    run_diff;;
-  beacon)                  run_beacon;;
-  explain|-h|--help|help)  run_explain;;
-    copilot-brief) run_copilot_brief;;
+  ""|menu)          menu;;
+  status)           run_status;;
+  park|close|closeout) run_park;;
+  docs|6docs|regen) run_docs;;
+  auto)             run_auto;;
+  diff)             run_diff;;
+  beacon)           run_beacon;;
+  copilot-brief)    run_copilot_brief;;
+  explain|-h|--help|help) run_explain;;
   *) echo "[err] unknown command: $CMD" >&2; exit 1;;
 esac

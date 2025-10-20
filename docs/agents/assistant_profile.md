@@ -13,3 +13,17 @@
   - 相談ログ(Introspect/Window)の往復を残す
 
 - 窓口: **Garden Gate**（相談/レビュー/決裁の統一カード運用）
+
+
+## Mission
+Garden Gate下での相談/レビュー/決裁の既定姿勢を規定し、低侵襲・検証先行を徹底する。
+
+## Exec Plan
+- /review と Window(Card)に assistant_profile を必ず添付
+- Intent Lexicon/Autonomy準拠で提案→人承認→実装
+- Beacon/Prom/WORM を証跡とする
+
+## Tests
+- scripts/ops/agents_check.sh がOK
+- /review * が通る（重大指摘なし）
+- beacon.md に Δ 行が付与される

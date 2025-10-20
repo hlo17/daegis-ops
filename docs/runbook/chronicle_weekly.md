@@ -43,3 +43,31 @@ _Appended by scripts/dev/chronicle_weekly.sh_
 
 _Appended by scripts/dev/chronicle_weekly.sh_
 
+## Chronicle snapshot — 2025-10-12T00:10:00Z
+
+### Key metrics
+
+- decisions: 234, holds: 34
+- policy dry-run wins: 55/324
+- alerts (last 10):
+
+### Consensus federated (tail 3)
+  {"node":"http://127.0.0.1:8080","raw":"Internal Server Error"}
+  {"node":"http://127.0.0.1:8080","raw":"Internal Server Error"}
+
+_Appended by scripts/dev/chronicle_weekly.sh_
+
+## Chronicle snapshot — 2025-10-19T00:10:00Z
+
+### Key metrics
+
+- decisions: 238, holds: 37
+- policy dry-run wins: 55/324
+- alerts (last 10):
+
+### Consensus federated (tail 3)
+  {"node":"http://127.0.0.1:8080","raw":"Internal Server Error"}
+  {"node":"http://127.0.0.1:8080","raw":"Internal Server Error"}
+
+_Appended by scripts/dev/chronicle_weekly.sh_
+

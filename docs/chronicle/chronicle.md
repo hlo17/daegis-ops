@@ -1,6 +1,6 @@
 # Chronicle
 
-_Generated at 2025-10-11T10:08:24Z_
+_Generated at 2025-10-11T12:56:23Z_
 
 ## Timeline (tail 100)
 - - — [Phase V] oracle.l13: Canary判定（plan/publish中心、5分窓併用）
