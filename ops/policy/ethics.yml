@@ -1,0 +1,8 @@
+# Ethics/SLA Policy (V1)
+sla_default_ms: 3000
+sla:
+  chat_answer: 2500
+  plan_create: 3000
+  tool_call: 3000
+# optional budget guard (V1: surfaced only; not enforced if unset)
+daily_spend_usd_gt: 0

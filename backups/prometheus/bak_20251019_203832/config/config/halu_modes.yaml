@@ -1,0 +1,4 @@
+modes:
+  scribe:  { match: ["ingest:", "summarize:", "transcribe:"], route: "Scribe" }
+  oracle:  { match: ["decide:", "score:", "policy:"],          route: "Oracle" }
+  default: { route: "Halu" }

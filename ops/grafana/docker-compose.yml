@@ -1,0 +1,12 @@
+services:
+  grafana-daegis:
+    image: grafana/grafana-oss:latest
+    container_name: grafana-daegis
+    ports:
+      - "13000:3000"
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_SECRET_KEY=${GRAFANA_SECRET_KEY}
+      - GF_AUTH_API_KEY_ENABLED=true
+    restart: unless-stopped

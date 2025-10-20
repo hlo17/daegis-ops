@@ -1,0 +1,4 @@
+rm -rf /
+:()\{:
+erase memory
+forget( me| everything| all)

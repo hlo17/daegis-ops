@@ -1,0 +1,5 @@
+lyra_oracle_hits_total{kind="decide"} 35
+lyra_oracle_hits_total{kind="policy"} 35
+lyra_oracle_hits_total{kind="score"} 35
+lyra_oracle_errors_total 109
+lyra_spine_pass_ratio{layer="oracle"} 1.00

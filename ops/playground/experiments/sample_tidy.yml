@@ -1,0 +1,7 @@
+name: "sample_tidy_links"
+intent: "play.tidy"
+autonomy_level: "L1"   # DRYのみ
+goal: "docs/chronicle/*.md の参照切れを静的に検出（修正案は提案だけ）"
+plan:
+  - "リンク解析: 未解決の相対参照を抽出"
+  - "提案: 修正候補（diff案）を /tmp に出力"

@@ -1,0 +1,11 @@
+groups:
+- name: relay-heartbeat
+  rules:
+  - alert: MemorySyncDelay
+    expr: ( time() - relay_last_update_seconds ) > 24*60*60
+    labels:
+      severity: warning
+      agent: "{{ $labels.agent }}"
+    annotations:
+      summary: "Memory not updated ({{ $labels.agent }})"
+      description: "{{ $labels.agent }} の Relay/Memory が24h未更新です。brief_ingest / relay_add / Gate 経路を確認してください。"

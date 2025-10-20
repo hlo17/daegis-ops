@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+OUT_DIR="$HOME/daegis/logs"
+OUT_JSON="$OUT_DIR/halu_self_metrics.json"
+REFLECT_FILE="$OUT_DIR/reflection.jsonl"
+PROM_URL="http://127.0.0.1:9091/metrics"
+
+mkdir -p "$OUT_DIR"
+
+timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+# metrics収集
+halu_up=$(curl -s "$PROM_URL" | awk '/^halu_up / {print $2}')
+sot_consistent=$(curl -s "$PROM_URL" | awk '/^daegis_sot_consistent / {print $2}')
+heartbeat_age=$(curl -s "$PROM_URL" | awk '/^halu_last_heartbeat_age_seconds / {print $2}')
+
+cat > "$OUT_JSON" <<JSON
+{
+  "timestamp": "$timestamp",
+  "halu_up": $halu_up,
+  "sot_consistent": $sot_consistent,
+  "heartbeat_age": $heartbeat_age
+}
+JSON
+
+# reflectionログが無ければ初期化
+if [ ! -f "$REFLECT_FILE" ]; then
+  echo "{}" > "$REFLECT_FILE"
+fi
+
+echo "[HaluMetrics] updated at $timestamp"

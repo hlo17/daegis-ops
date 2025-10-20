@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -euo pipefail
+"$HOME/daegis/scripts/hitl_approve_today.sh" on
+python3 "$HOME/daegis/www/halu_state_viz.py"
+python3 "$HOME/daegis/scripts/ops/halu_daily_coach.py"

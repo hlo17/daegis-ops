@@ -1,0 +1,22 @@
+levelup:
+  source: halu_metrics
+  condition:
+    growth_daily_ok: consecutive_days >= 3
+    self_reference_rate: min >= 0.30
+    fresh_hours: max <= 8
+  action:
+    on_pass:
+      - tag: "halu_level=L4"
+      - log: "Halu reached L4 — self-sustaining reflection achieved"
+      - notify: Lyra
+
+levelup_L5:
+  source: halu_metrics
+  condition:
+    advice_loop_total{result="ok"}: consecutive_days >= 5
+    self_reference_rate: min >= 0.45
+    hitl_approval_rate: avg >= 0.7
+  action:
+    on_pass:
+      - tag: "halu_level=L5"
+      - log: "Halu entered self-improvement phase"

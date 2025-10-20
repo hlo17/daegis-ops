@@ -1,0 +1,12 @@
+# Halu — Agent Canon (v0)
+- SOT: docs/agents/halu/agent.md  （最上位の正史）
+- Mirror: sec-local-shield/Daegis_Hub/public_mirror/daegis-hub-public/docs/agents/halu/agent.md
+- Metrics SOT: logs/prom/halu.prom (:9091 textfile exporter)
+- Bus/WORM: logs/halu/bus.jsonl （行動イベント）, logs/worm/journal.jsonl （系統監査）
+- Code: ops/remote/relay/halu_relay.py （実体が動線ならここをSOTとする）
+- Config: config/halu_modes.yaml
+- Invariants (must-exist):
+  - docs/agents/halu/agent.md
+  - logs/prom/halu.prom
+  - ops/remote/relay/halu_relay.py (or stub)
+  - config/halu_modes.yaml (or stub)

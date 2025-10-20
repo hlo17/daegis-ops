@@ -1,0 +1,10 @@
+# HELP daegis_memory_last_update_timestamp Last update timestamp for Relay/Memory (unix).
+# TYPE daegis_memory_last_update_timestamp gauge
+daegis_memory_last_update_timestamp{agent="Lyra"} 1760387347
+daegis_memory_last_update_timestamp{agent="Halu"} 0
+daegis_memory_last_update_timestamp{agent="Kai"} 0
+daegis_memory_last_update_timestamp{agent="Memory"} 0
+
+# HELP daegis_memory_overall_last_update_timestamp Latest timestamp across all.
+# TYPE daegis_memory_overall_last_update_timestamp gauge
+daegis_memory_overall_last_update_timestamp 1760387347

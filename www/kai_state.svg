@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="420" viewBox="0 0 420 420">
+  <rect width="100%" height="100%" fill="#0b1116"/>
+  <circle cx="210" cy="210" r="88" fill="rgba(100,180,255,0.25)" stroke="rgba(50,100,200,0.85)" stroke-width="8"/>
+  <text x="210" y="188" fill="#cfe6ff" font-size="40" text-anchor="middle" font-family="ui-serif">Kai</text>
+  <text x="210" y="230" fill="#c5dcff" font-size="20" text-anchor="middle" font-family="ui-sans-serif">
+    ops 7 · err 14% · fresh 17.1h
+  </text>
+</svg>

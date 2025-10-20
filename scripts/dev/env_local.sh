@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+# --- Daegis local dev env (append-only) ---
+[ -n "${__DAEGIS_ENV_LOCAL_LOADED:-}" ] && return 0
+export CONSENSUS_HOLD_THRESHOLD="${CONSENSUS_HOLD_THRESHOLD:-0.80}"
+export DAEGIS_INTENTS="${DAEGIS_INTENTS:-chat_answer,plan_create,tool_call,other}"
+export DAEGIS_SLA_DEFAULT_MS="${DAEGIS_SLA_DEFAULT_MS:-3000}"
+# example per-intent override (optional):
+# export DAEGIS_SLA_CHAT_ANSWER_MS=2500
+echo "[Daegis] env loaded: CONSENSUS_HOLD_THRESHOLD=$CONSENSUS_HOLD_THRESHOLD INTENTS=$DAEGIS_INTENTS"
+__DAEGIS_ENV_LOCAL_LOADED=1
+# [L5 bootstrap] set baseline SLA
+export DAEGIS_SLA_DEFAULT_MS=800
+export DAEGIS_SLA_OTHER_MS=720
+export DAEGIS_SLA_ANALYZE_MS=2850
+export DAEGIS_SLA_GATE_MS=2850
+export DAEGIS_SLA_PLAN_MS=2850
+export DAEGIS_SLA_PUBLISH_MS=2850
+export DAEGIS_SLA_CHAT_ANSWER_MS=720
+export DAEGIS_SLA_CHAT_ANSWER_MS=720
+export DAEGIS_SLA_CHAT_ANSWER_MS=720
+export DAEGIS_SLA_CHAT_ANSWER_MS=720

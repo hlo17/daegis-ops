@@ -1,0 +1,23 @@
+# 🌌 Genesis Archive: Public Vocabulary v1.0
+origin: "始まり・起点。"
+echo: "響き・残響。"
+breath: "呼吸・間奏。"
+thread: "繋がり・道筋。"
+mirror: "反射・再帰。"
+harbor: "安全な港。"
+pulse: "拍動・周期。"
+seed: "起点の可能性。"
+
+veil:
+  description: >-
+    A membrane between seen and unseen; not to conceal, but to protect the
+    rhythm of understanding. There are two kinds of veil —
+    poetic: silence as reverence, and functional: silence as protection.
+  safe_use:
+    - poetic veil may appear in public chronicles
+    - functional veil must remain within protected archives
+  misuse:
+    - do not use veil to justify omission or deception
+    - do not veil what requires accountability
+
+light: "気づき・再生。"

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)/.."
+P="${1:-}"; [ -n "$P" ] || { echo "usage: ops/run-profile <name>"; exit 1; }
+F="$ROOT/ops/profiles/${P}.txt"; [ -f "$F" ] || { echo "missing profile: $F"; exit 2; }
+while IFS= read -r CAPID; do
+  [ -z "$CAPID" ] && continue
+  [[ "$CAPID" =~ ^# ]] && continue
+  "$ROOT/ops/run" "$CAPID" all || true
+done < "$F"
+echo "[profile done] $P"

@@ -1,0 +1,13 @@
+[Unit]
+Description=Halu Reflection Count Exporter
+After=network.target
+
+[Service]
+ExecStart=/opt/halu-exporter/.venv/bin/python /home/f/daegis/ops/scripts/halu_reflection_exporter.py
+Restart=always
+User=f
+WorkingDirectory=/home/f/daegis
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+
+[Install]
+WantedBy=multi-user.target

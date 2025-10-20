@@ -1,0 +1,8 @@
+# HELP daegis_compass_intents_total Flag per intent (1=present)
+# TYPE daegis_compass_intents_total counter
+daegis_compass_intents_total{intent="ANALYZE"} 1
+daegis_compass_intents_total{intent="OPTIMIZE"} 1
+daegis_compass_intents_total{intent="SAFE"} 1
+# TYPE daegis_compass_intents_success_total counter
+# TYPE daegis_compass_intents_failure_total counter
+# compass_sha 25a0c9e65712fd03aab3452cc45bf60973ee02d271c1d72edd72f3b269341f7f

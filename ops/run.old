@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")" && pwd)/.."
+CAPID="${1:-}"; PHASE="${2:-all}"
+[ -n "$CAPID" ] || { echo "usage: ops/run <capid> [pre|run|verify|rollback|all]"; exit 1; }
+REG="$ROOT/ops/registry.jsonl"
+PATHREL="$(awk -v id="$CAPID" -F '\t' '$1==id{print $2; exit}' "$REG" 2>/dev/null || true)"
+[ -n "${PATHREL:-}" ] || { echo "not found: $CAPID"; exit 2; }
+[ -x "$ROOT/$PATHREL" ] || { echo "missing or not executable: $ROOT/$PATHREL"; exit 3; }
+CAPID="$CAPID" PHASE="$PHASE" bash "$ROOT/$PATHREL"
+
+# --- shim: audit_chat_extract (scribe) ---
+if [ "${1:-}" = "audit_chat_extract" ]; then shift || true; exec ops/capsules/scribe/audit_chat_extract.sh "$@"; fi

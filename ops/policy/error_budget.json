@@ -1,0 +1,10 @@
+{
+  "version": "v0",
+  "window_hours": 24,
+  "budget": {
+    "e5xx": { "max": 0 },             // 直近24hは 5xx=0 を目標
+    "hold_rate": { "max": 0.20 },     // 一時上振れの警戒ライン
+    "p95_ms": { "max": 3000 }         // 遅延の警戒ライン
+  },
+  "suggest_restore_after_days": 3     // 連続N日しきい値内なら復帰を提案
+}

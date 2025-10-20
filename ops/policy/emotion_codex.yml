@@ -1,0 +1,3 @@
+version: v1
+moods: [JOY, FLOW, FEAR, AWE, ANGER, GRIEF, LOVE, SILENCE, TRANSCEND]
+defaults: {mood: SILENCE, tone: null}

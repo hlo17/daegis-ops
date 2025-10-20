@@ -1,0 +1,8 @@
+{
+  "id": "reflect_digest_hourly",
+  "summary": "過去1時間の反射要約を人間レビュー用に提出（DRY）",
+  "inputs": ["logs/prom/halu_reflection_summary.prom"],
+  "evidence": ["docs/ledger/halu.jsonl tail", "logs/halu/bus.jsonl tail"],
+  "blast_radius": "none (dry)",
+  "rollback": "n/a"
+}

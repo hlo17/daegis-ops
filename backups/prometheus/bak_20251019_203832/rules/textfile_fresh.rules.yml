@@ -1,0 +1,14 @@
+groups:
+  - name: textfile_fresh
+    interval: 15s
+    rules:
+      # node_exporter textfile collector の mtime が取れる前提
+      - record: lyra_textfile_age_seconds
+        expr: time() - max by (instance) (node_textfile_mtime_seconds{file=~".*lyra_mode.prom"} )
+      - alert: LyraTextfileStale
+        expr: lyra_textfile_age_seconds > 180
+        for: 3m
+        labels: { severity: warning }
+        annotations:
+          summary: "Lyra textfile is stale (>3m)"
+          description: "node_exporter textfile (lyra_mode.prom) not updated for >3 minutes"

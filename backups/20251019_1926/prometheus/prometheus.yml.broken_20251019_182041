@@ -1,0 +1,31 @@
+global:
+  scrape_interval: 15s
+
+alerting:
+  alertmanagers:
+  - static_configs:
+    - targets: ['localhost:9093']
+
+rule_files:
+  - /etc/prometheus/halu_alerts/halu.reflection.rules.yml
+  - /etc/prometheus/halu_alerts/halu.intent.rules.yml
+  - /etc/prometheus/halu_alerts/halu.self.rules.yml
+  - /etc/prometheus/halu_alerts/halu.slo.rules.yml
+
+scrape_configs:
+  - job_name: 'node'
+    static_configs:
+      - targets: ['localhost:9100']
+    metric_relabel_configs:
+      - source_labels: [__name__]
+        regex: '^daegis_.*'
+        action: drop   # ← node_exporter(textfile) 由来の daegis_* を片系に統一したい場合はコメントアウト可
+
+  - job_name: 'halu-local'
+    static_configs:
+      - targets: ['127.0.0.1:9091']
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['127.0.0.1:9093']

@@ -1,0 +1,18 @@
+groups:
+- name: halu_self
+  rules:
+  - alert: PromTargetDown
+    expr: up == 0
+    for: 2m
+    labels: {severity: warning}
+    annotations: {summary: "Some scrape targets are down"}
+  - alert: NodeTextfileError
+    expr: node_textfile_scrape_error > 0
+    for: 2m
+    labels: {severity: warning}
+    annotations: {summary: "node_exporter textfile scrape has errors"}
+  - alert: PromRuleEvalStalled
+    expr: time() - timestamp(prometheus_rule_group_last_evaluation_timestamp_seconds) > 300
+    for: 5m
+    labels: {severity: warning}
+    annotations: {summary: "Rule evaluation hasn’t run in >5m"}

@@ -1,0 +1,11 @@
+# HELP lyra_mode_count Count per mode
+# TYPE lyra_mode_count gauge
+# HELP lyra_mode_switches_total Mode switches
+# TYPE lyra_mode_switches_total counter
+# HELP lyra_mode_last Last observed mode
+# TYPE lyra_mode_last gauge
+lyra_mode_count{mode="Halu"} 0
+lyra_mode_count{mode="Scribe"} 0
+lyra_mode_count{mode="Oracle"} 0
+lyra_mode_switches_total 0
+lyra_mode_last{mode="unknown"} 1

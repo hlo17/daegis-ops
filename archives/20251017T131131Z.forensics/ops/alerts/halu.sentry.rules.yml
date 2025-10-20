@@ -1,0 +1,10 @@
+groups:
+- name: halu_sentry
+  rules:
+  - alert: HaluSentryStale
+    expr: daegis_halu_textfile_age_seconds > 1800
+    for: 10m
+    labels: {severity: warning}
+    annotations:
+      summary: "Halu textfile is stale"
+      description: "halu.prom not refreshed for >30m (current: {{ $value }}s)"

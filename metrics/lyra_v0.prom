@@ -1,0 +1,8 @@
+lyra_spine_pass_ratio{layer="perception"} 1.00
+lyra_spine_pass_ratio{layer="reflection"} 1.00
+lyra_spine_pass_ratio{layer="adaptation"} 1.00
+lyra_spine_pass_ratio{layer="expression"} 1.00
+lyra_spine_breach_total 0
+lyra_spine_idempotent_relay 0
+lyra_spine_idempotent_trellis 0
+lyra_spine_trials_total 31

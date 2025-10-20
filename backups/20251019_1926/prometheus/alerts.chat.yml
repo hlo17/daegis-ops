@@ -1,0 +1,20 @@
+groups:
+- name: daegis-chat-alerts
+  rules:
+  - alert: ChatLatencyHigh
+    expr: histogram_quantile(0.95, sum by (le)(rate(rt_latency_ms_bucket{route="/chat"}[5m]))) > 3000
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Chat P95 > 3s"
+      description: "Chat endpoint P95 latency is {{ $value }}ms over 5 minutes"
+
+  - alert: ChatErrorRateHigh
+    expr: sum(rate(router_chat_errors_total[5m])) / sum(rate(rt_requests_total{route="/chat"}[5m])) > 0.01
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Chat 5xx rate > 1%"
+      description: "Chat endpoint error rate is {{ $value | humanizePercentage }} over 5 minutes"

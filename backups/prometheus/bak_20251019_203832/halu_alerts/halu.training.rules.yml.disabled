@@ -1,0 +1,24 @@
+groups:
+- name: halu_training
+  rules:
+  # 15分合格率 < 80%
+  - alert: HaluEvalPassLow
+    expr: (
+      sum(increase(daegis_halu_eval_cases_total{result="pass"}[15m]))
+      /
+      sum(increase(daegis_halu_eval_cases_total[15m]))
+    ) < 0.8
+    for: 10m
+    labels: {severity: warning}
+    annotations:
+      summary: "Eval pass ratio under 80% (15m)"
+      description: "Pass ratio dipped below 0.8 in the last 15m."
+
+  # 理由別 Fail スパイク（5分で 10 件超など、あとで調整してOK）
+  - alert: HaluEvalFailSpikeByReason
+    expr: increase(daegis_halu_eval_cases_reason_total{result="fail"}[5m]) > 10
+    for: 5m
+    labels: {severity: critical}
+    annotations:
+      summary: "Fail spike by reason (>10 in 5m)"
+      description: "Reason={{ $labels.reason }} spiked in the last 5m."

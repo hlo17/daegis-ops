@@ -1,0 +1,21 @@
+groups:
+- name: daegis-runtime
+  rules:
+  - alert: DaegisWindowSendStale
+    # Unix秒メトリクスなので経過秒を比較
+    expr: (time() - daegis_window_send_last_ts) > 300
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: "Window send stalled (>5m)"
+      description: "time() - daegis_window_send_last_ts is {{ $value | printf \"%.0f\" }}s"
+
+  - alert: DaegisExporterDown
+    expr: up{job="daegis_solaris_exporter"} == 0
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: "daegis_solaris_exporter down"
+      description: "Exporter on {{ $labels.instance }} is down."

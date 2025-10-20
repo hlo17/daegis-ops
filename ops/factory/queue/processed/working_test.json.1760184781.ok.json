@@ -1,0 +1,13 @@
+{
+  "job_id": "working-0001",
+  "intent": "scribe.dashboard_snapshot",
+  "role": "scribe",
+  "phase": "VI",
+  "commands": [
+    ["echo", "Factory system is working!"],
+    ["bash", "scripts/dev/dashboard_lite.sh"]
+  ],
+  "timeout_sec": 30,
+  "dry_run": true,
+  "hmac": "PLACEHOLDER"
+}

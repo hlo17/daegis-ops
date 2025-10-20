@@ -1,0 +1,11 @@
+groups:
+- name: lyra-beacon
+  rules:
+  - alert: LyraMemoryDrift
+    expr: (time() - lyra_capability_timestamp) > 3*60*60 OR lyra_capability_ok == 0
+    labels:
+      severity: warning
+      agent: "Lyra"
+    annotations:
+      summary: "Lyra capability drift suspected"
+      description: "beacon stale (>3h) or core capability missing (gardener/SSOT). Check SSOT & profile."

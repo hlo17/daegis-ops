@@ -1,0 +1,5 @@
+[{
+  "id":"awe_research_boot",
+  "when":{"mood":"AWE","hold_rate_max":0.05},
+  "action":{"open_card":true,"to":"agent:oracle","topic":"AWE: 自発研究の提案","intent":"play.explore"}
+}]

@@ -1,0 +1,20 @@
+groups:
+  - name: daegis.router
+    rules:
+      - alert: ChatLatencyHigh
+        expr: histogram_quantile(0.95, sum(rate(rt_latency_ms_bucket{route="/chat"}[5m])) by (le)) > 3000
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "p95 chat latency > 3s"
+          hint: "Consider: scripts/guard/safe_fallback.sh --enable"
+
+      - alert: ChatErrorsHigh
+        expr: increase(rt_cache_misses_total{route="/chat"}[5m]) == 0 and increase(rt_cache_hits_total{route="/chat"}[5m]) == 0
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: "router no traffic or stalled"
+          hint: "Consider: scripts/guard/safe_fallback.sh --enable"

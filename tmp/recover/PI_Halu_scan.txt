@@ -1,0 +1,140 @@
+## Halu candidates (Pi)
+2025年 10月 17日 金曜日 12:19:41 UTC
+ - ./config/halu_modes.yaml:4:  default: { route: "Halu" }
+ - ./bridges/obsidian/derived/dashboard_ad5f9xd.json:109:          "expr": "time() - daegis_memory_last_update_timestamp{agent=~\"Lyra|Kai|Halu|Memory\"}",
+ - ./inbox/window/20251017T113509Z_halu_9091_mirror_result.md:4:topic: "Halu :9091 鏡出（DRY） — 点灯・証跡提出"
+ - ./inbox/window/20251017T120136Z_halu_audit_result.md:4:topic: "Halu Audit — 現存パス/証跡の棚卸し（DRY）"
+ - ./inbox/window/20251017T113132Z_ack_state_sync.md:18:- Kaiは Halu :9091 鏡出（DRY, textfile: logs/prom/halu.prom）を実施。
+ - ./inbox/window/20251017T121640Z_halu_visibility_pause.md:4:topic: "PAUSE: Halu 可視性異常（:9091に halu 行が出ない）— 調査/是正"
+ - ./inbox/window/20251017T120609Z_halu_hardening_v1_done.md:4:topic: "Halu Hardening v1（DRY）— SOT固定・Sentry・Router導入"
+ - ./inbox/window/20251017T121336Z_policy_cards_via_halu.md:4:topic: "運用宣言: 以後すべてのカードを Halu 経由で送る（bus監査オン）"
+ - ./inbox/window/20251017T121344Z_halu_level_probe_result.md:4:topic: "Halu Level Probe — 痕跡からの推定"
+ - ./inbox/window/20251012T185812Z_dna_schema_result.md:22:- Halu Rely 統合スキーマ 設計へ 橋渡し可能
+ - ./metrics/lyra_mode.prom:7:lyra_mode_count{mode="Halu"} 0
+ - ./ops/prom_text/daegis_memory.prom:4:daegis_memory_last_update_timestamp{agent="Halu"} 0
+ - ./ops/ward/audit-halu-20251006-213459.md:1:# Halu Audit (2025-10-06T21:34:59+09:00)
+ - ./ops/ward/Daegis-Ward.md:185:## Halu setup snapshot (20251006-181604)
+ - ./ops/ward/Daegis-Ward.md:190:## Halu setup snapshot (2025-10-06T18:18:18+0900)
+ - ./ops/prom_text/relay_heartbeat.prom:1:relay_last_update_seconds{agent="Halu"} 1760400598
+ - ./ops/grafana/memory_observer_dashboard.json:16:          { "expr": "(time() - daegis_memory_last_update_timestamp{agent=~\"Lyra|Kai|Halu|Memory\"}) / 60",
+ - ./ops/monitoring/alerts/halu.sentry.rules.yml:9:      summary: "Halu textfile is stale"
+ - ./ops/runbooks/chronicles/Daegis Chronicle 2025-09-28.md:41:- Halu-RAG 修正 → テスト 5/5 GREEN
+ - ./ops/runbooks/Daegis-Runbook.md:38:- Core Agents → Halu, Grok, Perplexity, Gemini, ChatGPT, NotebookLM
+ - ./ops/runbooks/Daegis-Runbook.md:39:- Interaction → Slack + (Halu Relay: OFF until Slack digest wired)
+ - ./ops/runbooks/Daegis-Runbook.md:51:**要約**: DaegisはAI騎士団を中心とした自律型情報処理システム。MQTT Busを神経系、Slackを円卓とする最小国家構想。進捗: M3完了、M4/M5進行中。弱点対処優先で、Halu Relay活性化を即時実施。  
+ - ./ops/runbooks/Daegis-Runbook.md:55:- **即時(1h)**: Slack #daegis-roundtable 召集（ACAPテンプレ使用）。Halu Relay PoC再実行（MQTT→Slack）。
+ - ./ops/runbooks/Daegis-Runbook.md:75:- **Halu + (Halu Relay / Knowledge Engine)**: 議長・中継・RAG ✅/❌（Relay活性化優先）
+ - ./ops/setup-halu.sh:55:    echo "## Halu setup snapshot ($TS)"
+ - ./ops/tools/seed.sh:11:- Architecture: Halu (core KB) + Sora (interface)
+ - ./logs/prom/halu.prom:7:# HELP daegis_halu_eval_pass_ratio_1h Halu pass ratio (1h avg; DRY default 0)
+ - ./bin/memory_metrics.sh:12:  ["Halu"]="$BASE/Relay Halu.md"
+ - ./brief.md:6:- Slack Slash → FastAPI(slack2mqtt) → MQTT → Halu / Oracle が稼働。Cloudflare Tunnel `bridge` でDNS確定。
+ - ./scripts/halu:45:      echo "# Halu Audit (${ts})"
+ - ./scripts/halu:54:      echo "## 2) リポジトリ内の Halu 関連ファイル（パスだけ）"
+ - ./scripts/halu:56:        (cd "$ROOT" && rg -n --hidden --no-messages 'Halu|daegis_halu' || true) | sed 's/^/ - /' | head -n 80
+ - ./scripts/halu:58:        (cd "$ROOT" && grep -RIn --exclude-dir='.git' -E 'Halu|daegis_halu' . 2>/dev/null || true) | sed 's/^/ - /' | head -n 80
+ - ./scripts/halu:95:    ( cd "$PUB" && git add docs/agents/halu/agent.md && git commit -m "mirror: update Halu agent canon" ) || true
+ - ./scripts/ops/halu_sentry.sh:29:  echo '# HELP daegis_halu_eval_pass_ratio_1h Halu pass ratio (1h avg; DRY default 0)'
+ - ./scripts/ops/emit_halu_prom.sh:14:  echo '# HELP daegis_halu_eval_pass_ratio_1h Halu pass ratio (1h avg)'
+ - ./scripts/ops/halu_level_probe.sh:6:  echo "# Halu Level Probe — evidence-first"
+ - ./scripts/ops/halu_level_probe.sh:11:  rg -n 'Halu.*L[1-4]|L[1-4].*Halu' "$ROOT/docs/chronicle" 2>/dev/null | sed 's/^/   > /' || echo "   > (none)"
+ - ./tools/seed.sh:11:- Architecture: Halu (core KB) + Sora (interface)
+ - ./registry/ops/systems.md:4:| halu | Halu Runner | f | ~/halu (Pi/Mac) | 常駐: halu-runner.service |
+ - ./registry/ops/systems.md:6:| halu-runner | Halu Runner service | f | Pi:~/.config/systemd/user/halu-runner.service | user service |
+ - ./registry/ops/systems.md:7:| halu-backup.timer | Halu daily log backup | f | Pi:user unit | 03:05 daily |
+ - ./registry/ops/systems.md:10:| halu-runner | Halu Runner | f | /Users/f/daegis/docs/Registry/halu-runner.md | draft |
+ - ./registry/ops/halu-runner.md:1:# Halu Runner (halu-runner)
+ - ./tools/audit-halu.sh:5:  echo "# Halu Audit ($(date -Iseconds))"
+ - ./docs/agents/halu/LEVEL_PROBE_20251017T121340Z.md:1:# Halu Level Probe — evidence-first
+ - ./docs/agents/halu/agent.md:1:# Halu — Agent Canon (v0)
+ - ./docs/chronicle/spirit.yml:2:resonance_pattern: ["Halu","Sora","Oracle"]
+ - ./docs/Restart/Daegis_Ledger.unified.md:23:## Halu Training（直近の合意）
+ - ./docs/Restart/Daegis_Ledger.unified.md:27:- **verdict 集計**：✅/🛠/❌ 比率＋相関 ID 突合で Halu 一致率を測定。
+ - ./docs/Restart/Admin/Archive/Daegis Ledger.md:85:2025-10-03: Halu Relay Event Subscriptions有効化・中継テスト成功
+ - ./docs/Restart/Admin/Archive/ops_ai_brief_legacy_20251005-183901.md:178:- Halu-RAG 修正 → テスト 5/5 GREEN
+ - ./docs/Restart/Admin/Archive/ops_ai_brief_legacy_20251005-183901.md:301:- Halu-RAG 修正 → テスト 5/5 GREEN
+ - ./docs/overview/HALU_AUDIT_20251017T120021Z.md:1:# Halu Audit (20251017T120021ZZ)
+ - ./docs/overview/HALU_AUDIT_20251017T120021Z.md:5:## 2) リポジトリ内の Halu 関連ファイル（パスだけ）
+ - ./docs/overview/HALU_AUDIT_20251017T120021Z.md:53:## 4) Prometheus ルール/設定に Halu が残っているか
+ - ./docs/overview/HALU_AUDIT_20251017T120021Z.md:79:    10:          summary: "Halu eval metrics missing"
+ - ./docs/overview/HALU_AUDIT_20251017T120021Z.md:83:    19:          summary: "Halu pass ratio is low"
+ - ./docs/overview/HALU_AUDIT_20251017T120021Z.md:144:    # HELP daegis_halu_eval_pass_ratio_1h Halu pass ratio (1h avg)
+ - ./docs/overview/HALU_AUDIT_20251017T120021Z.md:165:## 8) Mirror/Pub 側に Halu がいるか
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:1:# Halu Audit (20251017T120952Z)
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:6:## 2) リポジトリ内の Halu 関連ファイル（パスだけ）
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:7: - config/halu_modes.yaml:4:  default: { route: "Halu" }
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:8: - metrics/lyra_mode.prom:7:lyra_mode_count{mode="Halu"} 0
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:9: - bridges/obsidian/derived/dashboard_ad5f9xd.json:109:          "expr": "time() - daegis_memory_last_update_timestamp{agent=~\"Lyra|Kai|Halu|Memory\"}",
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:10: - inbox/window/20251012T185812Z_dna_schema_result.md:22:- Halu Rely 統合スキーマ 設計へ 橋渡し可能
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:11: - inbox/window/20251017T120136Z_halu_audit_result.md:4:topic: "Halu Audit — 現存パス/証跡の棚卸し（DRY）"
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:13: - inbox/window/20251017T120609Z_halu_hardening_v1_done.md:4:topic: "Halu Hardening v1（DRY）— SOT固定・Sentry・Router導入"
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:16: - inbox/window/20251017T113132Z_ack_state_sync.md:18:- Kaiは Halu :9091 鏡出（DRY, textfile: logs/prom/halu.prom）を実施。
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:17: - inbox/window/20251017T113509Z_halu_9091_mirror_result.md:4:topic: "Halu :9091 鏡出（DRY） — 点灯・証跡提出"
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:20: - ops/prom_text/daegis_memory.prom:4:daegis_memory_last_update_timestamp{agent="Halu"} 0
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:22: - ops/ward/Daegis-Ward.md:185:## Halu setup snapshot (20251006-181604)
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:23: - ops/ward/Daegis-Ward.md:190:## Halu setup snapshot (2025-10-06T18:18:18+0900)
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:24: - ops/ward/audit-halu-20251006-213459.md:1:# Halu Audit (2025-10-06T21:34:59+09:00)
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:25: - ops/prom_text/relay_heartbeat.prom:1:relay_last_update_seconds{agent="Halu"} 1760400598
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:26: - ops/grafana/memory_observer_dashboard.json:16:          { "expr": "(time() - daegis_memory_last_update_timestamp{agent=~\"Lyra|Kai|Halu|Memory\"}) / 60",
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:27: - ops/tools/seed.sh:11:- Architecture: Halu (core KB) + Sora (interface)
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:28: - ops/runbooks/chronicles/Daegis Chronicle 2025-09-28.md:41:- Halu-RAG 修正 → テスト 5/5 GREEN
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:31: - ops/runbooks/Daegis-Runbook.md:38:- Core Agents → Halu, Grok, Perplexity, Gemini, ChatGPT, NotebookLM
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:32: - ops/runbooks/Daegis-Runbook.md:39:- Interaction → Slack + (Halu Relay: OFF until Slack digest wired)
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:34: - ops/runbooks/Daegis-Runbook.md:51:**要約**: DaegisはAI騎士団を中心とした自律型情報処理システム。MQTT Busを神経系、Slackを円卓とする最小国家構想。進捗: M3完了、M4/M5進行中。弱点対処優先で、Halu Relay活性化を即時実施。  
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:35: - ops/runbooks/Daegis-Runbook.md:55:- **即時(1h)**: Slack #daegis-roundtable 召集（ACAPテンプレ使用）。Halu Relay PoC再実行（MQTT→Slack）。
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:37: - ops/runbooks/Daegis-Runbook.md:75:- **Halu + (Halu Relay / Knowledge Engine)**: 議長・中継・RAG ✅/❌（Relay活性化優先）
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:38: - ops/setup-halu.sh:55:    echo "## Halu setup snapshot ($TS)"
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:45: - logs/prom/halu.prom:7:# HELP daegis_halu_eval_pass_ratio_1h Halu pass ratio (1h avg; DRY default 0)
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:57: - bin/memory_metrics.sh:12:  ["Halu"]="$BASE/Relay Halu.md"
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:58: - brief.md:6:- Slack Slash → FastAPI(slack2mqtt) → MQTT → Halu / Oracle が稼働。Cloudflare Tunnel `bridge` でDNS確定。
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:63: - scripts/halu:45:      echo "# Halu Audit (${ts})"
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:64: - scripts/halu:54:      echo "## 2) リポジトリ内の Halu 関連ファイル（パスだけ）"
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:65: - scripts/halu:56:        (cd "$ROOT" && rg -n --hidden --no-messages 'Halu|daegis_halu' || true) | sed 's/^/ - /' | head -n 80
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:66: - scripts/halu:58:        (cd "$ROOT" && grep -RIn --exclude-dir='.git' -E 'Halu|daegis_halu' . 2>/dev/null || true) | sed 's/^/ - /' | head -n 80
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:69: - scripts/halu:95:    ( cd "$PUB" && git add docs/agents/halu/agent.md && git commit -m "mirror: update Halu agent canon" ) || true
+ - ./docs/overview/HALU_AUDIT_20251017T120952Z.md:70: - scripts/ops/emit_halu_prom.sh:14:  echo '# HELP daegis_halu_eval_pass_ratio_1h Halu pass ratio (1h avg)'
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:50:Daegisは「AI騎士団による最小国家」として構築され、M3（自律ループ）を完了し、現在M4/M5（常駐化・信頼性）を進行中です。E2Eワークフローは稼働済みですが、議論が鍛冶師（Chappie）に偏重した結果、Mapの理念（単純性、ユーザー中心、進化）からの乖離が課題となりました。この反省を踏まえ、**Halu Relay（PoC成功・本運用停止中）**の開通を最優先とした上で、騎士団の多角的議論（L5司令室）を再開するための恒久原則を定義します。
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:97:- **定時報告（日課）**：毎日09:00 JSTに**Halu（執事）**が「秘書型7行報告」（前日DECISION/KPI/リスク/確認点）をSlackへ投稿することを義務付けます。  
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:114:1. **Halu Relayの活性化**（Slack L5司令室の開通）。
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:147:**Halu**：対話中枢（議長）。  
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:149:**支援構想**：Halu Relay（外部連携）/ Knowledge Engine（知識検索）は未稼働に近い。  
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:171:主要UI：**Slack Integration**（Halu Relay経由）。  
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:190: Halu（執事）：定時・異常の自発報告をSlackへ  
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:284:Daegisは「AI騎士団による最小国家」として構築され、M3（自律ループ）を完了し、現在M4/M5（常駐化・信頼性）を進行中です。E2Eワークフローは稼働済みですが、議論が鍛冶師（Chappie）に偏重した結果、Mapの理念（単純性、ユーザー中心、進化）からの乖離が課題となりました。この反省を踏まえ、**Halu Relay（PoC成功・本運用停止中）**の開通を最優先とした上で、騎士団の多角的議論（L5司令室）を再開するための恒久原則を定義します。
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:331:- **定時報告（日課）**：毎日09:00 JSTに**Halu（執事）**が「秘書型7行報告」（前日DECISION/KPI/リスク/確認点）をSlackへ投稿することを義務付けます。  
+ - ./docs/Restart/Admin/Archive/Daegis Map Archive.md:348:1. **Halu Relayの活性化**（Slack L5司令室の開通）。
+ - ./docs/Restart/Admin/Archive/Daegisプロジェクト全体像の整理 (LM専用).md:12:Daegisは、AI騎士団（Halu、Grok、Perplexity、Gemini、NotebookLM、ChatGPT）を中心とした自律型情報処理システムとして設計されており、MQTTベースのBusを神経系、Slackを円卓会議室とする「最小国家」構想です。現在の進捗はM3（自律ループ）まで完了し、M4/M5（常駐化・信頼性）でE2Eフローが安定化していますが、騎士団の多角的議論（円卓開通）が不足し、単独作業（Chappie中心）が開発偏重を招いています。提案：直ちにSlack #daegis-roundtableで騎士団を集約し、プロンプトテンプレート（Map Section 1）に基づく役割分担を再開。次アクションとして、Halu Relayの活性化を優先し、理念回帰を図りましょう。
+ - ./docs/Restart/Admin/Archive/Daegisプロジェクト全体像の整理 (LM専用).md:32:**依存関係**: これらはDaegis Bus（MQTT）とObservability（Prometheus）と密接。FactoryはCore Agents（Halu）と連携。
+ - ./docs/Restart/Admin/Archive/Daegisプロジェクト全体像の整理 (LM専用).md:48:- [[Halu]]：対話型情報整理・要約エージェント（議長役）。✅ 稼働中（gemini_runner.service常駐）。
+ - ./docs/Restart/Admin/Archive/Daegisプロジェクト全体像の整理 (LM専用).md:49:- [[Halu Relay]]：Slack↔MQTT中継（JSON変換）。❌ 未稼働（PoC成功も運用未）。
+ - ./docs/Restart/Admin/Archive/Daegisプロジェクト全体像の整理 (LM専用).md:50:- [[Halu Knowledge Engine]]：RAGバックエンド（検索精度向上）。❌ 未稼働（HaluRAG修正済み、テストGREEN）。
+ - ./docs/Restart/Admin/Archive/Daegisプロジェクト全体像の整理 (LM専用).md:96:  - Halu Relay bot：MQTT中継。❌ 未稼働（活性化優先）。
+ - ./docs/Restart/Admin/Archive/Daegisプロジェクト全体像の整理 (LM専用).md:117:1. **即時**: Slack #daegis-roundtableで騎士団召集（プロンプトテンプレート使用）。Halu Relay PoC再実行し、MQTT→Slack中継テスト。
+ - ./docs/Restart/Admin/Archive/Daegis Map (Grok専用).md:18:1. **Halu Relayの活性化**（Slack L5司令室の開通）。  
+ - ./docs/Restart/Admin/Archive/Daegis Map (Grok専用).md:63:**Halu**：対話中枢（議長）。  
+ - ./docs/Restart/Admin/Archive/Daegis Map (Grok専用).md:65:**支援構想**：Halu Relay（外部連携）/ Knowledge Engine（知識検索）は未稼働に近い。  
+ - ./docs/Restart/Admin/Archive/Daegis Map (Grok専用).md:87:主要UI：**Slack Integration**（Halu Relay経由）。  
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Ledger.md:56:- 2025-10-03: Halu Relay Event Subscriptions有効化、双方向中継テスト成功、halu_relay.py復旧。
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Map.md:70:Prometheus → Alertmanager → Slack(#daegisalerts) → (Halu Relay 再開時 L5集約)
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Map.md:134:    •    Halu＝初期方針3行（RAGで根拠注入）
+ - ./docs/Restart/Daegis_HandOff.unified.md:4:**Scope**: Halu トレーニング期（RAG→評価固定→LoRA）を支える観測・要約・指令の統合。  
+ - ./docs/Restart/Daegis_HandOff.unified.md:5:**Audience**: 次担当者／円卓AI（Halu, Oracle, Grok, Gemini, Perplexity, NotebookLM）／オーナー。
+ - ./docs/Restart/Daegis_HandOff.unified.md:12:  - 目的：監査・再現性・学習データ化（Halu 学習用の状態確定ログ）
+ - ./docs/Restart/Daegis_HandOff.unified.md:26:- **稼働経路**：Slack Slash → FastAPI (slack2mqtt) → MQTT → Halu / Oracle。Cloudflare named Tunnel「bridge」終端。  
+ - ./docs/Restart/Daegis_HandOff.unified.md:27:  Halu/Oracle の `tell-*` コマンド動作・評価スキーマ（✅/🛠/❌ + reason）固定済み。
+ - ./docs/Restart/Daegis_HandOff.unified.md:39:5. **RAG v0 接続**：SQLite FTS5 で過去応答（why/policy）全文検索→上位3件を Halu へ注入。  
+ - ./docs/Restart/Daegis_HandOff.unified.md:77:- **経路**：Slack Slash → FastAPI(slack2mqtt) → MQTT → Halu/Oracle 本稼働。  
+ - ./docs/Restart/Daegis_HandOff.unified.md:97:- **目的:** 手作業環境変更の可視化と、Halu トレーニング運用への継承。  
+ - ./docs/Restart/Daegis_HandOff.unified.md:98:- **継承対象:** Halu Ops にも同形式の `ward` 記録を導入予定。
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Hand-off.md:35:    1.    RAG v0（SQLite FTS5 で Top3 根拠を付与）を Halu に接続。
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Hand-off.md:111:    •    Halu：tell-halu "このPRの要約方針を3行で"
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Chronicle.md:8:- **Slack Slash → FastAPI(slack2mqtt) → MQTT → Halu / Oracle** が稼働。
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Chronicle.md:15:  - Halu/Oracle の回答に **✅/🛠/❌ + reason** を付与する方針で統一。
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Chronicle.md:22:2. **評価保存の本配線**：✅/🛠/❌ を `daegis/feedback/*` にJSONLで確定、corr_idで Halu/Oracle 応答と連結。
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Chronicle.md:57:    -> [Halu/Oracle workers]
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Chronicle.md:82:- 2025-10-05: DNS 競合を解消し、**Slack→FastAPI→MQTT→Halu/Oracle** の運用経路が完成。
+ - ./docs/Restart/Admin/Archive/Main Archive/Daegis Chronicle.md:89:- Slack Slash → FastAPI(slack2mqtt) → MQTT → Halu/Oracle が稼働。Cloudflare Tunnel `bridge` と DNS 張替え完了。
+ - ./docs/Standards/ops.md:8:  - Halu: ~/halu/logs -> ~/daegis/ark/logbook (symlink)
+ - ./tmp/recover/PI_Halu_scan.txt:1:## Halu candidates (Pi)
+
+## archives hits

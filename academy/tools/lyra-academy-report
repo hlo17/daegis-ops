@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+echo "### Academy @ $(date -u +%FT%TZ)
+- datasets: $(wc -l < ~/daegis/academy/datasets/skills.jsonl)
+- skills: $(ls -1 ~/daegis/academy/skills/*.prompt 2>/dev/null | wc -l)
+" \
+| tee >(cat) \
+| { # Private Trellis prepend (Phase_4_Memory_Metrics.md)
+  TRE="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Daisy/2_Areas/50_Daegis/Trellis/Phase_4_Memory_Metrics.md"
+  if [[ -f "$TRE" ]]; then TMP=$(mktemp); cat >"$TMP"; cat "$TRE" >>"$TMP"; mv "$TMP" "$TRE"; fi
+}

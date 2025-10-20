@@ -1,0 +1,60 @@
+{
+  "scope": "Phase V batch import (5 records)",
+  "classification": "Internal",
+  "dlp_hits": "None",
+  "nodes": [
+    {
+      "id": "oracle.l13",
+      "storage": "unknown",
+      "egress": "unknown",
+      "trace_id": "unknown",
+      "evidence": [
+        "canary_verdict FAIL (HOLD_RATE=0.2241, e5xx=394, p95_ms=3005.72)"
+      ]
+    },
+    {
+      "id": "apply.l10_5_gate",
+      "storage": "unknown",
+      "egress": "unknown",
+      "trace_id": "unknown",
+      "evidence": ["adopt_block due to l13_verdict_FAIL"]
+    },
+    {
+      "id": "learn.sb2_pipeline",
+      "storage": "unknown",
+      "egress": "unknown",
+      "trace_id": "unknown",
+      "evidence": ["policy_apply_plan tail exists (apply_plan events)"]
+    },
+    {
+      "id": "scribe.dashboard_lite",
+      "storage": "unknown",
+      "egress": "unknown",
+      "trace_id": "unknown",
+      "evidence": []
+    },
+    {
+      "id": "ops.cron",
+      "storage": "unknown",
+      "egress": "unknown",
+      "trace_id": "unknown",
+      "evidence": []
+    }
+  ],
+  "rollup": {
+    "kpis": {
+      "canary.verdict": "FAIL",
+      "hold_rate": 0.2241,
+      "e5xx": 394,
+      "p95_ms": 3005.72
+    },
+    "edges_mandatory": [
+      "oracle.l13 → apply.l10_5_gate (kind=verdict)"
+    ],
+    "verdicts": {
+      "PASS": ["apply.l10_5_gate", "learn.sb2_pipeline"],
+      "FAIL": ["oracle.l13"],
+      "INSUFFICIENT": ["scribe.dashboard_lite", "ops.cron"]
+    }
+  }
+}

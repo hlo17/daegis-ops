@@ -1,0 +1,28 @@
+{
+  "roles": {
+    "scribe": [
+      [
+        "bash",
+        "scripts/dev/dashboard_lite.sh"
+      ],
+      [
+        "cp",
+        "docs/runbook/dashboard_lite.md",
+        "*"
+      ],
+      [
+        "mkdir",
+        "-p",
+        "archives/*"
+      ],
+      [
+        "cp",
+        "docs/runbook/dashboard_lite.md",
+        "archives/*"
+      ]
+    ]
+  },
+  "bindings": {
+    "scribe.dashboard_snapshot": "scribe"
+  }
+}

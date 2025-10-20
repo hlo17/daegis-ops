@@ -1,0 +1,34 @@
+groups:
+  - name: daegis_memory_sync
+    interval: 1m
+    rules:
+      # agent別（秒）
+      - record: daegis_memory_last_updated_seconds
+        expr: time() - daegis_memory_last_update_timestamp
+
+      # overall（秒）
+      - record: daegis_memory_overall_last_updated_seconds
+        expr: time() - daegis_memory_overall_last_update_timestamp
+
+      # 24h以上更新なし（agent別）
+      - alert: MemorySyncDelay
+        expr: daegis_memory_last_updated_seconds > 24 * 60 * 60
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Memory not updated ({{ $labels.agent }})"
+          description: |
+            {{ $labels.agent }} の Relay/Memory が24h未更新です。
+            brief_ingest / relay_add / Gate 経路を確認してください。
+
+      # 更新リズムのドリフト（agent別）
+      - alert: RelayDrift
+        expr: abs(deriv(daegis_memory_last_update_timestamp[1h])) > (2 * 60 * 60) / 3600
+        labels:
+          severity: info
+        annotations:
+          summary: "Memory cadence drifting ({{ $labels.agent }})"
+          description: |
+            直近1hで {{ $labels.agent }} の更新リズムが大きく変動しました。
+            非アクティブ/遅延/連携エラーなどを点検してください。

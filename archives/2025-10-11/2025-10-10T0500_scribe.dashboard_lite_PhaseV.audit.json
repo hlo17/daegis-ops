@@ -1,0 +1,58 @@
+{
+  "phase": "Phase V",
+  "layer": [
+    "docs",
+    "observability"
+  ],
+  "component_id": "scribe.dashboard_lite",
+  "topic": "Dashboard Lite 拡張（ALLOW/cooldown表示など）",
+  "decisions": [],
+  "todos": [],
+  "files": [
+    "scripts/dev/dashboard_lite.sh",
+    "docs/runbook/dashboard_lite.md"
+  ],
+  "commands": [
+    "bash scripts/dev/dashboard_lite.sh"
+  ],
+  "env_knobs": [],
+  "interfaces": {
+    "inputs": [
+      "logs/*",
+      "flags/L105_COOLDOWN_UNTIL"
+    ],
+    "outputs": [
+      "docs/runbook/dashboard_lite.md"
+    ],
+    "side_effects": []
+  },
+  "gates_safety": [],
+  "metrics_ports": [],
+  "dependencies": {
+    "upstream": [],
+    "downstream": []
+  },
+  "effects": [],
+  "effects_chain": [],
+  "evidence": [],
+  "time_window": "unknown",
+  "owners": [],
+  "evaluation": {
+    "verdict": "INSUFFICIENT",
+    "reason": "unknown",
+    "factors": []
+  },
+  "governance": {
+    "classification": "Internal",
+    "storage": "unknown",
+    "egress": "unknown",
+    "dlp_hits": "unknown",
+    "trace_id": "unknown"
+  },
+  "reproducibility": {
+    "capsule_or_profile": "unknown",
+    "journal_sha": "unknown",
+    "status": "Pending"
+  },
+  "status": "Confirmed"
+}

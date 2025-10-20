@@ -1,0 +1,3 @@
+pass	grammar	2
+fail	grounding	1
+fail	hallucination	1

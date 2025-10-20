@@ -1,0 +1,25 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['127.0.0.1:9093']  # 使うなら
+
+rule_files:
+  - /etc/prometheus/rules/*.yml
+  - /etc/prometheus/halu_alerts/*.yml
+
+scrape_configs:
+  - job_name: 'halu-local'
+    static_configs:
+      - targets: ['127.0.0.1:9091']
+
+  - job_name: 'node'
+    static_configs:
+      - targets: ['127.0.0.1:9100']
+
+  - job_name: 'halu-reflection'
+    static_configs:
+      - targets: ['127.0.0.1:9310']

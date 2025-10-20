@@ -1,0 +1,19 @@
+groups:
+  - name: halu
+    interval: 15s
+    rules:
+      # 合格率の1時間平均
+      - record: halu_eval_pass_ratio_1h
+        expr: avg_over_time(halu_eval_pass_ratio[1h])
+
+      # 直近1時間のケース増分（pass/fail/unsafe）
+      - record: halu_eval_cases_1h
+        expr: increase(halu_eval_cases_total[1h])
+        labels:
+          status: "{{status}}"
+
+      # 直近24時間のケース増分
+      - record: halu_eval_cases_24h
+        expr: increase(halu_eval_cases_total[24h])
+        labels:
+          status: "{{status}}"

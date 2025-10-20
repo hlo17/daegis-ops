@@ -1,0 +1,215 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "canDelete": true,
+    "slug": "halu-metrics-v1",
+    "url": "/grafana/d/40360aec-6eda-44d4-83a1-7dad17a4ed42/halu-metrics-v1",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2025-10-18T03:03:23+09:00",
+    "updated": "2025-10-18T03:19:26+09:00",
+    "updatedBy": "admin",
+    "createdBy": "admin",
+    "version": 2,
+    "hasAcl": false,
+    "isFolder": false,
+    "apiVersion": "v0alpha1",
+    "folderId": 0,
+    "folderUid": "",
+    "folderTitle": "General",
+    "folderUrl": "",
+    "provisioned": false,
+    "provisionedExternalId": "",
+    "annotationsPermissions": {
+      "dashboard": {
+        "canAdd": true,
+        "canEdit": true,
+        "canDelete": true
+      },
+      "organization": {
+        "canAdd": true,
+        "canEdit": true,
+        "canDelete": true
+      }
+    }
+  },
+  "dashboard": {
+    "id": 20,
+    "panels": [
+      {
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "options": {
+          "legend": {
+            "showLegend": true
+          }
+        },
+        "targets": [
+          {
+            "expr": "daegis_halu_reflection_5m",
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "title": "Reflections (5m)",
+        "type": "timeseries"
+      },
+      {
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "options": {
+          "legend": {
+            "showLegend": true
+          }
+        },
+        "targets": [
+          {
+            "expr": "rate(daegis_halu_intent_exec_total[5m])",
+            "legendFormat": "{{instance}}",
+            "refId": "A"
+          }
+        ],
+        "title": "Intent Exec (rate 5m)",
+        "type": "timeseries"
+      },
+      {
+        "gridPos": {
+          "h": 6,
+          "w": 6,
+          "x": 0,
+          "y": 8
+        },
+        "targets": [
+          {
+            "expr": "time() - daegis_halu_reflection_summary_last_ts",
+            "refId": "A"
+          }
+        ],
+        "title": "Reflection last TS (sec ago)",
+        "type": "stat"
+      },
+      {
+        "gridPos": {
+          "h": 6,
+          "w": 6,
+          "x": 6,
+          "y": 8
+        },
+        "targets": [
+          {
+            "expr": "sum(daegis_halu_reflection_1h)",
+            "refId": "A"
+          }
+        ],
+        "title": "Reflections (1h total)",
+        "type": "stat"
+      },
+      {
+        "gridPos": {
+          "h": 6,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "targets": [
+          {
+            "expr": "sum by () (ALERTS{alertname=\"HaluReflectionLowVolume\",alertstate=\"suppressed\"})",
+            "refId": "A"
+          }
+        ],
+        "title": "AM: LowVolume suppressed?",
+        "type": "stat"
+      },
+      {
+        "gridPos": {
+          "h": 6,
+          "w": 6,
+          "x": 0,
+          "y": 0
+        },
+        "options": {
+          "max": 1,
+          "min": 0,
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ]
+          }
+        },
+        "targets": [
+          {
+            "expr": "sum_over_time(increase(daegis_halu_eval_cases_total{result=\"pass\"}[1m])[5m:15s]) / sum_over_time(increase(daegis_halu_eval_cases_total[1m])[5m:15s])",
+            "refId": "A"
+          }
+        ],
+        "title": "Pass Ratio (5m smoothed)",
+        "type": "gauge"
+      },
+      {
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 6,
+          "y": 0
+        },
+        "options": {
+          "showHeader": true
+        },
+        "targets": [
+          {
+            "expr": "topk(5, increase(daegis_halu_eval_cases_reason_total{result=\"fail\"}[10m]))",
+            "refId": "A"
+          }
+        ],
+        "title": "Top Fail Reasons (10m)",
+        "type": "table"
+      }
+    ],
+    "refresh": "10s",
+    "schemaVersion": 38,
+    "templating": {
+      "list": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dez9ppc897uo0e"
+          },
+          "name": "job",
+          "query": "label_values(job)",
+          "refresh": 2,
+          "type": "query"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "dez9ppc897uo0e"
+          },
+          "name": "instance",
+          "query": "label_values(instance)",
+          "refresh": 2,
+          "type": "query"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    },
+    "timezone": "browser",
+    "title": "Halu Metrics v1",
+    "uid": "40360aec-6eda-44d4-83a1-7dad17a4ed42",
+    "version": 2
+  }
+}

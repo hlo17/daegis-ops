@@ -1,0 +1,100 @@
+{
+  "phase": "Phase VI→VII bridge",
+  "layer": ["governance", "agents", "observability", "security"],
+  "component_id": "factory.daemon",
+  "topic": "Factory Daemon 最小実装（RBAC+Allowlist+HMAC 署名＋WORM監査）導入決定",
+  "decisions": [
+    "AIは署名付き実行計画(JSON)のみ提出し、実行はデーモン側でRBAC+Allowlist+HMAC検証後に実施",
+    "DRY / REQUIRE_APPROVAL / APPROVED の3レベルを運用",
+    "監査は logs/factory_jobs.jsonl（append-only）、成果は genome_index.jsonl に正規化追記",
+    "guardian factory {queue|run|status} をオペ窓口とする"
+  ],
+  "todos": [
+    "RBACトークンマッチの厳密化（引数検証・ワイルドカード最小）",
+    "Factoryメトリクス（jobs_ok/fail/deny/dry）をBrief/Runbookへ露出",
+    "HMAC鍵を .env.local (600) に固定し、デーモン読込に限定"
+  ],
+  "files": [
+    "ops/factory/_lib.sh",
+    "ops/factory/run_job.sh",
+    "ops/factory/daemon.sh",
+    "ops/factory/policies.d/rbac.json",
+    "ops/factory/genome_index.jsonl",
+    "logs/factory_jobs.jsonl",
+    "ops/factory/guardian_factory.sh"
+  ],
+  "commands": [
+    "bash ops/factory/daemon.sh",
+    "bash ops/factory/guardian_factory.sh status",
+    "bash ops/factory/guardian_factory.sh queue",
+    "bash ops/factory/guardian_factory.sh run ops/factory/queue/<job>.json"
+  ],
+  "env_knobs": [
+    "FACTORY_HMAC_KEY",
+    "FACTORY_DIR (default ops/factory)"
+  ],
+  "interfaces": {
+    "inputs": ["ops/factory/queue/*.json (署名付き実行計画)"],
+    "outputs": ["logs/factory_jobs.jsonl", "ops/factory/genome_index.jsonl"],
+    "side_effects": ["許可コマンドの実行（ulimit/timeout付与）"]
+  },
+  "gates_safety": [
+    "APPROVED 以外は DRY 実行のみ",
+    "sudo 明示拒否、symlink/.. 拒否、realpathチェック"
+  ],
+  "metrics_ports": [
+    "jobs_ok", "jobs_fail", "jobs_deny", "jobs_dry"
+  ],
+  "dependencies": {
+    "upstream": [
+      {"id": "guardian", "type": "control"},
+      {"id": "rbac.policies", "type": "config"}
+    ],
+    "downstream": [
+      {"id": "scribe.dashboard_lite", "type": "data"},
+      {"id": "rollup.current", "type": "data"}
+    ]
+  },
+  "effects": [
+    "安全境界を保ったまま実行系を再開可能に",
+    "将来のCode Genome学習素材が蓄積開始"
+  ],
+  "effects_chain": [
+    {"triggered_component": "scribe.dashboard_lite", "reason": "Factoryメトリクス表示"},
+    {"triggered_component": "oracle.l13", "reason": "実行結果の評価・ゲート判断材料"}
+  ],
+  "evidence": [
+    "ops/factory/policies.d/rbac.json（allowlist）",
+    "logs/factory_jobs.jsonl（実行ジャーナル）"
+  ],
+  "time_window": "unknown",
+  "owners": ["user:AEGIS", "agent:chatgpt12", "agent:chatgpt13-3"],
+  "evaluation": {
+    "verdict": "PASS",
+    "reason": "設計合意＆最小実装配置。Guardian統合導線あり。",
+    "factors": ["RBAC+HMAC+WORMが定義済み", "オペ用CLIが存在"]
+  },
+  "governance": {
+    "classification": "Internal",
+    "storage": "Citadel",
+    "egress": "Bridge",
+    "dlp_hits": "None",
+    "trace_id": "unknown"
+  },
+  "reproducibility": {
+    "capsule_or_profile": "factory",
+    "journal_sha": "unknown",
+    "status": "Confirmed"
+  },
+  "status": "Confirmed",
+  "chat_meta": {
+    "timestamp": "unknown",
+    "participants": ["AEGIS", "chatgpt12", "chatgpt13-3"],
+    "excerpt": "Factory Daemon（RBAC+HMAC+WORM）導入を合意。guardian factory を窓口化。"
+  },
+  "phase_lexicon": {
+    "Phase VI": {"period": "unknown", "signatures": ["Reward Normalize", "Confidence Calibrate", "Counterfactual"]},
+    "Phase VII": {"period": "unknown", "signatures": ["Operation Intelligence", "Factory metrics", "Code Genome"]}
+  },
+  "hint_keywords": ["factory", "rbac", "hmac", "worm", "daemon", "guardian factory", "genome"]
+}

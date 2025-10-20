@@ -1,0 +1,30 @@
+{
+  "phase": "",
+  "goal": "考査期間の自動観測維持と情報資産防護",
+  "kpi": {
+    "canary_verdict": "FAIL",
+    "hold_rate": 0.2241,
+    "e5xx": 394,
+    "p95_ms": 3005.72,
+    "adopt_block_last200": 4
+  },
+  "components_status": {
+    "oracle.l13": "FAIL",
+    "apply.l10_5_gate": "PASS",
+    "learn.sb2_pipeline": "PASS",
+    "scribe.dashboard_lite": "INSUFFICIENT",
+    "ops.cron": "INSUFFICIENT"
+  },
+  "governance_summary": {
+    "classification": "Internal",
+    "storage": "Citadel",
+    "egress": "Bridge",
+    "dlp_hits": "None",
+    "trace_id": "auto"
+  },
+  "open_gaps": [
+    "Dashboard KPI evidence",
+    "Cron snapshot",
+    "trace_id rule hardening"
+  ]
+}

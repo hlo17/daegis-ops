@@ -1,0 +1,5 @@
+# scribe profile: collect evidence daily
+ops/capsules/scribe/cron_snapshot.sh
+ops/capsules/scribe/dash_snapshot.sh
+# (optional) ingest audits if present
+# ops/capsules/scribe/ingest_audit_json.sh /tmp/audits_bundle.jsonl

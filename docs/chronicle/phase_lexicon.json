@@ -1,0 +1,21 @@
+[
+  {
+    "phase": "Phase VI",
+    "period": ["2025-10-11","2025-11-30"],
+    "goals": [
+      "Reward Normalize (winsorize + z-clip per intent/window)",
+      "Confidence Calibrate (density n × consistency ρ → low/mid/high)",
+      "Counterfactual Logger (adopted vs rejected proposals)"
+    ],
+    "signatures": [
+      "reward_normalize.py","confidence_calibrate.py","counterfactual_logger.py",
+      "SB_MIN_CONF_TAG","train_ready_v2.csv","simbrain_v2"
+    ],
+    "kpi": ["canary.verdict","p95_ms","hold_rate","e5xx","sb2.pass_rate","gate.pass:skip"],
+    "upgrade_criteria": [
+      "L13 PASS rate ≥ 90% (canary-only, 7d)",
+      "gate PASS:SKIP ≥ 0.6 with SB_MIN_CONF_TAG=mid",
+      "counterfactual coverage ≥ 80%"
+    ]
+  }
+]

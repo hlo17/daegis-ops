@@ -1,0 +1,18 @@
+[Unit]
+Description=Halu Sidecar Exporter
+After=network-online.target
+
+[Service]
+Type=simple
+Environment=DAEGIS_ROOT=/home/f/daegis
+Environment=DAEGIS_PHASE_FILE=/home/f/daegis/phase_tag.txt
+Environment=DAEGIS_ROLLUP_FILE=/home/f/daegis/rollup/current.json
+Environment=DAEGIS_HALU_STATE_FILE=/home/f/daegis/flags/L7_HALU_STATE
+Environment=EXPORTER_HOST=127.0.0.1
+Environment=EXPORTER_PORT=9091
+ExecStart=/opt/halu-exporter/.venv/bin/python /opt/halu-exporter/exporter.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

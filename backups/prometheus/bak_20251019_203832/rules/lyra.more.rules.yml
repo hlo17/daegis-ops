@@ -1,0 +1,15 @@
+groups:
+  - name: lyra_more
+    interval: 10s
+    rules:
+      # 直近1hのモード稼働率（0..1）
+      - record: lyra_mode_uptime_ratio_1h
+        expr: avg_over_time(lyra_mode_is_active[1h])
+
+      # 直近1hのスイッチ回数
+      - record: lyra_mode_switches_1h
+        expr: increase(lyra_mode_switches_total[1h])
+
+      # 直近24hのスイッチ回数
+      - record: lyra_mode_switches_24h
+        expr: increase(lyra_mode_switches_total[24h])

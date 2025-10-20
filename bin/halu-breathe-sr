@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -euo pipefail
+ISO=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+read -rp "昨日の『何を』振り返る？: " WHAT
+read -rp "修正点は？: " FIX
+REF="$HOME/daegis/logs/reflection.jsonl"; mkdir -p "$(dirname "$REF")"
+echo "{\"ts\":\"$ISO\",\"type\":\"reflection\",\"message\":\"昨日の私の${WHAT}を振り返る。修正は${FIX}。前回との差分を明日検証する。\"}" >> "$REF"
+echo "[emit] reflection appended."
+python3 "$HOME/daegis/www/halu_state_viz.py"
+python3 "$HOME/daegis/scripts/ops/halu_daily_coach.py"

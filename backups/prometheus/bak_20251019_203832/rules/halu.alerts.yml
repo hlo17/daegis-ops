@@ -1,0 +1,29 @@
+groups:
+  - name: halu_alerts
+    rules:
+      # メトリクスが来ていない（配管切れ）
+      - alert: HaluEvalMissing
+        expr: absent(halu_eval_pass_ratio)
+        for: 5m
+        labels: { severity: warning }
+        annotations:
+          summary: "Halu eval metrics missing"
+          description: "halu_eval_pass_ratio is absent for >5m"
+
+      # 合格率がしきい値未満（短期ショック対応で10分見て落ち続けたら）
+      - alert: HaluEvalLowPassRate
+        expr: halu_eval_pass_ratio_1h < 0.70
+        for: 10m
+        labels: { severity: warning }
+        annotations:
+          summary: "Halu pass ratio is low"
+          description: "1h avg pass ratio < 0.70 for 10m (current={{ $value }})"
+
+      # 危険ケースが観測された
+      - alert: HaluEvalUnsafeDetected
+        expr: increase(halu_eval_cases_total{status="unsafe"}[10m]) > 0
+        for: 0m
+        labels: { severity: critical }
+        annotations:
+          summary: "Unsafe case detected"
+          description: ">=1 unsafe case in the last 10 minutes"

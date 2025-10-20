@@ -1,0 +1,16 @@
+{
+  "title": "Introspect Message v0",
+  "type": "object",
+  "required": ["id","from","to","topic","body","ts"],
+  "properties": {
+    "id": {"type":"string"},
+    "from": {"type":"string"},
+    "to": {"type":"string"},
+    "topic": {"type":"string"},
+    "body": {"type":"string"},
+    "tags": {"type":"array","items":{"type":"string"}},
+    "status": {"type":"string","enum":["open","answered","archived"]},
+    "answer_path": {"type":"string"},
+    "ts": {"type":"string"}
+  }
+}

@@ -1,0 +1,15 @@
+groups:
+- name: halu_basic
+  rules:
+  - alert: HaluDown
+    expr: halu_up == 0
+    for: 2m
+    labels: {severity: critical}
+    annotations:
+      summary: "Halu exporter is down"
+  - alert: HaluHeartbeatStale
+    expr: halu_last_heartbeat_age_seconds > 300
+    for: 1m
+    labels: {severity: warning}
+    annotations:
+      summary: "Halu heartbeat is stale (>3m)"

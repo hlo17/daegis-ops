@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+python3 "$HOME/daegis/scripts/ops/halu_daily_coach.py"
+sed -n '1,3p' "$HOME/daegis/logs/reflection.jsonl" 2>/dev/null | tail -n 1 | sed 's/^/latest: /' || true

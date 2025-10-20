@@ -1,0 +1,12 @@
+# Denylist for Obsidian Bridge Index
+# Last updated: 2025-10-14T09:00Z by Gardener
+
+Daegis Chronicle/
+Daegis Hand-off/
+Garden Tree.md
+
+# 古いノート群（archive扱い）
+archives/
+
+# 自動生成ログ類
+bridges/obsidian/derived/

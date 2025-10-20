@@ -1,0 +1,19 @@
+groups:
+- name: halu_reflection
+  rules:
+  - alert: HaluReflectionSilent
+    expr: (hour()>=9 and hour()<=19) and daegis_halu_reflection_5m == 0
+    for: 15m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Halu Reflection inactive during active hours"
+      description: "No reflections in 15m window (9–19 JST)."
+  - alert: HaluReflectionBurst
+    expr: rate(daegis_halu_reflection_5m[5m]) > 100
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Reflection burst"
+      description: "High reflection activity in last 5m."

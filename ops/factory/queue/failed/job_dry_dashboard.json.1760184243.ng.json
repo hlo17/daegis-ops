@@ -1,0 +1,13 @@
+{
+  "job_id": "dash-0001",
+  "intent": "scribe.dashboard_snapshot",
+  "role": "scribe",
+  "phase": "VI",
+  "commands": [
+    ["bash","scripts/dev/dashboard_lite.sh"],
+    ["cp","docs/runbook/dashboard_lite.md","archives/2025-10-11/"]
+  ],
+  "timeout_sec": 60,
+  "dry_run": true,
+  "hmac": "PLACEHOLDER"
+}

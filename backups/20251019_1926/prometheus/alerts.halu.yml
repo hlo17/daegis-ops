@@ -1,0 +1,10 @@
+groups:
+- name: halu-heartbeat.rules
+  rules:
+  - alert: HaluRelayHeartbeatMissing
+    expr: halu_last_heartbeat_age_seconds > 180
+    for: 6m
+    labels: {severity: warning, site: round-table}
+    annotations:
+      summary: "no heartbeat on daegis/halu/metrics/status"
+      description: "Last heartbeat older than 3m (sustained 6m)"

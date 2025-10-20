@@ -1,0 +1,18 @@
+groups:
+- name: remote_write_safety
+  rules:
+  - alert: RemoteWriteFailures
+    expr: increase(prometheus_remote_storage_failed_samples_total[10m]) > 0
+    for: 5m
+    labels: {severity: warning}
+    annotations:
+      summary: "Remote write is failing"
+      description: "Failed samples increasing in last 10m."
+
+  - alert: RemoteWriteStalled
+    expr: rate(prometheus_remote_storage_samples_total[10m]) == 0
+    for: 15m
+    labels: {severity: critical}
+    annotations:
+      summary: "Remote write stalled (no samples out for 15m)"
+      description: "Check token/URL/network. Local Prometheus still scraping."

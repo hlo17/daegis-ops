@@ -1,0 +1,8 @@
+groups:
+- name: temp-smoke.rules
+  rules:
+  - alert: HeartbeatSmokeTest
+    expr: halu_last_heartbeat_age_seconds > 10
+    for: 30s
+    labels: {severity: info}
+    annotations: {summary: "SMOKE: heartbeat age >10s"}

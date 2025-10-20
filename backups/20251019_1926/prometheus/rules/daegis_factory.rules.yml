@@ -1,0 +1,12 @@
+groups:
+- name: daegis_factory
+  interval: 30s
+  rules:
+  - record: factory:jobs:ok
+    expr: sum(daegis_factory_jobs_total{result="ok"})
+  - record: factory:jobs:fail
+    expr: sum(daegis_factory_jobs_total{result="fail"})
+  - record: factory:jobs:deny
+    expr: sum(daegis_factory_jobs_total{result="deny"})
+  - record: factory:jobs:dry
+    expr: sum(daegis_factory_jobs_total{result="dry"})

@@ -1,0 +1,55 @@
+{
+  "id": 2,
+  "panels": [
+    {
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "time() - scribe_last_append_ts"
+        }
+      ],
+      "title": "Append Age (sec)",
+      "type": "stat"
+    },
+    {
+      "gridPos": {
+        "h": 8,
+        "w": 16,
+        "x": 8,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum by(actor) (rate(scribe_appended_total[5m]))"
+        }
+      ],
+      "title": "Appended/sec by actor",
+      "type": "timeseries"
+    },
+    {
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 6
+      },
+      "targets": [
+        {
+          "expr": "increase(scribe_duplicate_skips_total[5m])"
+        }
+      ],
+      "title": "Duplicate Skips (5m)",
+      "type": "stat"
+    }
+  ],
+  "schemaVersion": 38,
+  "timezone": "browser",
+  "title": "Daegis · Scribe Mini",
+  "uid": "f7c908b8-0902-4bed-acec-63920b761751",
+  "version": 1
+}

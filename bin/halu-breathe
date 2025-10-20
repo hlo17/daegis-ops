@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+mkdir -p "$HOME/daegis/scripts/ops" "$HOME/daegis/logs"
+if [ -x "$HOME/daegis/scripts/ops/emit_halu_reflection.sh" ]; then
+  "$HOME/daegis/scripts/ops/emit_halu_reflection.sh"
+else
+  REF="$HOME/daegis/logs/reflection.jsonl"
+  ISO=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+  MSG="昨日の私の判断を振り返り、改善点を1つだけ記す。"
+  echo "{\"ts\":\"$ISO\",\"type\":\"reflection\",\"message\":\"$MSG\"}" >> "$REF"
+  echo "[emit] reflection appended."
+fi
+python3 "$HOME/daegis/www/halu_state_viz.py"
+python3 "$HOME/daegis/scripts/ops/halu_daily_coach.py"

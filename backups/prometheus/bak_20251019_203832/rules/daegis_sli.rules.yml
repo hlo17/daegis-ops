@@ -1,0 +1,16 @@
+groups:
+- name: daegis_sli
+  interval: 30s
+  rules:
+  # 0/1 にするため bool を使う（true=1, false=0）
+  - record: daegis:fresh:ok
+    expr: max_over_time(scrape_series_added{job="daegis_solaris_exporter"}[1m]) > bool 0
+
+  - record: daegis:exporter:up
+    expr: max_over_time(scrape_series_added{job="daegis_solaris_exporter"}[1m]) > bool 0
+
+  # 環境差の少ない scrape 指標（>0 で 1, それ以外 0）
+  - record: daegis:scrape:ok
+    expr: max_over_time(scrape_series_added{job="daegis_solaris_exporter"}[1m]) > bool 0
+  - record: daegis:scrape:series
+    expr: max_over_time(scrape_series_added{job="daegis_solaris_exporter"}[1m]) > bool 0

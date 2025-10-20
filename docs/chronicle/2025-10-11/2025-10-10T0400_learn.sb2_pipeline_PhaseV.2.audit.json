@@ -1,0 +1,67 @@
+{
+  "phase": "Phase V",
+  "layer": [
+    "agents"
+  ],
+  "component_id": "learn.sb2_pipeline",
+  "topic": "SimBrain v2 提案 + confidence タグ注入",
+  "decisions": [],
+  "todos": [],
+  "files": [
+    "scripts/dev/sb2_pipeline.sh",
+    "logs/policy_auto_tune.jsonl",
+    "logs/policy_apply_plan.jsonl"
+  ],
+  "commands": [
+    "bash scripts/dev/sb2_pipeline.sh"
+  ],
+  "env_knobs": [
+    "SB_MIN_CONF_TAG=mid",
+    "SB2_ALLOW_INTENTS=plan,publish"
+  ],
+  "interfaces": {
+    "inputs": [
+      "logs/simbrain_proposals.jsonl",
+      "logs/policy_auto_tune.jsonl"
+    ],
+    "outputs": [
+      "logs/policy_apply_plan.jsonl"
+    ],
+    "side_effects": []
+  },
+  "gates_safety": [
+    "apply_planner: v2提案のみ SB_MIN_CONF_TAG でフィルタ"
+  ],
+  "metrics_ports": [],
+  "dependencies": {
+    "upstream": [],
+    "downstream": []
+  },
+  "effects": [],
+  "effects_chain": [],
+  "evidence": [
+    "apply_plan_tail:"
+  ],
+  "time_window": "unknown",
+  "owners": [],
+  "evaluation": {
+    "verdict": "PASS",
+    "reason": "apply_plan events present",
+    "factors": [
+      "policy_apply_plan tail exists"
+    ]
+  },
+  "governance": {
+    "classification": "Internal",
+    "storage": "unknown",
+    "egress": "unknown",
+    "dlp_hits": "unknown",
+    "trace_id": "unknown"
+  },
+  "reproducibility": {
+    "capsule_or_profile": "unknown",
+    "journal_sha": "unknown",
+    "status": "Pending"
+  },
+  "status": "Confirmed"
+}

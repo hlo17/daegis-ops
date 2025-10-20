@@ -1,0 +1,43 @@
+{
+  "nodes": [
+    { "id": "oracle.l13", "label": "L13 Canary", "state": "FAIL" },
+    { "id": "apply.l10_5_gate", "label": "L10.5 Gate", "state": "PASS" },
+    { "id": "learn.sb2_pipeline", "label": "SB2 Pipeline", "state": "PASS" },
+    { "id": "scribe.dashboard_lite", "label": "Dashboard Lite", "state": "INSUFFICIENT" },
+    { "id": "ops.cron", "label": "Cron", "state": "INSUFFICIENT" }
+  ],
+  "edges": [
+    {
+      "from": "oracle.l13",
+      "to": "apply.l10_5_gate",
+      "reason": "verdict=FAIL blocks adopt",
+      "evidence_refs": [
+        "l13_tail FAIL",
+        "adopt_block entries"
+      ]
+    },
+    {
+      "from": "ops.cron",
+      "to": "learn.sb2_pipeline",
+      "reason": "scheduled run (15m assumed)",
+      "evidence_refs": []
+    },
+    {
+      "from": "learn.sb2_pipeline",
+      "to": "scribe.dashboard_lite",
+      "reason": "apply_plan values surface on dashboard",
+      "evidence_refs": []
+    },
+    {
+      "from": "apply.l10_5_gate",
+      "to": "scribe.dashboard_lite",
+      "reason": "policy_apply_controlled visible",
+      "evidence_refs": []
+    }
+  ],
+  "effects_summary": [
+    "L13 FAIL raised; L10.5 correctly blocked adoption",
+    "SB2 proposals flowed to planner (dry) and candidates updated",
+    "Dashboard evidence insufficient in this batch"
+  ]
+}

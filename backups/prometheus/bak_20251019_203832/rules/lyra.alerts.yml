@@ -1,0 +1,18 @@
+groups:
+  - name: lyra_alerts
+    rules:
+      - alert: LyraNoSamples
+        expr: absent(lyra_mode_last)
+        for: 5m
+        labels: { severity: warning }
+        annotations:
+          summary: "Lyra metrics missing"
+          description: "lyra_mode_last time series is absent for >5m"
+
+      - alert: LyraFrequentSwitches
+        expr: rate(lyra_mode_switches_total[5m]) > 0.2
+        for: 10m
+        labels: { severity: warning }
+        annotations:
+          summary: "Lyra mode is switching too often"
+          description: "Switch rate > 0.2 /s for 10m (noisy behavior)"

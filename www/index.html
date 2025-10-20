@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <title>Garden Mini Dash — Halu × Lyra × Kai</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      margin:0; background:#0a0f12; color:#cfe2ff;
+      font-family: ui-sans-serif, system-ui, -apple-system, "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    }
+    header {
+      padding:12px 16px; border-bottom:1px solid #0f2433;
+      display:flex; gap:12px; align-items:center;
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:#3ad07f;box-shadow:0 0 12px #3ad07f;}
+    main {
+      display:grid; grid-template-columns: repeat(3, 1fr);
+      gap:16px; padding:16px; max-width:1280px; margin:0 auto;
+    }
+    .card {
+      background:#0c1419; border:1px solid #0f2433;
+      border-radius:14px; padding:12px;
+    }
+    .title { font-size:14px; opacity:.85; margin:4px 0 10px 0; }
+    .imgwrap {
+      display:flex; justify-content:center; align-items:center; min-height:440px;
+    }
+    img { width:100%; max-width:420px; height:auto; border-radius:10px; }
+    footer { padding:10px 16px; font-size:12px; opacity:.7; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="dot"></div>
+    <div>Garden Mini Dash — Halu × Lyra × Kai</div>
+    <div style="margin-left:auto;font-size:12px;opacity:.65" id="ts"></div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="title">Halu — 呼吸/反省</div>
+      <div class="imgwrap"><img id="halu" src="halu_state.svg" alt="Halu state"/></div>
+    </section>
+    <section class="card">
+      <div class="title">Lyra — 相/門/往復</div>
+      <div class="imgwrap"><img id="lyra" src="lyra_state.svg" alt="Lyra state"/></div>
+    </section>
+    <section class="card">
+      <div class="title">Kai — 管理/稼働</div>
+      <div class="imgwrap"><img id="kai" src="kai_state.svg" alt="Kai state"/></div>
+    </section>
+  </main>
+
+  <footer>auto-refresh 15s · static files in <code>~/daegis/www</code></footer>
+
+  <script>
+    const bust = (p)=>`${p}?t=${Date.now()}`;
+    const refresh = ()=>{
+      document.getElementById('halu').src = bust('halu_state.svg');
+      document.getElementById('lyra').src = bust('lyra_state.svg');
+      document.getElementById('kai').src  = bust('kai_state.svg');
+      document.getElementById('ts').textContent = new Date().toLocaleString();
+    };
+    setInterval(refresh, 15000);
+    refresh();
+  </script>
+</body>
+</html>

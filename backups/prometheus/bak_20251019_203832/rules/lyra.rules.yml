@@ -1,0 +1,10 @@
+groups:
+  - name: lyra
+    interval: 10s
+    rules:
+      - record: lyra_mode_is_active
+        expr: lyra_mode_last == 1
+      - record: lyra_mode_switches_rate_5m
+        expr: rate(lyra_mode_switches_total[5m])
+      - record: lyra_mode_count_sum
+        expr: sum by (mode) (lyra_mode_count)

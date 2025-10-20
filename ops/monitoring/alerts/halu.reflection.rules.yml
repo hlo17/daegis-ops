@@ -1,0 +1,17 @@
+groups:
+- name: halu_reflection
+  rules:
+  - alert: HaluReflectionSilent
+    expr: daegis_halu_reflection_5m == 0
+    for: 15m
+    labels: {severity: warning}
+    annotations:
+      summary: "Halu reflection silent (15m)"
+      description: "No reflections ingested in 15m. Check ingest cron and logs/decision_enriched.jsonl."
+  - alert: HaluReflectionBurst
+    expr: daegis_halu_reflection_5m > 5000
+    for: 5m
+    labels: {severity: warning}
+    annotations:
+      summary: "Halu reflection burst (>5k/5m)"
+      description: "Possible bad timestamp ingestion or loop. Consider compaction & source log sanity."

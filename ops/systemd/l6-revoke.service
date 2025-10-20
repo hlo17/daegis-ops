@@ -1,0 +1,12 @@
+[Unit]
+Description=Daegis L6 Revoke Evaluator (user)
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=%h/daegis
+ExecStart=/usr/bin/env bash -lc 'L6_REVOKE_HOLD_STREAK=${L6_REVOKE_HOLD_STREAK:-5} L6_REVOKE_5XX_STREAK=${L6_REVOKE_5XX_STREAK:-2} L6_BASELINE_SLA_MS=${L6_BASELINE_SLA_MS:-3000} bash scripts/guard/l6_revoke_eval.sh'
+Nice=10
+
+[Install]
+WantedBy=default.target

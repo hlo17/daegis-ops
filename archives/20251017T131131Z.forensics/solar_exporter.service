@@ -1,0 +1,15 @@
+# /etc/systemd/system/solar-textfile-exporter.service
+[Unit]
+Description=Solar textfile exporter (9091)
+After=network.target
+
+[Service]
+User=f
+Environment=HOME=/home/f
+WorkingDirectory=/home/f/daegis
+ExecStart=/home/f/daegis/.venv/bin/python /home/f/daegis/scripts/ops/solar_textfile_exporter.py
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

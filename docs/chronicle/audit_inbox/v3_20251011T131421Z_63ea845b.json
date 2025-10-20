@@ -1,0 +1,95 @@
+{
+  "phase": "Phase VI",
+  "layer": ["governance", "observability", "docs"],
+  "component_id": "guardian.beacon",
+  "topic": "Guardian/Beacon 修復と運用安定化（NOW_修正・PATH整備・+x・可視化更新）",
+  "decisions": [
+    "BeaconのNOW_未定義を修正し$NOW使用に統一",
+    "guardian を PATH 常駐化（~/.bashrc：export PATH=\"$HOME/daegis/scripts/guardian:$PATH\"）",
+    "scriptsにshebangと実行権限を付与（guardian, beacon.sh ほか）",
+    "append-only 原則：docs/chronicle/phase_ledger.jsonl に1行JSONで追記",
+    "可視化は guardian docs / guardian beacon を標準ルーチン化"
+  ],
+  "todos": [
+    "BeaconのJSON出力をDashboard Liteに取り込み（Factory metricsと併記）",
+    "guardian diff のKPI差分をrollupへ反映（自動）"
+  ],
+  "files": [
+    "scripts/guardian/guardian",
+    "scripts/guardian/beacon.sh",
+    "docs/chronicle/phase_ledger.jsonl",
+    "docs/chronicle/beacon.md",
+    "docs/chronicle/beacon.json"
+  ],
+  "commands": [
+    "chmod +x scripts/guardian/{guardian,beacon.sh}",
+    "guardian beacon",
+    "guardian docs"
+  ],
+  "env_knobs": [
+    "ROOT (optional; defaults to $PWD)"
+  ],
+  "interfaces": {
+    "inputs": ["docs/rollup/current.json", "docs/chronicle/phase_ledger.jsonl", "flags/*"],
+    "outputs": ["docs/chronicle/beacon.md", "docs/chronicle/beacon.json", "docs/chronicle/phase_ledger.jsonl (append)"],
+    "side_effects": ["Git commit/push by closeout (when used)"]
+  },
+  "gates_safety": [
+    "Append-only to ledger",
+    "No destructive edits to docs/*"
+  ],
+  "metrics_ports": [
+    "p95_ms", "hold_rate", "e5xx", "adopt_block_last200"
+  ],
+  "dependencies": {
+    "upstream": [
+      {"id": "rollup.current", "type": "data"},
+      {"id": "flags.veto_cooldown", "type": "config"}
+    ],
+    "downstream": [
+      {"id": "runbook.dashboard_lite", "type": "data"}
+    ]
+  },
+  "effects": [
+    "BeaconとGuardianの安定稼働",
+    "6-docs再生成の定常化"
+  ],
+  "effects_chain": [
+    {"triggered_component": "scribe.dashboard_lite", "reason": "beacon/rollup値の再描画"}
+  ],
+  "evidence": [
+    "docs/chronicle/beacon.md (直近生成)",
+    "docs/chronicle/phase_ledger.jsonl (末尾)",
+    "git log（guardian/beacon修復コミット）"
+  ],
+  "time_window": "unknown",
+  "owners": ["user:AEGIS", "agent:chatgpt13-3"],
+  "evaluation": {
+    "verdict": "PASS",
+    "reason": "Beacon実行成功・可視化更新・Ledger追記の一貫性確認",
+    "factors": ["NOW_修正適用", "PATH定着", "権限+shebang整備"]
+  },
+  "governance": {
+    "classification": "Internal",
+    "storage": "Citadel",
+    "egress": "Bridge",
+    "dlp_hits": "None",
+    "trace_id": "unknown"
+  },
+  "reproducibility": {
+    "capsule_or_profile": "guardian",
+    "journal_sha": "unknown",
+    "status": "Confirmed"
+  },
+  "status": "Confirmed",
+  "chat_meta": {
+    "timestamp": "unknown",
+    "participants": ["AEGIS", "chatgpt13-3"],
+    "excerpt": "Guardian/Beacon 修復・PATH 常駐・append-only Ledger 運用の確定。"
+  },
+  "phase_lexicon": {
+    "Phase V": {"period": "unknown", "signatures": ["Auto-Adopt Gate", "SimBrain v2", "Dashboard Lite"]},
+    "Phase VI": {"period": "unknown", "signatures": ["Reward Normalize", "Confidence Calibrate", "Counterfactual"]}
+  },
+  "hint_keywords": ["guardian", "beacon", "ledger", "append-only", "rollup", "flags", "dashboard"]
+}

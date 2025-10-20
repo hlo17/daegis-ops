@@ -1,0 +1,10 @@
+groups:
+- name: halu_slo
+  rules:
+  - alert: HaluReflectionLowVolume
+    expr: daegis_halu_reflection_1h < 1000
+    for: 15m
+    labels: {severity: warning}
+    annotations:
+      summary: "Low reflection volume"
+      description: "1h reflections below expected floor."

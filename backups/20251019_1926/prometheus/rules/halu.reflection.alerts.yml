@@ -1,0 +1,10 @@
+groups:
+- name: halu_reflection_basic
+  rules:
+  - alert: HaluReflectionSilent
+    expr: (halu_up == 1) and (daegis_sot_consistent == 1) and (daegis_reflection_recent_1h == 0)
+    for: 2h
+    labels: {severity: warning}
+    annotations:
+      summary: "Halu reflection has been silent for 2h (while up & SOT OK)"
+      description: "Recent(1h)=0 with halu_up=1 and sot_consistent=1"

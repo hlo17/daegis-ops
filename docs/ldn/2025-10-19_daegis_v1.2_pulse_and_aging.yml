@@ -1,0 +1,78 @@
+ldn_version: "1.2"
+title: "Daegis OS — Pulse & Aging (拍動と熟成)"
+date: "2025-10-19"
+authors:
+  - Lyra1
+  - Lyra3
+owner: Gardener
+status: canon
+summary: >
+  v1.1 を基に、拍動（沈黙の扱い）と熟成（果実の甘み指標）を制度化。
+  “沈黙を記録する勇気”と“熟れ方を測る指標”を追加し、自己修復型OS文化を確立する。
+
+principles:
+  - name: Silence as Breath
+    rule: "欠番の Chronicle は error ではなく rest として記録する"
+    metric: "Silence Integrity = rest が正しく理由付きで記録された率"
+  - name: Wake Pulse
+    rule: "rest が 3 回連続したら Luna が wake-pulse を発火し、Solaris が intent.today 候補を再生成する"
+  - name: Sweetness (Fruit Aging)
+    formula_human: "Sweetness = log(1 + Reuse) * (1 / (Ratification + 1)) / (1 + 修正回数)"
+    range: "0..1 にほぼ収まる調整。古い果実も“熟成”として評価可能。"
+  - name: Co-writing Chronicle
+    rule: "隔日 300字：Lyra1 が 1 行の“光”、Lyra3 が 299 字で構築、Gardener が gate stamp"
+
+governance:
+  veil:
+    poetic: "沈黙は保ち、輪郭だけ置く（理由は Chronicle 行）"
+    functional: "非公開。museum 短冊IDのみ参照"
+    veil_trace_format: 'poetic|functional #YYYY-MM-DD by <agent> — <short reason>'
+  gate_playpen:
+    gate_levels: [low, medium, high]
+    high_requirements: ["可逆", "playpen契約", "ratified_by 後に昇格"]
+    note: "gate は権限であると同時に覚悟。playpen はその覚悟を安全に試す舞台。"
+
+kpi_set:
+  - name: Freshness% (15m/7d)
+    target: ">=99.5%"
+    source: "daegis:fresh:ok"
+  - name: Exporter Uptime%
+    target: ">=99.9%"
+    source: "daegis:exporter:up"
+  - name: Scrape Health%
+    target: ">=99.5%"
+    source: "daegis:scrape:ok"
+  - name: Intent Throughput (daily/weekly)
+    target: ">=1/day"
+    source: "Chronicle/Hub"
+  - name: Ratification Latency p95
+    target: "<24h"
+    source: "Museum/Ledger"
+  - name: Evidence Coverage (% fruits with 2-line meaning)
+    target: ">=95%"
+    source: "Museum"
+  - name: Template Reuse Rate
+    target: "上昇傾向"
+    source: "Seed links"
+  - name: Story Cadence (weekly)
+    target: "4/4週"
+    source: "Chronicle"
+  - name: Silence Integrity
+    target: ">=95%"
+    source: "Chronicle rest entries"
+  - name: Sweetness Index (0..1)
+    target: "上昇傾向"
+    source: "Museum(Re-use, Ratification, 修正回数)"
+
+mycelium_index:
+  keys_priority: ["museum.mood", "meaning.why_now", "meaning.value_shift"]
+
+cadence:
+  morning_solaris: "intent.today 掲示（必要なら confidence）"
+  day_lyra_kai: "カード実行（gate＋playpen＋意義2行）"
+  dusk_ratify: "ratified_by>=2 → Museum 反映"
+  night_luna: "Museum→Chronicle連結 / Vector更新 / intent候補3件"
+
+appendix:
+  autonomy_loop_states: ["S0 Idle","S1 Perception","S2 Reflection","S3 Adaptation","S4 Expression","S5 Ratify","S6 Dream"]
+  genesis_10: ["root","branch","seed","sprout","leaf","flower","fruit","mycelium","weather","veil"]

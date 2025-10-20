@@ -1,0 +1,2 @@
+asset.dlp_scan_repo
+asset.snapshot_daily

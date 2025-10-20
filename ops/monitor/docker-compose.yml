@@ -1,0 +1,49 @@
+services:
+  prom-daegis:
+    image: prom/prometheus:latest
+    container_name: prom-daegis
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ../prometheus/rules:/etc/prometheus/rules:ro
+    ports: ["19090:9090"]
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.enable-lifecycle
+    restart: unless-stopped
+
+  node-daegis:
+    image: quay.io/prometheus/node-exporter:latest
+    container_name: node-daegis
+    command:
+      - --path.rootfs=/host
+      - --collector.textfile.directory=/textfiles
+    pid: host
+    volumes:
+      - /:/host:ro,rslave
+      - ../prom_text:/textfiles:ro
+    restart: unless-stopped
+
+  am-daegis:
+    image: prom/alertmanager:v0.27.0
+    container_name: am-daegis
+    ports: ["19093:9093"]
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+      - ./secrets/brief_webhook:/run/alertmanager/brief_webhook:ro
+      - ./secrets/brief_webhook:/etc/alertmanager/brief_webhook:ro
+    command:
+      - --config.file=/etc/alertmanager/alertmanager.yml
+      - --web.listen-address=:9093
+    environment:
+      SLACK_BRIEF_WEBHOOK:  SLACK_WEBHOOK_REDACTED
+      SLACK_RECOVERY_WEBHOOK: SLACK_WEBHOOK_REDACTED
+      SLACK_ROUNDTABLE_WEBHOOK: SLACK_WEBHOOK_REDACTED
+    restart: unless-stopped
+
+  grafana-daegis:
+    image: grafana/grafana-oss:latest
+    container_name: grafana-daegis
+    ports: ["13000:3000"]
+    depends_on: [prom-daegis]
+    restart: unless-stopped

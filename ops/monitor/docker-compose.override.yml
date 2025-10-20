@@ -1,0 +1,5 @@
+services:
+  am-daegis:
+    environment:
+      # ← 実値で置換する（Slackの Incoming Webhook URL）
+      SLACK_WEBHOOK_BRIEF: "SLACK_WEBHOOK_REDACTED"

@@ -1,0 +1,70 @@
+{
+  "phase": "Phase V",
+  "layer": [
+    "observability",
+    "agents"
+  ],
+  "component_id": "oracle.l13",
+  "topic": "Canary判定（plan/publish中心、5分窓併用）",
+  "decisions": [],
+  "todos": [],
+  "files": [
+    "scripts/learn/decision_enrich.py",
+    "scripts/learn/canary_verdict.py",
+    "logs/policy_canary_verdict.jsonl"
+  ],
+  "commands": [
+    "python3 scripts/learn/decision_enrich.py",
+    "python3 scripts/learn/canary_verdict.py"
+  ],
+  "env_knobs": [
+    "L13_WINDOW_SEC=300",
+    "L13_ONLY_CANARY=1"
+  ],
+  "interfaces": {
+    "inputs": [
+      "logs/decision.jsonl"
+    ],
+    "outputs": [
+      "logs/policy_canary_verdict.jsonl"
+    ],
+    "side_effects": []
+  },
+  "gates_safety": [
+    "verdict=FAIL when HOLD_RATE>0.2 or HTTP_5XX>0"
+  ],
+  "metrics_ports": [
+    "p95_ms",
+    "hold_rate",
+    "e5xx"
+  ],
+  "dependencies": {
+    "upstream": [],
+    "downstream": []
+  },
+  "effects": [],
+  "effects_chain": [],
+  "evidence": [
+    "2025-10-11T06:31Z l13_tail:{\"event\":\"canary_verdict\",\"ts\":1760164201.952082,\"window_sec\":300,\"canary_intents\":[],\"n\":22852,\"hold_rate\":0.2241,\"e5xx\":394,\"p95_ms\":3005.72,\"verdict\":\"FAIL\",\"reason\":\"HOLD_RATE>0.2;HTTP_5XX>0\"}"
+  ],
+  "time_window": "unknown",
+  "owners": [],
+  "evaluation": {
+    "verdict": "FAIL",
+    "reason": "from l13 tail",
+    "factors": []
+  },
+  "governance": {
+    "classification": "Internal",
+    "storage": "unknown",
+    "egress": "unknown",
+    "dlp_hits": "unknown",
+    "trace_id": "unknown"
+  },
+  "reproducibility": {
+    "capsule_or_profile": "unknown",
+    "journal_sha": "unknown",
+    "status": "Pending"
+  },
+  "status": "Confirmed"
+}

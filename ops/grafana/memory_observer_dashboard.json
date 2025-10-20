@@ -1,0 +1,36 @@
+{
+  "dashboard": {
+    "title": "Daegis • Memory Observer",
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "version": 1,
+    "panels": [
+      {
+        "type": "timeseries",
+        "title": "Agent別 Memory Delay (min)",
+        "fieldConfig": {
+          "defaults": { "unit": "m" },
+          "overrides": []
+        },
+        "targets": [
+          { "expr": "(time() - daegis_memory_last_update_timestamp{agent=~\"Lyra|Kai|Halu|Memory\"}) / 60",
+            "legendFormat": "{{agent}}" }
+        ],
+        "gridPos": { "x": 0, "y": 0, "w": 12, "h": 9 }
+      },
+      {
+        "type": "timeseries",
+        "title": "Memory Overall Delay (min)",
+        "fieldConfig": {
+          "defaults": { "unit": "m" },
+          "overrides": []
+        },
+        "targets": [
+          { "expr": "(time() - daegis_memory_overall_last_update_timestamp) / 60" }
+        ],
+        "gridPos": { "x": 12, "y": 0, "w": 12, "h": 9 }
+      }
+    ]
+  },
+  "overwrite": true
+}

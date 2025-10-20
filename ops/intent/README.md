@@ -1,0 +1,2 @@
+- Only intents defined here can be proposed by Halu (dry-run by default).
+- Each intent must include: summary, inputs, expected evidence, blast radius, rollback.

@@ -1,0 +1,69 @@
+{
+  "phase": "Phase V",
+  "layer": [
+    "agents",
+    "governance",
+    "sentry"
+  ],
+  "component_id": "apply.l10_5_gate",
+  "topic": "Auto-Adopt Gate（L13/VETO/COOLDOWN連動）",
+  "decisions": [],
+  "todos": [],
+  "files": [
+    "scripts/learn/auto_adopt_gate.sh",
+    "logs/policy_apply_controlled.jsonl",
+    "flags/L5_VETO",
+    "flags/L105_COOLDOWN_UNTIL"
+  ],
+  "commands": [
+    "bash scripts/learn/auto_adopt_gate.sh"
+  ],
+  "env_knobs": [
+    "AUTO_TUNE_ALLOW_INTENTS=plan,publish"
+  ],
+  "interfaces": {
+    "inputs": [
+      "logs/policy_canary_verdict.jsonl",
+      "flags/L5_VETO"
+    ],
+    "outputs": [
+      "logs/policy_apply_controlled.jsonl"
+    ],
+    "side_effects": []
+  },
+  "gates_safety": [
+    "VETO present→skip",
+    "L13 verdict!=PASS→skip",
+    "COOLDOWN active→skip"
+  ],
+  "metrics_ports": [],
+  "dependencies": {
+    "upstream": [],
+    "downstream": []
+  },
+  "effects": [],
+  "effects_chain": [],
+  "evidence": [
+    "2025-10-11T06:31Z l105_tail:[{\"ts\":1760060750,\"event\":\"adopt_block\",\"reason\":\"l13_verdict_FAIL\"},{\"ts\":1760060801,\"event\":\"adopt_block\",\"reason\":\"l13_verdict_FAIL\"},{\"ts\":1760060812,\"event\":\"adopt_block\",\"reason\":\"l13_verdict_FAIL\"}]"
+  ],
+  "time_window": "unknown",
+  "owners": [],
+  "evaluation": {
+    "verdict": "INSUFFICIENT",
+    "reason": "unknown",
+    "factors": []
+  },
+  "governance": {
+    "classification": "Internal",
+    "storage": "unknown",
+    "egress": "unknown",
+    "dlp_hits": "unknown",
+    "trace_id": "unknown"
+  },
+  "reproducibility": {
+    "capsule_or_profile": "unknown",
+    "journal_sha": "unknown",
+    "status": "Pending"
+  },
+  "status": "Confirmed"
+}

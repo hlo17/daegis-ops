@@ -1,0 +1,56 @@
+{
+  "phase": "Phase V",
+  "layer": [
+    "observability",
+    "scheduler"
+  ],
+  "component_id": "ops.cron",
+  "topic": "常設ジョブ（enrich/verdict/ready/sb2）",
+  "decisions": [],
+  "todos": [],
+  "files": [
+    "(user) crontab",
+    "scripts/dev/sb2_pipeline.sh"
+  ],
+  "commands": [
+    "crontab -l | sed -n \"1,50p\""
+  ],
+  "env_knobs": [
+    "AUTO_TUNE_ALLOW_INTENTS=plan,publish",
+    "SB_MIN_CONF_TAG=mid"
+  ],
+  "interfaces": {
+    "inputs": [],
+    "outputs": [],
+    "side_effects": []
+  },
+  "gates_safety": [],
+  "metrics_ports": [],
+  "dependencies": {
+    "upstream": [],
+    "downstream": []
+  },
+  "effects": [],
+  "effects_chain": [],
+  "evidence": [],
+  "time_window": "unknown",
+  "owners": [],
+  "evaluation": {
+    "verdict": "INSUFFICIENT",
+    "reason": "unknown",
+    "factors": []
+  },
+  "governance": {
+    "classification": "Internal",
+    "storage": "unknown",
+    "egress": "unknown",
+    "dlp_hits": "unknown",
+    "trace_id": "unknown"
+  },
+  "reproducibility": {
+    "capsule_or_profile": "unknown",
+    "journal_sha": "unknown",
+    "status": "Pending"
+  },
+  "status": "Confirmed"
+}

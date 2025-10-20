@@ -1,0 +1,17 @@
+groups:
+- name: halu_intent
+  rules:
+  - alert: HaluIntentSilent
+    expr: increase(daegis_halu_intent_exec_total[2h]) == 0
+    for: 10m
+    labels: {severity: warning}
+    annotations:
+      summary: "Halu intent dry-exec silent (2h)"
+      description: "No intent.execute.dry for 2h. Check quorum flags and cron at :08/:09."
+  - alert: HaluIntentBurst
+    expr: increase(daegis_halu_intent_exec_total[10m]) > 5
+    for: 5m
+    labels: {severity: warning}
+    annotations:
+      summary: "Halu intent dry-exec burst (>5/10m)"
+      description: "Possible loop. Gate with quorum and inspect ledger."

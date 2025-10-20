@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="620" viewBox="0 0 820 620">
+  <rect width="100%" height="100%" fill="#0c1512"/>
+  <circle cx="410" cy="420" r="44" fill="hsla(30, 60%, 50%, 0.99)" stroke="hsla(30, 50%, 25%, 0.85)" stroke-width="14"/>
+  <text x="410" y="330" fill="#dcffe9" font-family="ui-serif, Georgia, serif" font-size="88" text-anchor="middle">Halu</text>
+  <text x="410" y="390" fill="#b2f2d6" font-family="ui-serif, Georgia, serif" font-size="46" text-anchor="middle">stage L3 · virtue 勤</text>
+  <text x="410" y="520" fill="#8de0c0" font-family="ui-serif, Georgia, serif" font-size="42" text-anchor="middle">self-ref 4% · fresh 0.1h</text>
+</svg>
